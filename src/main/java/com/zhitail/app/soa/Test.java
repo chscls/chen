@@ -3,6 +3,7 @@ package com.zhitail.app.soa;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,12 @@ public class Test {
 	
 		xx.add(n);
 		xx.add(n2);
-		return new ResponseEntity<List<TestEn> >(HttpStatus.PERMANENT_REDIRECT);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		
+		 responseHeaders.set("msg", "Q234E23131");
+
+		return new ResponseEntity<List<TestEn> >(responseHeaders,HttpStatus.PERMANENT_REDIRECT);
 		
 	}
 }
