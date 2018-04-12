@@ -20,7 +20,7 @@ import org.hibernate.annotations.IndexColumn;
 public class FyTest {
 	public enum Mode{
 		free,limit,race
-	}//单选
+	}
 	public enum Status{
 		create,process,complete
 	}
