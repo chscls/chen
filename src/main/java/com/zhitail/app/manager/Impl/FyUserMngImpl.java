@@ -22,7 +22,7 @@ public class FyUserMngImpl implements FyUserMng{
 			Integer pageSize, FyUser search) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-				Finder finder = Finder.create(" from KfUser bean where 1=1");
+				Finder finder = Finder.create(" from FyUser bean where 1=1");
 				if(type!=null){
 					finder.append(" and bean.type=:type ");
 					finder.setParam("type", type);

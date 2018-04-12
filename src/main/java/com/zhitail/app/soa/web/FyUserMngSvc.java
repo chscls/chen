@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhitail.app.entity.FyUser;
@@ -21,7 +22,7 @@ import com.zhitail.frame.util.page.Pagination;
 
 
 
-@RequestMapping("/soa/services/KfUserMngSvc")
+@RequestMapping("/services/FyUserMngSvc")
 @RestController
 public class FyUserMngSvc {
 	@Autowired
@@ -30,7 +31,7 @@ public class FyUserMngSvc {
 	private FyUserMng userMng;
 	
 	
-	@RequestMapping(value = "/queryUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/queryUser",method=RequestMethod.GET)
 	public ResponseEntity<Pagination<FyUser>> queryUser(FyUser.Type type, String token,Long groupId,Integer pageNo,Integer pageSize,FyUser search) {
 		
 		Pagination<FyUser> page = userMng.getPage(type,pageNo,pageSize,search);

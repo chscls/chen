@@ -1,4 +1,4 @@
-package com.zhitail.app;
+package com.zhitail;
 
 import javax.servlet.MultipartConfigElement;
 
