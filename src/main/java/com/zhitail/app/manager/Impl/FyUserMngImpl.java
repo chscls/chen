@@ -1,8 +1,11 @@
 package com.zhitail.app.manager.Impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 
 
@@ -55,6 +58,7 @@ public class FyUserMngImpl implements FyUserMng{
 	}
 	public FyUser save(FyUser user) {
 		// TODO Auto-generated method stub
+		user.setCreateTime(new Date());
 		return userDao.save(user);
 	}
 	public void delete(Long[] ids) {
