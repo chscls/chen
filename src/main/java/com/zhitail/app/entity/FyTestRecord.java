@@ -36,8 +36,15 @@ public class FyTestRecord {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Mode mode;
-
+	private Boolean isQuestionnaire;
 	
+	public Boolean getIsQuestionnaire() {
+		return isQuestionnaire;
+	}
+	public void setIsQuestionnaire(Boolean isQuestionnaire) {
+		this.isQuestionnaire = isQuestionnaire;
+	}
+
 	private Integer limitSecond;
 	public Integer getLimitSecond() {
 		return limitSecond;

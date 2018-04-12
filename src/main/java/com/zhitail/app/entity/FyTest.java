@@ -29,7 +29,13 @@ public class FyTest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+	private Boolean isQuestionnaire=false;
+	public Boolean getIsQuestionnaire() {
+		return isQuestionnaire;
+	}
+	public void setIsQuestionnaire(Boolean isQuestionnaire) {
+		this.isQuestionnaire = isQuestionnaire;
+	}
 	private Mode mode;
 	private Status status=Status.create;
 	
