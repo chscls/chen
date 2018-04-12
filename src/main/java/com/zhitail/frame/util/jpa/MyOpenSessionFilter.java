@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
+
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
