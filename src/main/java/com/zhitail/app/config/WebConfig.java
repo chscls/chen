@@ -17,6 +17,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.io.File;
@@ -32,7 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 
 	@Autowired
 	private Environment env;
-
+	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		  //映射本地资源文件
 	

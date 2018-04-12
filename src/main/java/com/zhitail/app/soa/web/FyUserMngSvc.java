@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 import com.zhitail.app.entity.FyUser;
+import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.page.Pagination;
@@ -30,6 +32,20 @@ public class FyUserMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyUserMng userMng;
+	
+	
+	@RequestMapping(value = "/currentUser",method=RequestMethod.GET)
+	public ResponseEntity<AntUser> currentUser(String token) {
+		
+		
+		AntUser au = new AntUser();
+		FyUser u=userMng.findById(1L);
+		au.setAvatar(u.getHeadImg());
+		au.setName(u.getRealname());
+		au.setNotifyCount(12);
+		au.setUserid(u.getId().toString());
+		return new  ResponseEntity<AntUser>(au,HttpStatus.OK);
+	}
 	
 	
 	@RequestMapping(value = "/queryUser",method=RequestMethod.GET)

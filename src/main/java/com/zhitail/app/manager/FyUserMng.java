@@ -15,4 +15,6 @@ public interface FyUserMng {
 
 	public void delete(Long[] ids);
 
+	public FyUser findById(Long id);
+
 }
