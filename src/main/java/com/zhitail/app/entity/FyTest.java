@@ -21,7 +21,7 @@ import org.hibernate.annotations.IndexColumn;
 @Table(name = "fy_test")
 public class FyTest {
 	public enum Mode{
-		free,limit,race
+		free,singleLimit,totalLimit,race,
 	}
 	public enum Status{
 		create,process,complete
