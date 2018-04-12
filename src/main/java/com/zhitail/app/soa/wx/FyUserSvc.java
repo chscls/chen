@@ -29,15 +29,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.zhitail.app.soa.LoginManager;
 
-/**
- * 3.11.用户相关接口-账号相关接口定义
- * @ClassName: AccoutService
- * @Description: TODO
- * @author huangshunfindDict
- * @date 2018年4月2日 下午1:31:40
- *
-*/
-
 @RequestMapping("/services/FyUserSvc")
 @RestController
 public class FyUserSvc {
