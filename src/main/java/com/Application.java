@@ -1,4 +1,4 @@
-package com.zhitail;
+package com;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -16,10 +16,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
+
+
+
 
 @SpringBootApplication
 @ServletComponentScan
-
+@EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
 	
 	public static void main(String[] args) {
