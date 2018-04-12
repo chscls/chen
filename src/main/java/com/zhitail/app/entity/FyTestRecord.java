@@ -1,5 +1,6 @@
 package com.zhitail.app.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,14 +12,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.IndexColumn;
 
+import com.alibaba.fastjson.JSONArray;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zhitail.app.entity.middle.FyQuestionItem;
+
 @Entity
-@Table(name = "fy_test")
-public class FyTest {
+@Table(name = "fy_test_record")
+public class FyTestRecord {
 	public enum Mode{
 		free,limit,race
 	}
@@ -28,9 +35,8 @@ public class FyTest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
 	private Mode mode;
-	private Status status=Status.create;
+
 	
 	private Integer limitSecond;
 	public Integer getLimitSecond() {
@@ -39,16 +45,29 @@ public class FyTest {
 	public void setLimitSecond(Integer limitSecond) {
 		this.limitSecond = limitSecond;
 	}
-	public Status getStatus() {
-		return status;
-	}
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+	
 	private String title;
 	private Date createTime;
 	private Long userId;
 	private String code;
+	@JsonIgnore
+	@Lob
+	private String json;
+	
+	@Transient
+	public List<FyQuestion> getQuestions() {
+		if(json!=null){
+			return JSONArray.parseArray(this.json,FyQuestion.class);
+			}else{
+				return new ArrayList<FyQuestion>(0);
+			}
+	}
+	public String getJson() {
+		return json;
+	}
+	public void setJson(String json) {
+		this.json = json;
+	}
 	public String getCode() {
 		return code;
 	}
@@ -61,21 +80,7 @@ public class FyTest {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	/**
-	 * 包含的问题
-	 */
-	@ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-	@IndexColumn(name="priority")
-	@JoinTable(name="fy_test_question",joinColumns={@JoinColumn(name="test_id",referencedColumnName="id")},
-			inverseJoinColumns={@JoinColumn(name="question_id",referencedColumnName="id")}
-	)
-	private List<FyQuestion> questions;
-	public List<FyQuestion> getQuestions() {
-		return questions;
-	}
-	public void setQuestions(List<FyQuestion> questions) {
-		this.questions = questions;
-	}
+	
 	public Long getId() {
 		return id;
 	}
