@@ -31,6 +31,9 @@ public class FyQuestion {
 	 */
 	private String title;
 	private Date createTime;
+	
+	
+	
 	public Date getCreateTime() {
 		return createTime;
 	}

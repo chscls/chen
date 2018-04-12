@@ -30,7 +30,20 @@ public class FyTest {
 	
 	private String title;
 	private Date createTime;
-	
+	private Long userId;
+	private String code;
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	/**
 	 * 包含的问题
 	 */
