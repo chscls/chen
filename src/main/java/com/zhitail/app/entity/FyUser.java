@@ -1,5 +1,7 @@
 package com.zhitail.app.entity;
 
+import java.util.Date;
+
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
@@ -34,7 +36,33 @@ public class FyUser {
 	private String nickname;
 	
 	private String headImg;
-	
+	private Long questionCount=0L;
+	private Date createTime;
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	private Long questionCapacity=50L;
+	public Long getQuestionCapacity() {
+		return questionCapacity;
+	}
+
+	public void setQuestionCapacity(Long questionCapacity) {
+		this.questionCapacity = questionCapacity;
+	}
+
+	public Long getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(Long questionCount) {
+		this.questionCount = questionCount;
+	}
+
 	private Long score=0L;
 
 	public Long getId() {
