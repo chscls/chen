@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -48,6 +49,7 @@ public class FyTest {
 	private String title;
 	private Date createTime;
 	private Long userId;
+	@Column(unique=true)
 	private String code;
 	public String getCode() {
 		return code;
