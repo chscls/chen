@@ -28,15 +28,10 @@ public class FyQuestion {
 	private Long id;
 	private String title;
 	private Date createTime;
-	private Integer limitSecond;
 	
 	
-	public Integer getLimitSecond() {
-		return limitSecond;
-	}
-	public void setLimitSecond(Integer limitSecond) {
-		this.limitSecond = limitSecond;
-	}
+	
+	
 	public Date getCreateTime() {
 		return createTime;
 	}

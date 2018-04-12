@@ -30,6 +30,14 @@ public class FyTest {
 	
 	private Mode mode;
 	private Status status=Status.create;
+	
+	private Integer limitSecond;
+	public Integer getLimitSecond() {
+		return limitSecond;
+	}
+	public void setLimitSecond(Integer limitSecond) {
+		this.limitSecond = limitSecond;
+	}
 	public Status getStatus() {
 		return status;
 	}
