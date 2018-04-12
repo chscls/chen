@@ -1,21 +1,24 @@
 package com.zhitail.app.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONArray;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.middle.FyQuestionItem;
-
+@Entity
+@Table(name = "fy_question")
 public class FyQuestion {
 	public enum Type{
 		single,mutiply,judge
@@ -27,7 +30,13 @@ public class FyQuestion {
 	 * 标题
 	 */
 	private String title;
-	
+	private Date createTime;
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	public String getJson() {
 		return json;
 	}
