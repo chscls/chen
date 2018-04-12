@@ -21,13 +21,21 @@ public class FyTest {
 	public enum Mode{
 		free,limit,race
 	}//单选
-	
+	public enum Status{
+		create,process,complete
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private Mode mode;
-	
+	private Status status=Status.create;
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	private String title;
 	private Date createTime;
 	private Long userId;

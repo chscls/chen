@@ -22,18 +22,21 @@ import com.zhitail.app.entity.middle.FyQuestionItem;
 public class FyQuestion {
 	public enum Type{
 		single,mutiply,judge
-	}//单选
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	/**
-	 * 标题
-	 */
 	private String title;
 	private Date createTime;
+	private Integer limitSecond;
 	
 	
-	
+	public Integer getLimitSecond() {
+		return limitSecond;
+	}
+	public void setLimitSecond(Integer limitSecond) {
+		this.limitSecond = limitSecond;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}
