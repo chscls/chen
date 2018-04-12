@@ -21,8 +21,17 @@ public class FyUser {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	private Boolean isDel=false; 
 	private Type type;
 	
+	public Boolean getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(Boolean isDel) {
+		this.isDel = isDel;
+	}
+
 	@Column(unique=true)
 	private String mobile;
 	
