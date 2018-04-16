@@ -3,10 +3,10 @@ package com.zhitail.app.manager.Impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zhitail.app.manager.FyTestMng;
+import com.zhitail.app.manager.FySensitiveMng;
 
 @Service
 @Transactional
-public class FyTestMngImpl implements FyTestMng{
+public class  FySensitiveMngImpl implements FySensitiveMng{
 
 }
