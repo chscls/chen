@@ -35,7 +35,7 @@ import com.zhitail.frame.util.page.Pagination;
 
 
 
-@RequestMapping("/services/FyUserMngSvc")
+@RequestMapping("/services/FySensitiveMngSvc")
 @RestController
 public class FySensitiveMngSvc {
 	@Autowired
