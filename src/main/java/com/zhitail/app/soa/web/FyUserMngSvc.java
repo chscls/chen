@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyUserMng;
@@ -36,7 +38,20 @@ public class FyUserMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyUserMng userMng;
-	
+	@RequestMapping(value = "/account",method=RequestMethod.POST)
+	public ResponseEntity<JSONObject> account(String userName,String password) {
+	FyUser u = 	userMng.findByUserName(userName);
+	if(u.getPassword().equals(password)){
+		JSONObject jo = new JSONObject();
+		jo.put("status", "ok");
+		jo.put("currentAuthority", "admin");
+		String token = loginManager.getToken(u);
+		jo.put("token", token);
+		 return new  ResponseEntity<JSONObject>(jo,HttpStatus.OK);
+	}
+		JSONObject jo= JSONObject.parseObject("{\"status\":\"error\",\"currentAuthority\":\"user\"}");
+		return new  ResponseEntity<JSONObject>(jo,HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/fake_chart_data",method=RequestMethod.GET)
 	public ResponseEntity<JSONObject> fake_chart_data(String token) {

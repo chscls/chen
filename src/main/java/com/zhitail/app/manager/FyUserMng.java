@@ -17,4 +17,6 @@ public interface FyUserMng {
 
 	public FyUser findById(Long id);
 
+	public FyUser findByUserName(String userName);
+
 }

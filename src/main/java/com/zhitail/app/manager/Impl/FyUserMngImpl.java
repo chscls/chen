@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import com.zhitail.app.dao.FyUserDao;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyUser.Type;
@@ -73,5 +74,9 @@ public class FyUserMngImpl implements FyUserMng{
 	public FyUser findById(Long id) {
 		// TODO Auto-generated method stub
 		return userDao.findOne(id);
+	}
+	public FyUser findByUserName(String userName) {
+		// TODO Auto-generated method stub
+		return userDao.findByUserName(userName);
 	}
 }

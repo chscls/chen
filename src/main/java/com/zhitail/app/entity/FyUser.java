@@ -45,6 +45,16 @@ public class FyUser {
 	private String nickname;
 	
 	private String headImg;
+	
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private Long questionCount=0L;
 	private Date createTime;
 	public Date getCreateTime() {
