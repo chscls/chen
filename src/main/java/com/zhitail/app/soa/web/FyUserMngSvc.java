@@ -95,7 +95,9 @@ public class FyUserMngSvc {
 	
 	@RequestMapping(value = "/queryUser",method=RequestMethod.GET)
 	public Result queryUser(String token,FyUser.Type type, Integer pageNo,Integer pageSize,FyUser search) {
-		
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
 		Pagination<FyUser> page = userMng.getPage(type,pageNo,pageSize,search);
 		
 		return new  Result(page);
@@ -110,7 +112,9 @@ public class FyUserMngSvc {
 	 */
 	@RequestMapping(value = "/addUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addUser( String token,FyUser user,FyUser.Type type) {
-		
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
 		if(user.getId()==null){
 		
 		user = userMng.save(user);
@@ -130,7 +134,9 @@ public class FyUserMngSvc {
 	@RequestMapping(value = "/removeUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeClazz(String token, Long[] ids) {
 
-		
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
 
 		userMng.delete(ids);
 
