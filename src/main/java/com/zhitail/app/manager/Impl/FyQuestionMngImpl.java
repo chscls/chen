@@ -23,10 +23,11 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
 		
-		if(search.getTitle()!=null){
-			  finder.append(" and bean.word like:word");
-	            finder.setParam("word","%"+search.getTitle()+"%");
+		if (search.getTitle() != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
+
 		
 		finder.append(" order by bean.id desc");
 		return questionDao.findPageByFinder(finder, pageNo, pageSize);
