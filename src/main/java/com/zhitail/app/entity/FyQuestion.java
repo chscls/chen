@@ -29,9 +29,15 @@ public class FyQuestion {
 	private String title;
 	private Date createTime;
 	
+	private Integer level;
 	
 	
-	
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}
