@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyUserMng;
@@ -81,10 +83,12 @@ public class FyUserMngSvc {
 	
 	@RequestMapping(value = "/currentUser",method=RequestMethod.GET)
 	public ResponseEntity<AntUser> currentUser(String token) {
-		
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
 		
 		AntUser au = new AntUser();
-		FyUser u=userMng.findById(1L);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));		
 		au.setAvatar(u.getHeadImg());
 		au.setName(u.getRealname());
 		au.setNotifyCount(12);
