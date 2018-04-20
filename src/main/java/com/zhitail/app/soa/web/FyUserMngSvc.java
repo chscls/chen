@@ -45,7 +45,7 @@ public class FyUserMngSvc {
 	if(u.getPassword().equals(password)){
 		JSONObject jo = new JSONObject();
 		jo.put("status", "ok");
-		jo.put("currentAuthority", "admin");
+		jo.put("currentAuthority", u.getType());
 		String token = loginManager.getToken(u);
 		jo.put("token", token);
 		 return new  ResponseEntity<JSONObject>(jo,HttpStatus.OK);
