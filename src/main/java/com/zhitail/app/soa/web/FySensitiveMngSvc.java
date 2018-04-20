@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FySensitive;
@@ -32,6 +33,7 @@ import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.page.Pagination;
+import com.zhitail.frame.util.service.Result;
 
 
 
@@ -43,11 +45,11 @@ public class FySensitiveMngSvc {
 	@Autowired
 	private FySensitiveMng sensitiveMng;
 	@RequestMapping(value = "/querySensitive",method=RequestMethod.GET)
-	public ResponseEntity<Pagination<FySensitive>> querySensitive(String token, Integer pageNo,Integer pageSize,FySensitive search) {
+	public Result querySensitive(String token, Integer pageNo,Integer pageSize,FySensitive search) {
 		
 		Pagination<FySensitive> page = sensitiveMng.getPage(pageNo,pageSize,search);
 		
-		return new  ResponseEntity<Pagination<FySensitive>>(page,HttpStatus.OK);
+		return new Result(page);
 	}
 	
 	/**
@@ -58,7 +60,7 @@ public class FySensitiveMngSvc {
 	 * @return
 	 */
 	@RequestMapping(value = "/addSensitive", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FySensitive> addSensitive( String token,FySensitive sensitive) {
+	public Result addSensitive( String token,FySensitive sensitive) {
 		
 		if(sensitive.getId()==null){
 		
@@ -66,7 +68,8 @@ public class FySensitiveMngSvc {
 		}else{
 			sensitive = sensitiveMng.update(sensitive);
 		}
-		return new  ResponseEntity<FySensitive>(sensitive,HttpStatus.OK);
+		return new Result(sensitive);
+	
 	}
 	
 	
@@ -77,14 +80,14 @@ public class FySensitiveMngSvc {
 	 * @return
 	 */
 	@RequestMapping(value = "/removeSensitive", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> removeSensitive(String token, Long[] ids) {
+	public Result removeSensitive(String token, Long[] ids) {
 
 		
 
 		sensitiveMng.delete(ids);
 
+		return new Result(true);
 	
-		return new  ResponseEntity<Boolean>(true,HttpStatus.OK);
 
 	}
 }

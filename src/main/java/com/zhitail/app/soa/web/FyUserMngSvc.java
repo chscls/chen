@@ -20,14 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.page.Pagination;
+import com.zhitail.frame.util.service.Result;
 
 
 
@@ -93,11 +94,11 @@ public class FyUserMngSvc {
 	
 	
 	@RequestMapping(value = "/queryUser",method=RequestMethod.GET)
-	public ResponseEntity<Pagination<FyUser>> queryUser(String token,FyUser.Type type, Integer pageNo,Integer pageSize,FyUser search) {
+	public Result queryUser(String token,FyUser.Type type, Integer pageNo,Integer pageSize,FyUser search) {
 		
 		Pagination<FyUser> page = userMng.getPage(type,pageNo,pageSize,search);
 		
-		return new  ResponseEntity<Pagination<FyUser>>(page,HttpStatus.OK);
+		return new  Result(page);
 	}
 	
 	/**
@@ -105,10 +106,10 @@ public class FyUserMngSvc {
 	 * @param token
 	 * @param user  用户
 	 * @param groupId  分组id
-	 * @return
+	 * @return FyUser
 	 */
 	@RequestMapping(value = "/addUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FyUser> addUser( String token,FyUser user,FyUser.Type type) {
+	public Result addUser( String token,FyUser user,FyUser.Type type) {
 		
 		if(user.getId()==null){
 		
@@ -116,7 +117,7 @@ public class FyUserMngSvc {
 		}else{
 			user = userMng.update(user);
 		}
-		return new  ResponseEntity<FyUser>(user,HttpStatus.OK);
+		return new  Result(user);
 	}
 	
 	
@@ -124,17 +125,17 @@ public class FyUserMngSvc {
 	 *  删除用户
 	 * @param token
 	 * @param ids
-	 * @return
+	 * @return Boolean
 	 */
 	@RequestMapping(value = "/removeUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> removeClazz(String token, Long[] ids) {
+	public Result removeClazz(String token, Long[] ids) {
 
 		
 
 		userMng.delete(ids);
 
 	
-		return new  ResponseEntity<Boolean>(true,HttpStatus.OK);
+		return new Result(true);
 
 	}
 	
