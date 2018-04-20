@@ -14,7 +14,7 @@ import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
-@RequestMapping("/services/FySensitiveMngSvc")
+@RequestMapping("/services/FyQuestionMngSvc")
 @RestController
 public class FyQuestionMngSvc {
 	@Autowired
