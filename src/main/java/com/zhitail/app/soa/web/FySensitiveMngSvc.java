@@ -54,13 +54,7 @@ public class FySensitiveMngSvc {
 		return new Result(page);
 	}
 	
-	/**
-	 * 新增用户
-	 * @param token
-	 * @param user  用户
-	 * @param groupId  分组id
-	 * @return
-	 */
+	
 	@RequestMapping(value = "/addSensitive", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addSensitive( String token,FySensitive sensitive) {
 		if(!loginManager.verify(token)){
@@ -77,12 +71,7 @@ public class FySensitiveMngSvc {
 	}
 	
 	
-	/**
-	 *  删除用户
-	 * @param token
-	 * @param ids
-	 * @return
-	 */
+	
 	@RequestMapping(value = "/removeSensitive", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeSensitive(String token, Long[] ids) {
 
