@@ -29,6 +29,15 @@ public class FyQuestionMngSvc {
 	private FyQuestionMng questionMng;
 	@Autowired
 	private FyUserMng userMng;
+	@RequestMapping(value = "/findQuestion",method=RequestMethod.GET)
+	public Result findQuestion(String token,Long id) {
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
+		FyQuestion question = questionMng.findById(id);
+		
+		return new Result(question);
+	}
 	@RequestMapping(value = "/queryQuestion",method=RequestMethod.GET)
 	public Result queryQuestion(String token, Integer pageNo,Integer pageSize,FyQuestion search) {
 		if(!loginManager.verify(token)){

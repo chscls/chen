@@ -48,5 +48,10 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 		// TODO Auto-generated method stub
 		return questionDao.save(question);
 	}
+	@Override
+	public FyQuestion findById(Long id) {
+		// TODO Auto-generated method stub
+		return questionDao.findOne(id);
+	}
 
 }

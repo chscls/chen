@@ -15,4 +15,6 @@ public interface FyQuestionMng {
 
 	public FyQuestion save(FyQuestion question);
 
+	public FyQuestion findById(Long id);
+
 }
