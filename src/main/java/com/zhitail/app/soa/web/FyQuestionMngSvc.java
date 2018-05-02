@@ -49,11 +49,11 @@ public class FyQuestionMngSvc {
 	}
 	
 	@RequestMapping(value = "/addQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addQuestion( String token,FyQuestion question,Integer diff) {
+	public Result addQuestion( String token,FyQuestion question,String[] tags) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		
+		question.setTagsJson(JSONArray.toJSONString(tags));
 		if(question.getId()==null){
 			question.setCreateTime(new Date());
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
