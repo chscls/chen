@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.zhitail.app.entity.FyQuestion;
-import com.zhitail.app.entity.FyQuestion.Difficulty;
+
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyQuestionMng;
@@ -53,7 +53,6 @@ public class FyQuestionMngSvc {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		question.setDifficulty( FyQuestion.valueOf(diff));
 		
 		if(question.getId()==null){
 			question.setCreateTime(new Date());

@@ -26,31 +26,13 @@ public class FyQuestion {
 	public enum Status{
 		create,complete
 	}
-	public enum Difficulty{
-		veryEasy,easy,moderate,hard,veryHard
-		
-	}
-	 public static Difficulty valueOf(int value) {    //    手写的从int到enum的转换函数
-	        switch (value) {
-	        case 0:
-	            return Difficulty.veryEasy;
-	        case 25:
-	            return Difficulty.easy;
-	        case 50:
-	            return Difficulty.moderate;
-	        case 75:
-	            return Difficulty.hard;
-	        case 100:
-	            return Difficulty.veryHard;
-	        default:
-	            return Difficulty.veryEasy;
-	        }
-	    }
+	
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String title;
-	private Difficulty difficulty=Difficulty.veryEasy;
+	private Integer difficulty=0;
 	private Double score;
 	public Double getScore() {
 		return score;
@@ -129,10 +111,11 @@ public class FyQuestion {
 				return new ArrayList<FyQuestionItem>(0);
 			}
 	}
-	public Difficulty getDifficulty() {
+	public Integer getDifficulty() {
 		return difficulty;
 	}
-	public void setDifficulty(Difficulty difficulty) {
+	public void setDifficulty(Integer difficulty) {
 		this.difficulty = difficulty;
 	}
+	
 }
