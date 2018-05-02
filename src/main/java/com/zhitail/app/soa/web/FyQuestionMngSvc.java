@@ -59,6 +59,7 @@ public class FyQuestionMngSvc {
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
 			question.setUserId(u.getId());
 			question.setJson((new JSONArray()).toJSONString());
+			question.setTagsJson((new JSONArray()).toJSONString());
 			
 			question = questionMng.save(question);
 		}else{

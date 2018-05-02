@@ -34,6 +34,23 @@ public class FyQuestion {
 	private String title;
 	private Integer difficulty=0;
 	private Double score;
+	@JsonIgnore
+	private String tagsJson;
+	@Transient
+	private List<String> getTags(){
+		if(tagsJson!=null){
+			return JSONArray.parseArray(this.json,String.class);
+			}else{
+				return new ArrayList<String>(0);
+			}
+		
+	}
+	public String getTagsJson() {
+		return tagsJson;
+	}
+	public void setTagsJson(String tagsJson) {
+		this.tagsJson = tagsJson;
+	}
 	public Double getScore() {
 		return score;
 	}
