@@ -1,5 +1,7 @@
 package com.zhitail.app.soa.web;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -7,10 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zhitail.app.entity.FyQuestion;
+import com.zhitail.app.entity.FyQuestion.Difficulty;
 import com.zhitail.app.entity.FySensitive;
+import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
+import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
@@ -21,6 +27,8 @@ public class FyQuestionMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyQuestionMng questionMng;
+	@Autowired
+	private FyUserMng userMng;
 	@RequestMapping(value = "/queryQuestion",method=RequestMethod.GET)
 	public Result queryQuestion(String token, Integer pageNo,Integer pageSize,FyQuestion search) {
 		if(!loginManager.verify(token)){
@@ -32,12 +40,18 @@ public class FyQuestionMngSvc {
 	}
 	
 	@RequestMapping(value = "/addQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addQuestion( String token,FyQuestion question) {
+	public Result addQuestion( String token,FyQuestion question,Integer diff) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		if(question.getId()==null){
+		question.setDifficulty( FyQuestion.valueOf(diff));
 		
+		if(question.getId()==null){
+			question.setCreateTime(new Date());
+			FyUser u=userMng.findByUserName(loginManager.getUser(token));
+			question.setUserId(u.getId());
+			question.setJson((new JSONArray()).toJSONString());
+			
 			question = questionMng.save(question);
 		}else{
 			question= questionMng.update(question);
