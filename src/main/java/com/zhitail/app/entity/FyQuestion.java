@@ -37,9 +37,9 @@ public class FyQuestion {
 	@JsonIgnore
 	private String tagsJson;
 	@Transient
-	private List<String> getTags(){
+	public List<String> getTags(){
 		if(tagsJson!=null){
-			return JSONArray.parseArray(this.json,String.class);
+			return JSONArray.parseArray(this.tagsJson,String.class);
 			}else{
 				return new ArrayList<String>(0);
 			}
