@@ -53,13 +53,13 @@ public class FyQuestionMngSvc {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		question.setTagsJson(JSONArray.toJSONString(tags));
+		question.setTagsJson(tags!=null?JSONArray.toJSONString(tags):null );
 		if(question.getId()==null){
 			question.setCreateTime(new Date());
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
 			question.setUserId(u.getId());
 			question.setJson((new JSONArray()).toJSONString());
-			question.setTagsJson((new JSONArray()).toJSONString());
+			
 			
 			question = questionMng.save(question);
 		}else{
