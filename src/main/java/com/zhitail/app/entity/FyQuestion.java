@@ -21,7 +21,7 @@ import com.zhitail.app.entity.middle.FyQuestionItem;
 @Table(name = "fy_question")
 public class FyQuestion {
 	public enum Type{
-		single,mutiply,judge
+		single,mutiply,judge,fill,ask
 	}
 	public enum Status{
 		create,complete
