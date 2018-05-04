@@ -39,17 +39,18 @@ public class FyQuestionMngSvc {
 		return new Result(question);
 	}
 	@RequestMapping(value = "/queryQuestion",method=RequestMethod.GET)
-	public Result queryQuestion(String token, Integer pageNo,Integer pageSize,FyQuestion search) {
+	public Result queryQuestion(String token, Integer pageNo,Integer pageSize,String type,String difficulty,String status,String title) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		Pagination<FyQuestion> page = questionMng.getPage(pageNo,pageSize,search);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		Pagination<FyQuestion> page = questionMng.getPage(pageNo,pageSize,u.getId(),title,type,difficulty,status);
 		
 		return new Result(page);
 	}
 	
 	@RequestMapping(value = "/addQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addQuestion( String token,String status,FyQuestion question,String[] tags) {
+	public Result addQuestion( String token,FyQuestion question,String[] tags) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}

@@ -6,8 +6,7 @@ import com.zhitail.frame.util.page.Pagination;
 
 public interface FyQuestionMng {
 
-	public Pagination<FyQuestion> getPage(Integer pageNo, Integer pageSize,
-			FyQuestion search);
+
 
 	public void delete(Long[] ids);
 
@@ -16,5 +15,8 @@ public interface FyQuestionMng {
 	public FyQuestion save(FyQuestion question);
 
 	public FyQuestion findById(Long id);
+
+	public Pagination<FyQuestion> getPage(Integer pageNo, Integer pageSize,
+			Long userId, String title, String type, String difficulty, String status);
 
 }
