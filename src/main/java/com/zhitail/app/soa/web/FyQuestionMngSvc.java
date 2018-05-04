@@ -60,11 +60,11 @@ public class FyQuestionMngSvc {
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
 			question.setUserId(u.getId());
 			question.setJson((new JSONArray()).toJSONString());
-			if(question.getIsRich()&&question.getTitle().contains("<img")){
+			/*if(question.getIsRich()&&question.getTitle().contains("<img")){
 				question.setStatus(Status.check);
 			}else{
 				question.setStatus(Status.complete);
-			}
+			}*/
 			
 			question = questionMng.save(question);
 		}else{
