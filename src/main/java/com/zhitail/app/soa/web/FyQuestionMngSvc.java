@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.zhitail.app.entity.FyQuestion;
-
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
+import com.zhitail.app.entity.FyQuestion.Status;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
@@ -49,7 +49,7 @@ public class FyQuestionMngSvc {
 	}
 	
 	@RequestMapping(value = "/addQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addQuestion( String token,FyQuestion question,String[] tags) {
+	public Result addQuestion( String token,String status,FyQuestion question,String[] tags) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
@@ -59,7 +59,11 @@ public class FyQuestionMngSvc {
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
 			question.setUserId(u.getId());
 			question.setJson((new JSONArray()).toJSONString());
-			
+			if(question.getIsRich()&&question.getTitle().contains("<img")){
+				question.setStatus(Status.check);
+			}else{
+				question.setStatus(Status.complete);
+			}
 			
 			question = questionMng.save(question);
 		}else{

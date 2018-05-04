@@ -24,7 +24,7 @@ public class FyQuestion {
 		single,mutiply,judge,fill,ask
 	}
 	public enum Status{
-		create,complete
+		create,check,complete
 	}
 	
 	 
