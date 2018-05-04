@@ -21,6 +21,13 @@ public class FyQuestionItem {
 	}
 	private java.lang.Boolean isSolution;
 	private java.lang.Boolean isAnswer;
+	private java.lang.Boolean isRich=false;
+	public java.lang.Boolean getIsRich() {
+		return isRich;
+	}
+	public void setIsRich(java.lang.Boolean isRich) {
+		this.isRich = isRich;
+	}
 	public java.lang.Boolean getIsSolution() {
 		return isSolution;
 	}
