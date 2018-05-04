@@ -31,6 +31,7 @@ public class FyQuestion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Lob
 	private String title;
 	private Integer difficulty=0;
 	private Double score;
@@ -121,7 +122,7 @@ public class FyQuestion {
 	@Lob
 	private String json;
 	@Transient
-	private List<FyQuestionItem> getItems(){
+	public List<FyQuestionItem> getItems(){
 		if(json!=null){
 			return JSONArray.parseArray(this.json,FyQuestionItem.class);
 			}else{
