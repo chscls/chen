@@ -62,7 +62,7 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 				 tt.add(Type.valueOf(s));
 			}
 			finder.append(" and bean.type in:types");
-			finder.setParam("types", tt.toArray(new Type[tt.size()]));
+			finder.setParamList("types", tt.toArray(new Type[tt.size()]));
 		}
 		if(status!=null){
 			String[] t = status.split(",");
@@ -71,7 +71,7 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 				 tt.add(Status.valueOf(s));
 			}
 			finder.append(" and bean.status in:statuss");
-			finder.setParam("statuss", tt.toArray(new Status[tt.size()]));
+			finder.setParamList("statuss", tt.toArray(new Status[tt.size()]));
 		}
 		if(difficulty!=null){
 			String[] t = difficulty.split(",");
@@ -80,7 +80,7 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 				 tt.add(Integer.parseInt(s));
 			}
 			finder.append(" and bean.difficulty in:difficultys");
-			finder.setParam("difficultys",  tt.toArray(new Integer[tt.size()]));
+			finder.setParamList("difficultys",  tt.toArray(new Integer[tt.size()]));
 		}
 
 		finder.append(" and bean.userId=:userId");
