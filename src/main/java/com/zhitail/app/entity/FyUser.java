@@ -38,7 +38,6 @@ public class FyUser {
 	@Column(unique=true)
 	private String openid;
 	
-	@Column(unique=true)
 	private String realname;
 	
 	@Column(unique=true)
