@@ -48,6 +48,17 @@ public class FyQuestionMngSvc {
 		
 		return new Result(page);
 	}
+	@RequestMapping(value = "/updateOptions", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result addQuestion( String token,Long id,String options) {
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
+		FyQuestion q=questionMng.findById(id);
+	System.out.print("options");
+		return new Result(q);
+	
+	}
+	
 	
 	@RequestMapping(value = "/addQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addQuestion( String token,FyQuestion question,String[] tags) {

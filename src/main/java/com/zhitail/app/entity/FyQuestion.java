@@ -66,7 +66,14 @@ public class FyQuestion {
 		this.type = type;
 	}
 	private Date createTime;
+	public Boolean getIsQuestionnaire() {
+		return isQuestionnaire;
+	}
+	public void setIsQuestionnaire(Boolean isQuestionnaire) {
+		this.isQuestionnaire = isQuestionnaire;
+	}
 	private Boolean isRich=false;
+	private Boolean isQuestionnaire=false;
 	public Boolean getIsRich() {
 		return isRich;
 	}
