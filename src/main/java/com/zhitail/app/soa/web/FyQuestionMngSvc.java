@@ -56,6 +56,7 @@ public class FyQuestionMngSvc {
 		FyQuestion q=questionMng.findById(id);
 		q.setIsQuestionnaire(isQuestionnaire);
 		q.setJson(options);
+		q.setStatus(Status.complete);
 		questionMng.update(q);
 	
 		return new Result(q);
