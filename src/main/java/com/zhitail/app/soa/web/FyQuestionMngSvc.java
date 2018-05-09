@@ -49,12 +49,15 @@ public class FyQuestionMngSvc {
 		return new Result(page);
 	}
 	@RequestMapping(value = "/updateOptions", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addQuestion( String token,Long id,String options) {
+	public Result addQuestion( String token,Long id,String options,Boolean isQuestionnaire) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyQuestion q=questionMng.findById(id);
-	System.out.print(options);
+		q.setIsQuestionnaire(isQuestionnaire);
+		q.setJson(options);
+		questionMng.update(q);
+	
 		return new Result(q);
 	
 	}
