@@ -54,7 +54,7 @@ public class FyQuestionMngSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyQuestion q=questionMng.findById(id);
-	System.out.print("options");
+	System.out.print(options);
 		return new Result(q);
 	
 	}
