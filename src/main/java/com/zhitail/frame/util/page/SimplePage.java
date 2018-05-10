@@ -81,41 +81,7 @@ public class SimplePage implements Paginable {
 		return totalPage;
 	}
 
-	/**
-	 * 是否第一页
-	 */
-	public boolean isFirstPage() {
-		return pageNo <= 1;
-	}
-
-	/**
-	 * 是否最后一页
-	 */
-	public boolean isLastPage() {
-		return pageNo >= getTotalPage();
-	}
-
-	/**
-	 * 下一页页码
-	 */
-	public int getNextPage() {
-		if (isLastPage()) {
-			return pageNo;
-		} else {
-			return pageNo + 1;
-		}
-	}
-
-	/**
-	 * 上一页页码
-	 */
-	public int getPrePage() {
-		if (isFirstPage()) {
-			return pageNo;
-		} else {
-			return pageNo - 1;
-		}
-	}
+	
 
 	protected int totalCount = 0;
 	protected int pageSize = 20;
