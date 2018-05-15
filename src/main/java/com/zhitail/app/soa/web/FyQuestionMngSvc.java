@@ -18,6 +18,7 @@ import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 @RequestMapping("/services/FyQuestionMngSvc")
@@ -29,6 +30,7 @@ public class FyQuestionMngSvc {
 	private FyQuestionMng questionMng;
 	@Autowired
 	private FyUserMng userMng;
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/findQuestion",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {
 		if(!loginManager.verify(token)){

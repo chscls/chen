@@ -259,7 +259,7 @@ public class SensitiveWordUtil {
     }
 
 
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
 
         Set<String> sensitiveWordSet = new HashSet<String>();
         sensitiveWordSet.add("太多");

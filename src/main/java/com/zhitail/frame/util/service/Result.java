@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
+import com.zhitail.frame.common.exception.BusinessException;
+
+
 
 
 public class Result<T> extends ResponseEntity<T>{
@@ -31,7 +34,7 @@ public class Result<T> extends ResponseEntity<T>{
 	
 	
 	public static Result<String> error(String errorMsg){
-		return new Result(errorMsg,HttpStatus.ACCEPTED);
+		throw new BusinessException(null, errorMsg, HttpStatus.ACCEPTED);
 		
 	}
 

@@ -42,18 +42,21 @@ public class FyUserMngSvc {
 	@Autowired
 	private FyUserMng userMng;
 	@RequestMapping(value = "/account",method=RequestMethod.POST)
-	public ResponseEntity<JSONObject> account(String userName,String password) {
+	public Result account(String userName,String password) {
 	FyUser u = 	userMng.findByUserName(userName);
+	if(u==null){
+		return Result.error("用户不存在");
+	}
 	if(u.getPassword().equals(password)){
 		JSONObject jo = new JSONObject();
 		jo.put("status", "ok");
 		jo.put("currentAuthority", u.getType());
 		String token = loginManager.getToken(u);
 		jo.put("token", token);
-		 return new  ResponseEntity<JSONObject>(jo,HttpStatus.OK);
+		 return new  Result(jo);
 	}
 		JSONObject jo= JSONObject.parseObject("{\"status\":\"error\",\"currentAuthority\":\"user\"}");
-		return new  ResponseEntity<JSONObject>(jo,HttpStatus.OK);
+		return new  Result(jo);
 	}
 	
 	@RequestMapping(value = "/fake_chart_data",method=RequestMethod.GET)
