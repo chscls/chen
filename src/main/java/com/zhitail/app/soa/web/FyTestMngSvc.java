@@ -1,5 +1,7 @@
 package com.zhitail.app.soa.web;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -7,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FySensitive;
+import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyTestMng;
-
 import com.zhitail.app.manager.FySensitiveMng;
+import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 @RequestMapping("/services/FyTestMngSvc")
@@ -22,6 +27,16 @@ public class FyTestMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyTestMng testMng;
+	@Autowired
+	private FyUserMng userMng;
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
+	public Result findQuestion(String token,Long id) {
+		
+		FyTest test= testMng.findById(id);
+		
+		return new Result(test);
+	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
 	public Result queryTest(String token, Integer pageNo,Integer pageSize,FyTest search) {
 		if(!loginManager.verify(token)){
@@ -33,17 +48,19 @@ public class FyTestMngSvc {
 	}
 	
 	@RequestMapping(value = "/addTest", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addTest( String token,FyTest Test) {
+	public Result addTest( String token,FyTest test) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		if(Test.getId()==null){
-		
-			Test = testMng.save(Test);
+		if(test.getId()==null){
+			test.setCreateTime(new Date());
+			FyUser u=userMng.findByUserName(loginManager.getUser(token));
+			test.setUserId(u.getId());
+			test = testMng.save(test);
 		}else{
-			Test= testMng.update(Test);
+			test= testMng.update(test);
 		}
-		return new Result(Test);
+		return new Result(test);
 	
 	}
 	

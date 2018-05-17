@@ -50,4 +50,10 @@ public class FyTestMngImpl implements FyTestMng {
 		}
 	}
 
+	@Override
+	public FyTest findById(Long id) {
+		// TODO Auto-generated method stub
+		return testDao.findOne(id);
+	}
+
 }

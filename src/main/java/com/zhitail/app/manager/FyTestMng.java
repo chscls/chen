@@ -13,4 +13,6 @@ public interface FyTestMng {
 
 	public void delete(Long[] ids);
 
+	public FyTest findById(Long id);
+
 }
