@@ -40,13 +40,13 @@ public class FyQuestionMngSvc {
 		
 		return new Result(question);
 	}
-	@RequestMapping(value = "/queryQuestion",method=RequestMethod.GET)
-	public Result queryQuestion(String token, Integer pageNo,Integer pageSize,String type,String difficulty,String status,String title) {
+	@RequestMapping(value = "/queryQuestion",method=RequestMethod.POST)
+	public Result queryQuestion(String token,Long[] alreadyIds, Integer pageNo,Integer pageSize,String type,String difficulty,String status,String title) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		Pagination<FyQuestion> page = questionMng.getPage(pageNo,pageSize,u.getId(),title,type,difficulty,status);
+		Pagination<FyQuestion> page = questionMng.getPage(alreadyIds,pageNo,pageSize,u.getId(),title,type,difficulty,status);
 		
 		return new Result(page);
 	}

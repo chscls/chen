@@ -16,7 +16,7 @@ public interface FyQuestionMng {
 
 	public FyQuestion findById(Long id);
 
-	public Pagination<FyQuestion> getPage(Integer pageNo, Integer pageSize,
+	public Pagination<FyQuestion> getPage(Long[] alreadyIds, Integer pageNo, Integer pageSize,
 			Long userId, String title, String type, String difficulty, String status);
 
 }

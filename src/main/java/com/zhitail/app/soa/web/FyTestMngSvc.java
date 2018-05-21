@@ -65,7 +65,15 @@ public class FyTestMngSvc {
 		return new Result(test);
 	
 	}
-	
+	@RequestMapping(value = "/updateTestQuestions", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result updateTestQuestions(String token,Long id, Long[] qids) {
+		
+		FyTest t  = testMng.updateTestQuestions(id,qids);
+		return new Result(t);
+
+		
+		
+	}
 	
 	
 	@RequestMapping(value = "/removeTest", produces = MediaType.APPLICATION_JSON_VALUE)

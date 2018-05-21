@@ -46,7 +46,7 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 		return questionDao.findOne(id);
 	}
 	@Override
-	public Pagination<FyQuestion> getPage(Integer pageNo, Integer pageSize,
+	public Pagination<FyQuestion> getPage(Long[] alreadyIds,Integer pageNo, Integer pageSize,
 			Long userId, String title, String type, String difficulty, String status) {
 		// TODO Auto-generated method stub
 	Finder finder = Finder.create(" from FyQuestion bean where 1=1");
@@ -81,6 +81,10 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 			}
 			finder.append(" and bean.difficulty in:difficultys");
 			finder.setParamList("difficultys",  tt.toArray(new Integer[tt.size()]));
+		}
+		if(alreadyIds!=null){
+			finder.append(" and bean.id NOT in:alreadyIds");
+			finder.setParamList("alreadyIds", alreadyIds);
 		}
 
 		finder.append(" and bean.userId=:userId");

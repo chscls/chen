@@ -2,6 +2,7 @@ package com.zhitail.app.manager;
 
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.frame.util.page.Pagination;
+import com.zhitail.frame.util.service.Result;
 
 public interface FyTestMng {
 
@@ -14,5 +15,7 @@ public interface FyTestMng {
 	public void delete(Long[] ids);
 
 	public FyTest findById(Long id);
+
+	public FyTest  updateTestQuestions(Long id, Long[] qids);
 
 }

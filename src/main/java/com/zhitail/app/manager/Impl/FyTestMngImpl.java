@@ -1,12 +1,16 @@
 package com.zhitail.app.manager.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zhitail.app.dao.FyQuestionDao;
 import com.zhitail.app.dao.FyTestDao;
+import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
+import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
@@ -17,7 +21,8 @@ import com.zhitail.frame.util.page.Pagination;
 public class FyTestMngImpl implements FyTestMng {
 	@Autowired
 	private FyTestDao testDao;
-
+	@Autowired
+	private FyQuestionMng questionMng;
 	public Pagination<FyTest> getPage(Integer pageNo, Integer pageSize,
 			FyTest search) {
 		// TODO Auto-generated method stub
@@ -54,6 +59,18 @@ public class FyTestMngImpl implements FyTestMng {
 	public FyTest findById(Long id) {
 		// TODO Auto-generated method stub
 		return testDao.findOne(id);
+	}
+
+	@Override
+	public FyTest updateTestQuestions(Long id, Long[] qids) {
+		FyTest  t= testDao.findOne(id);
+		// TODO Auto-generated method stub
+		List<FyQuestion>  list =t.getQuestions();
+		for(Long qid:qids){
+		list.add(questionMng.findById(qid));
+		}
+		
+		return update(t);
 	}
 
 }
