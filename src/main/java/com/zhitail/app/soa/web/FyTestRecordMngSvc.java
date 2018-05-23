@@ -25,7 +25,7 @@ import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 @RequestMapping("/services/FyTestRecordMngSvc")
 @RestController
-public class FyRecordMngSvc {
+public class FyTestRecordMngSvc {
 	@Autowired
 	private LoginManager loginManager;
 	@Autowired
