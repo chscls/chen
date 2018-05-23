@@ -33,14 +33,14 @@ public class FyRecordMngSvc {
 	@Autowired
 	private FyUserMng userMng;
 	@TokenAuth(value="token")
-	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
+	@RequestMapping(value = "/findTestRecord",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {
 		
 		FyTestRecord testRecord= testRecordMng.findById(id);
 		
 		return new Result(testRecord);
 	}
-	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
+	@RequestMapping(value = "/queryTestRecord",method=RequestMethod.GET)
 	public Result queryTestRecord(String token, Integer pageNo,Integer pageSize,FyTestRecord search) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
@@ -50,7 +50,7 @@ public class FyRecordMngSvc {
 		return new Result(page);
 	}
 	
-	@RequestMapping(value = "/addTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/addTestRecord", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addTest( String token,FyTestRecord test) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
@@ -64,7 +64,7 @@ public class FyRecordMngSvc {
 	
 	
 	
-	@RequestMapping(value = "/removeTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/removeTestRecord", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeTest(String token, Long[] ids) {
 
 		
