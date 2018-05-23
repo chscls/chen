@@ -7,13 +7,13 @@ public class FyTestRecordStatistics {
 		private Long count;
 		private Double maxScore;
 		private Double minScore;
-		public Double getArgScore() {
-			return argScore;
+		public Double getAvgScore() {
+			return avgScore;
 		}
-		public void setArgScore(Double argScore) {
-			this.argScore = argScore;
+		public void setAvgScore(Double avgScore) {
+			this.avgScore = avgScore;
 		}
-		private Double argScore;
+		private Double avgScore;
 		public Long getCount() {
 			return count;
 		}
@@ -21,12 +21,12 @@ public class FyTestRecordStatistics {
 			this.count = count;
 		}
 		private FyTest test;
-		public FyTestRecordStatistics (Long orgId,Long count,Double maxScore,Double minScore,Double argScore){
+		public FyTestRecordStatistics (Long orgId,Long count,Double maxScore,Double minScore,Double avgScore){
 			this.orgId=orgId;
 			this.count=count;
 			this.maxScore=maxScore;
 			this.minScore=minScore;
-			this.argScore =argScore;
+			this.avgScore =avgScore;
 		}
 		public Double getMinScore() {
 			return minScore;
