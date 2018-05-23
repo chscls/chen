@@ -1,5 +1,8 @@
 package com.zhitail.app.manager.Impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +11,7 @@ import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.dao.FyTestRecordDao;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
+import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestRecordMng;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
@@ -50,6 +54,25 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		for (Long id : ids) {
 			testRecordDao.delete(id);
 		}
+	}
+	@Override
+	public List<FyTestRecordStatistics> groupByIds(Long[] orgIds) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(count(bean.orgId),max(bean.limitSecond)) from FyTestRecord bean where 1=1");
+
+		if (orgIds!= null) {
+			finder.append(" and bean.orgId in:orgIds");
+			finder.setParamList("orgIds", orgIds);
+		}
+		finder.append(" group by bean.orgId ");
+		finder.append(" order by bean.id desc");
+		List<Object> list = testRecordDao.findObjectListByFinder(finder);
+		List<FyTestRecordStatistics> xx=new ArrayList<FyTestRecordStatistics>();
+		for(Object s:list){
+			xx.add((FyTestRecordStatistics)s);
+		}
+		return xx;
+		
 	}
 
 	

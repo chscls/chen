@@ -16,6 +16,7 @@ import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyUser;
+import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyTestRecordMng;
@@ -49,6 +50,8 @@ public class FyTestRecordMngSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		Pagination<Long> page = testRecordMng.getPage(pageNo,pageSize,search);
+	List<FyTestRecordStatistics> list2=	testRecordMng.groupByIds(page.getList().toArray(new Long[page.getList().size()]));
+	System.out.print(list2.size());
 	List<FyTest> list =	testMng.findByIds(page.getList().toArray(new Long[page.getList().size()]));
 	Pagination<FyTest> page2 =new Pagination<FyTest>();
 	page2.setList(list);

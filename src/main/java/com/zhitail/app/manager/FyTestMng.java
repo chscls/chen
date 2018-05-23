@@ -20,6 +20,6 @@ public interface FyTestMng {
 
 	public FyTest  updateTestQuestions(Long id, Long[] qids);
 
-	public List<FyTest> findByIds(Long[] ids);
+	public List<FyTest> findByIds(Long[] orgIds);
 
 }
