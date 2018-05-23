@@ -1,5 +1,6 @@
 package com.zhitail.app.soa.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +55,22 @@ public class FyTestRecordMngSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo,pageSize,search);
+		List<Long> userIds = new ArrayList<Long>(page.getList().size());
+		for(FyTestRecord r:page.getList()){
+			userIds.add(r.getUserId());
+		}
+	List<FyUser> list = 	userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
+	Map<Long,FyUser> map = new HashMap<Long,FyUser>();
+	for(FyUser t:list){
+		map.put(t.getId(), t);
+	}
+	for(FyTestRecord  s:page.getList()){
+		FyUser lite = map.get(s.getUserId());
+		lite.setPassword(null);
+		lite.setIsDel(null);
+		
+		s.setUser(lite );
+	}
 		return new Result(page);
 		
 		

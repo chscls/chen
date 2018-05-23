@@ -1,5 +1,7 @@
 package com.zhitail.app.manager;
 
+import java.util.List;
+
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyUser.Type;
 import com.zhitail.frame.util.page.Pagination;
@@ -18,5 +20,7 @@ public interface FyUserMng {
 	public FyUser findById(Long id);
 
 	public FyUser findByUserName(String userName);
+
+	public List<FyUser> findByIds(Long[] ids);
 
 }

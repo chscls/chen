@@ -1,10 +1,12 @@
 package com.zhitail.app.manager.Impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 
 
@@ -78,5 +80,15 @@ public class FyUserMngImpl implements FyUserMng{
 	public FyUser findByUserName(String userName) {
 		// TODO Auto-generated method stub
 		return userDao.findByUserName(userName);
+	}
+	@Override
+	public List<FyUser> findByIds(Long[] ids) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyUser bean where 1=1");
+		if(ids!=null){
+			finder.append(" and bean.id in:ids ");
+			finder.setParamList("ids", ids);
+		}
+		return userDao.findListByFinder(finder);
 	}
 }

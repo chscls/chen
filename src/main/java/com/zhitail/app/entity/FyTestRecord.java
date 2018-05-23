@@ -77,7 +77,15 @@ public class FyTestRecord {
 	@JsonIgnore
 	@Lob
 	private String json;
+	@Transient
 	
+	private FyUser user;
+	public FyUser getUser() {
+		return user;
+	}
+	public void setUser(FyUser user) {
+		this.user = user;
+	}
 	@Transient
 	public List<FyQuestion> getQuestions() {
 		if(json!=null){
