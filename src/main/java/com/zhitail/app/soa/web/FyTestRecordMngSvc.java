@@ -68,7 +68,7 @@ public class FyTestRecordMngSvc {
 		FyUser lite = map.get(s.getUserId());
 		lite.setPassword(null);
 		lite.setIsDel(null);
-		
+		lite.setOpenid(null);
 		s.setUser(lite );
 	}
 		return new Result(page);
