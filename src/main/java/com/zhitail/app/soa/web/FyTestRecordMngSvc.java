@@ -46,6 +46,19 @@ public class FyTestRecordMngSvc {
 		
 		return new Result(testRecord);
 	}
+	@RequestMapping(value = "/queryTestRecordDetail",method=RequestMethod.GET)
+	public Result queryTestRecordDetail(String token,Integer pageNo,Integer pageSize,FyTestRecord search) {
+		
+		
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
+		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo,pageSize,search);
+		return new Result(page);
+		
+		
+		
+	}
 	@RequestMapping(value = "/queryTestRecord",method=RequestMethod.GET)
 	public Result queryTestRecord(String token, Integer pageNo,Integer pageSize,FyTestRecord search) {
 		if(!loginManager.verify(token)){

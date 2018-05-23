@@ -20,4 +20,7 @@ public interface FyTestRecordMng {
 
 	public List<FyTestRecordStatistics> groupByIds(Long[] ids);
 
+	public Pagination<FyTestRecord> getDetailPage(Integer pageNo,
+			Integer pageSize, FyTestRecord search);
+
 }
