@@ -1,5 +1,7 @@
 package com.zhitail.app.manager;
 
+import java.util.List;
+
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
@@ -17,5 +19,7 @@ public interface FyTestMng {
 	public FyTest findById(Long id);
 
 	public FyTest  updateTestQuestions(Long id, Long[] qids);
+
+	public List<FyTest> findByIds(Long[] ids);
 
 }

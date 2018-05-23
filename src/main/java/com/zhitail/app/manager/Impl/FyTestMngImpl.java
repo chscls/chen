@@ -73,4 +73,18 @@ public class FyTestMngImpl implements FyTestMng {
 		return update(t);
 	}
 
+	@Override
+	public List<FyTest> findByIds(Long[] ids) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTest bean where 1=1");
+
+		if (ids != null) {
+			finder.append(" and bean.id in:ids");
+			finder.setParamList("ids", ids );
+		}
+
+		finder.append(" order by bean.id desc");
+		return testDao.findListByFinder(finder);
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.zhitail.app.soa.web;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class FyTestRecordMngSvc {
 	@Autowired
 	private FyTestRecordMng testRecordMng;
 	@Autowired
+	private FyTestMng testMng;
+	@Autowired
 	private FyUserMng userMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTestRecord",method=RequestMethod.GET)
@@ -45,9 +48,15 @@ public class FyTestRecordMngSvc {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		Pagination<FyTestRecord> page = testRecordMng.getPage(pageNo,pageSize,search);
-		
-		return new Result(page);
+		Pagination<Long> page = testRecordMng.getPage(pageNo,pageSize,search);
+	List<FyTest> list =	testMng.findByIds(page.getList().toArray(new Long[page.getList().size()]));
+	Pagination<FyTest> page2 =new Pagination<FyTest>();
+	page2.setList(list);
+	page2.setPageNo(page.getPageNo());
+	page2.setPageSize(page.getPageSize());
+	page2.setTotalCount(page.getTotalCount());
+	
+		return new Result(page2);
 	}
 	
 	@RequestMapping(value = "/addTestRecord", produces = MediaType.APPLICATION_JSON_VALUE)

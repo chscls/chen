@@ -24,18 +24,19 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findOne(id);
 	}
 	@Override
-	public Pagination<FyTestRecord> getPage(Integer pageNo, Integer pageSize,
+	public Pagination<Long> getPage(Integer pageNo, Integer pageSize,
 			FyTestRecord search) {
 		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
+		Finder finder = Finder.create(" select bean.orgId from FyTestRecord bean where 1=1");
 
 		if (search.getTitle() != null) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-
+		finder.append(" group by bean.orgId ");
 		finder.append(" order by bean.id desc");
-		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
+		
+		return testRecordDao.findIdsByFinder(finder, pageNo, pageSize);
 	}
 	@Override
 	public FyTestRecord update(FyTestRecord testRecord) {

@@ -192,5 +192,28 @@ public List<Map> getListMapBySQL(String sql) {
 }
 
 
+
+@Override
+public Pagination<Long> findIdsByFinder(Finder finder, int pageNo, int pageSize) {
+	// TODO Auto-generated method stub
+	int totalCount = countQueryResult(finder);
+	Pagination<Long> p = new Pagination<Long>(pageNo, pageSize, totalCount);
+	if (totalCount < 1) {
+		p.setList(new ArrayList<Long>());
+		return p;
+	}
+	Query query = getSession().createQuery(finder.getOrigHql());
+	finder.setParamsToQuery(query);
+	query.setFirstResult(p.getFirstResult());
+	query.setMaxResults(p.getPageSize());
+	if (finder.isCacheable()) {
+		query.setCacheable(true);
+	}
+	List<Long> list = query.list();
+	p.setList(list);
+	return p;
+}
+
+
 }
 

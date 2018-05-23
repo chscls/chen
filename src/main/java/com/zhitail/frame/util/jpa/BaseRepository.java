@@ -27,6 +27,7 @@ public interface BaseRepository<T, ID extends Serializable>
     public List<Object> findObjectListBySql(String sql);
     public List<Object[]> findObjectListBySql2(String sql);
     public List<Map> getListMapBySQL(String sql);
+    public Pagination<Long> findIdsByFinder(Finder finder,int pageNo,int pageSize);
 
 }
 
