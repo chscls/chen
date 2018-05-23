@@ -1,7 +1,9 @@
 package com.zhitail.app.soa.web;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +53,20 @@ public class FyTestRecordMngSvc {
 		}
 		Pagination<Long> page = testRecordMng.getPage(pageNo,pageSize,search);
 	List<FyTestRecordStatistics> list2=	testRecordMng.groupByIds(page.getList().toArray(new Long[page.getList().size()]));
-	System.out.print(list2.size());
+	
 	List<FyTest> list =	testMng.findByIds(page.getList().toArray(new Long[page.getList().size()]));
-	Pagination<FyTest> page2 =new Pagination<FyTest>();
-	page2.setList(list);
+	Map<Long,FyTest> map = new HashMap<Long,FyTest>();
+	for(FyTest t:list){
+		map.put(t.getId(), t);
+	}
+	for(FyTestRecordStatistics  s:list2){
+		FyTest lite = map.get(s.getOrgId());
+		lite.setQuestions(null);
+		
+		s.setTest(lite );
+	}
+	Pagination<FyTestRecordStatistics> page2 =new Pagination<FyTestRecordStatistics>();
+	page2.setList(list2);
 	page2.setPageNo(page.getPageNo());
 	page2.setPageSize(page.getPageSize());
 	page2.setTotalCount(page.getTotalCount());

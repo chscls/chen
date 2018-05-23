@@ -45,6 +45,14 @@ public class FyTestRecord {
 
 	private Long orgId;
 	private Mode mode;
+	private Double score;
+	public Double getScore() {
+		return score;
+	}
+	public void setScore(Double score) {
+		this.score = score;
+	}
+
 	private Boolean isQuestionnaire;
 	
 	public Boolean getIsQuestionnaire() {

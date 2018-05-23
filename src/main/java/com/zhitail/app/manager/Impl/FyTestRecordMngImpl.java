@@ -58,7 +58,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 	@Override
 	public List<FyTestRecordStatistics> groupByIds(Long[] orgIds) {
 		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(count(bean.orgId),max(bean.limitSecond)) from FyTestRecord bean where 1=1");
+		Finder finder = Finder.create(" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.orgId,count(bean.orgId),max(bean.score),min(bean.score),arg(bean.score)) from FyTestRecord bean where 1=1");
 
 		if (orgIds!= null) {
 			finder.append(" and bean.orgId in:orgIds");
