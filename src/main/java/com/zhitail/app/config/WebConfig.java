@@ -5,13 +5,21 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhitail.frame.common.upload.FileWebUploader;
 
+import org.apache.catalina.connector.Connector;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.ResourceUtils;
@@ -21,12 +29,14 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 
 
 @EnableWebMvc
+
 @Configuration 
 public class WebConfig extends WebMvcConfigurerAdapter {
 	
@@ -92,4 +102,37 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		FileWebUploader fileWebUploader=new FileWebUploader();
 		 return fileWebUploader;
 	 }
+	  @Bean
+	    public EmbeddedServletContainerFactory servletContainer() {
+	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http
+	        return tomcat;
+	    }
+
+	 private Connector createSslConnector() {
+	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+	        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
+	        try {
+	            File keystore = new ClassPathResource("keystore.p12").getFile();
+	            /*File truststore = new ClassPathResource("sample.jks").getFile();*/
+	            connector.setScheme("https");
+	            connector.setSecure(true);
+	            connector.setPort(8443);
+	            protocol.setSSLEnabled(true);
+	            protocol.setKeystoreFile(keystore.getAbsolutePath());
+	            protocol.setKeystorePass("mypassword");
+	           // protocol.setKeyPass(key_password);
+	            return connector;
+	        }
+	        catch (IOException ex) {
+	            throw new IllegalStateException("can't access keystore: [" + "keystore"
+	                    + "] or truststore: [" + "keystore" + "]", ex);
+	        }
+	    }
+
+
+	
+
+	
+	
 }

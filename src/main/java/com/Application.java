@@ -8,10 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,25 +27,16 @@ import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
 
 @SpringBootApplication
 @ServletComponentScan
+@EnableZuulProxy
+@EnableEurekaServer
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
-	 @Value("${http.port}")
-	    private Integer port;
+	
 	public static void main(String[] args) {
 			SpringApplication.run(Application.class, args);
 	
 	}
-	 private Connector createStandardConnector() {
-	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-	        connector.setPort(port);
-	        return connector;
-	    }
-	 @Bean
-	    public EmbeddedServletContainerFactory servletContainer() {
-	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-	        tomcat.addAdditionalTomcatConnectors(createStandardConnector()); // 添加http
-	        return tomcat;
-	    }
+	
 	 @Bean  
 	    public MultipartConfigElement multipartConfigElement() {  
 	        MultipartConfigFactory factory = new MultipartConfigFactory();  
