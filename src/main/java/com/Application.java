@@ -10,7 +10,10 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +30,11 @@ import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
 
 @SpringBootApplication
 @ServletComponentScan
+@EnableEurekaClient
 @EnableZuulProxy
+@EnableFeignClients
 @EnableEurekaServer
+@EnableCircuitBreaker
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
 	

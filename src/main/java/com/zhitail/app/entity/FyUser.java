@@ -2,7 +2,7 @@ package com.zhitail.app.entity;
 
 import java.util.Date;
 
-import io.swagger.annotations.ApiModelProperty;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
