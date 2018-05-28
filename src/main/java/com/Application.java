@@ -30,11 +30,11 @@ import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
 
 @SpringBootApplication
 @ServletComponentScan
-@EnableEurekaClient
+/*@EnableEurekaClient
 @EnableZuulProxy
 @EnableFeignClients
 @EnableEurekaServer
-@EnableCircuitBreaker
+@EnableCircuitBreaker*/
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
 	
