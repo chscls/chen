@@ -81,8 +81,17 @@ public class FyTestRecordMngSvc {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
+		Pagination<FyTestRecordStatistics> page2 =new Pagination<FyTestRecordStatistics>();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		Pagination<Long> page = testRecordMng.getPage(u.getId(),pageNo,pageSize,search);
+		if(page==null){
+			page2.setList(new ArrayList());
+			page2.setPageNo(pageNo);
+			page2.setPageSize(pageSize);
+			page2.setTotalCount(0);
+			return new Result(page2);
+		}
+		
 	List<FyTestRecordStatistics> list2=	testRecordMng.groupByIds(page.getList().toArray(new Long[page.getList().size()]));
 	
 	List<FyTest> list =	testMng.findByIds(page.getList().toArray(new Long[page.getList().size()]));
@@ -96,7 +105,7 @@ public class FyTestRecordMngSvc {
 		
 		s.setTest(lite );
 	}
-	Pagination<FyTestRecordStatistics> page2 =new Pagination<FyTestRecordStatistics>();
+	
 	page2.setList(list2);
 	page2.setPageNo(page.getPageNo());
 	page2.setPageSize(page.getPageSize());

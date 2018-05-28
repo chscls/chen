@@ -30,6 +30,19 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 	@Override
 	public Pagination<Long> getPage(Long teaId,Integer pageNo, Integer pageSize,
 			FyTestRecord search) {
+		Finder finder0 = Finder.create(" from FyTestRecord bean where 1=1");
+		finder0.append(" and bean.teaId=:teaId");
+		finder0.setParam("teaId",teaId);
+		if (search.getTitle() != null) {
+			finder0.append(" and bean.title like:title");
+			finder0.setParam("title", "%" + search.getTitle() + "%");
+		}
+		
+//		/finder0.append(" group by bean.orgId ");
+		//finder0.append(" order by bean.id desc");
+		
+		Pagination<FyTestRecord> p = testRecordDao.findPageByFinder(finder0, pageNo, pageSize);
+		if(p.getList().size()>0){
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" select bean.orgId from FyTestRecord bean where 1=1");
 		finder.append(" and bean.teaId=:teaId");
@@ -43,6 +56,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		finder.append(" order by bean.id desc");
 		
 		return testRecordDao.findIdsByFinder(finder, pageNo, pageSize);
+		}else{
+			return null;
+		}
 	}
 	@Override
 	public FyTestRecord update(FyTestRecord testRecord) {
