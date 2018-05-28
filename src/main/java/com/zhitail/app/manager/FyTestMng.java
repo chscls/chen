@@ -8,7 +8,7 @@ import com.zhitail.frame.util.service.Result;
 
 public interface FyTestMng {
 
-	public Pagination<FyTest> getPage(Integer pageNo, Integer pageSize, FyTest search);
+	public Pagination<FyTest> getPage(Long userId, Integer pageNo, Integer pageSize, FyTest search);
 
 	public FyTest update(FyTest test);
 

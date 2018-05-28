@@ -28,7 +28,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findOne(id);
 	}
 	@Override
-	public Pagination<Long> getPage(Integer pageNo, Integer pageSize,
+	public Pagination<Long> getPage(Long teaId,Integer pageNo, Integer pageSize,
 			FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" select bean.orgId from FyTestRecord bean where 1=1");
@@ -37,6 +37,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
+		finder.append(" and bean.teaId=:teaId");
+		finder.setParam("teaId",teaId);
 		finder.append(" group by bean.orgId ");
 		finder.append(" order by bean.id desc");
 		
@@ -75,7 +77,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		
 	}
 	@Override
-	public Pagination<FyTestRecord> getDetailPage( Integer pageNo,
+	public Pagination<FyTestRecord> getDetailPage(Integer pageNo,
 			Integer pageSize, FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");

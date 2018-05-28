@@ -43,7 +43,8 @@ public class FyTestMngSvc {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		Pagination<FyTest> page = testMng.getPage(pageNo,pageSize,search);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize,search);
 		
 		return new Result(page);
 	}

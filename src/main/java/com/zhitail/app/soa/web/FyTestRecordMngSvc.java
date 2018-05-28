@@ -81,7 +81,8 @@ public class FyTestRecordMngSvc {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
-		Pagination<Long> page = testRecordMng.getPage(pageNo,pageSize,search);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		Pagination<Long> page = testRecordMng.getPage(u.getId(),pageNo,pageSize,search);
 	List<FyTestRecordStatistics> list2=	testRecordMng.groupByIds(page.getList().toArray(new Long[page.getList().size()]));
 	
 	List<FyTest> list =	testMng.findByIds(page.getList().toArray(new Long[page.getList().size()]));

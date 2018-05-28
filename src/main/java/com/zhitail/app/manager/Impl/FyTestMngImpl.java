@@ -23,7 +23,7 @@ public class FyTestMngImpl implements FyTestMng {
 	private FyTestDao testDao;
 	@Autowired
 	private FyQuestionMng questionMng;
-	public Pagination<FyTest> getPage(Integer pageNo, Integer pageSize,
+	public Pagination<FyTest> getPage(Long userId,Integer pageNo, Integer pageSize,
 			FyTest search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTest bean where 1=1");
@@ -32,7 +32,8 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-
+		finder.append(" and bean.userId=:userId");
+		finder.setParam("userId",userId);
 		finder.append(" order by bean.id desc");
 		return testDao.findPageByFinder(finder, pageNo, pageSize);
 	}

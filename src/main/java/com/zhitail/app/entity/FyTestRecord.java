@@ -73,7 +73,15 @@ public class FyTestRecord {
 	private String title;
 	private Date createTime;
 	private Long userId;
+	private Long teaId;
 	private String code;
+	public Long getTeaId() {
+		return teaId;
+	}
+	public void setTeaId(Long teaId) {
+		this.teaId = teaId;
+	}
+
 	@JsonIgnore
 	@Lob
 	private String json;
