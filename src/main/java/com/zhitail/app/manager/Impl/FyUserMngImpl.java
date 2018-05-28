@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import com.zhitail.app.dao.FyUserDao;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyUser.Type;
@@ -90,5 +91,10 @@ public class FyUserMngImpl implements FyUserMng{
 			finder.setParamList("ids", ids);
 		}
 		return userDao.findListByFinder(finder);
+	}
+	@Override
+	public FyUser findByOpenid(String openid) {
+		// TODO Auto-generated method stub
+		return userDao.findByOpenId(openid);
 	}
 }

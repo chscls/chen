@@ -23,4 +23,6 @@ public interface FyUserMng {
 
 	public List<FyUser> findByIds(Long[] ids);
 
+	public  FyUser findByOpenid(String openid);
+
 }

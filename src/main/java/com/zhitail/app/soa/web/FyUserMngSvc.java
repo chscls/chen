@@ -89,7 +89,7 @@ public class FyUserMngSvc {
 		
 		AntUser au = new AntUser();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));		
-		au.setAvatar(u.getHeadImg());
+		au.setAvatar(u.getAvatarUrl());
 		au.setName(u.getRealname());
 		au.setNotifyCount(12);
 		au.setUserid(u.getId().toString());

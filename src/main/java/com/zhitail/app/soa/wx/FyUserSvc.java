@@ -36,7 +36,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mysql.fabric.xmlrpc.base.Array;
+import com.zhitail.app.entity.FyUser;
+import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.service.Result;
 
@@ -45,8 +48,20 @@ import com.zhitail.frame.util.service.Result;
 public class FyUserSvc {
 	@Autowired
 	private LoginManager loginManager;
-
-	@RequestMapping(value = "/wxcode",method=RequestMethod.GET)
+	@Autowired
+	private FyUserMng userMng;
+	@RequestMapping(value = "/register",method=RequestMethod.POST)
+	public Result wxcode(FyUser user) {
+		user = userMng.save(user);
+		String t = loginManager.getToken(user);
+		   user.setToken(t);
+		  return new Result(user);
+		
+		
+		
+		
+	}
+	@RequestMapping(value = "/wxcode",method=RequestMethod.POST)
 	public Result wxcode(String code) {
 		
 		
@@ -67,8 +82,21 @@ public class FyUserSvc {
 			 response = client.execute(get);
 		      HttpEntity entity = response.getEntity();
 		     String  token = EntityUtils.toString(entity, "UTF-8");
-		      
-		      System.out.println(token);
+		   JSONObject jo=   JSONObject.parseObject(token);
+		     String openid = jo.getString("openid");
+		   FyUser user =   userMng.findByOpenid(openid);
+		   if(user==null){
+			  
+			   user =  new FyUser();
+			   user.setOpenid(openid);
+			   return new Result(new FyUser());
+		   }else{
+			   String t = loginManager.getToken(user);
+			   user.setToken(t);
+			   user.setOpenid(openid);
+			   return new Result(user);
+		   }
+		     
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
