@@ -54,9 +54,13 @@ public class FyUserSvc {
 	private FyUserMng userMng;
 	@RequestMapping(value = "/register",method=RequestMethod.POST)
 	public Result wxcode(FyUser user) {
+		   user.setPassword("123456");
+		   user.setType(Type.user);
+		   user.setMobile(UUID.randomUUID().toString());
 		user = userMng.save(user);
 		String t = loginManager.getToken(user);
 		   user.setToken(t);
+		   
 		  return new Result(user);
 		
 		
@@ -91,9 +95,7 @@ public class FyUserSvc {
 			  
 			   user =  new FyUser();
 			   user.setOpenid(openid);
-			   user.setPassword("123456");
-			   user.setType(Type.user);
-			   user.setMobile(UUID.randomUUID().toString());
+		
 			   return new Result(user);
 		   }else{
 			   String t = loginManager.getToken(user);
