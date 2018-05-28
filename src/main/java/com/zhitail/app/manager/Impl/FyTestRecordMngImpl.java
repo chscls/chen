@@ -32,13 +32,13 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" select bean.orgId from FyTestRecord bean where 1=1");
-
+		finder.append(" and bean.teaId=:teaId");
+		finder.setParam("teaId",teaId);
 		if (search.getTitle() != null) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-		finder.append(" and bean.teaId=:teaId");
-		finder.setParam("teaId",teaId);
+		
 		finder.append(" group by bean.orgId ");
 		finder.append(" order by bean.id desc");
 		
