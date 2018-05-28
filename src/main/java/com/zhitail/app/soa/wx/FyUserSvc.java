@@ -10,6 +10,7 @@ import java.util.Set;
 
 
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +40,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.zhitail.app.entity.FyUser;
+import com.zhitail.app.entity.FyUser.Type;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.util.service.Result;
@@ -89,7 +91,10 @@ public class FyUserSvc {
 			  
 			   user =  new FyUser();
 			   user.setOpenid(openid);
-			   return new Result(new FyUser());
+			   user.setPassword("123456");
+			   user.setType(Type.user);
+			   user.setMobile(UUID.randomUUID().toString());
+			   return new Result(user);
 		   }else{
 			   String t = loginManager.getToken(user);
 			   user.setToken(t);
