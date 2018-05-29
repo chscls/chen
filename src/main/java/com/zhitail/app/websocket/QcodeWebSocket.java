@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.TimeUnit;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -15,39 +16,35 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 
 
-@ServerEndpoint(value = "/websocket")
+
+
+@ServerEndpoint(value = "/qcodeWebSocket")
 @Component
-public class MyWebSocket {
-    //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
-    private static int onlineCount = 0;
+public class QcodeWebSocket {
+    
+  
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+ 
+    //private static Map<String,MyWebSocket> wss = new ConcurrentHashMap<String,MyWebSocket>();
 
-    //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<MyWebSocket> webSocketSet = new CopyOnWriteArraySet<MyWebSocket>();
-    private static Map<Long,MyWebSocket> wss = new ConcurrentHashMap<Long,MyWebSocket>();
-
-    public static Map<Long, MyWebSocket> getWss() {
-		return wss;
-	}
-
-	public static void setWss(Map<Long, MyWebSocket> wss) {
-		MyWebSocket.wss = wss;
-	}
-
-
-
+    private static CacheMap<Object,Object> wss = CacheMap.getDefault();
     @OnOpen
     public void onOpen(Session session) {
        
      
         try {
         	JSONObject x = new JSONObject();
-        	x.put("type", "connectSuc");
+        	x.put("type", "/qcode/connectSuc");
         	WsMsg wm =new WsMsg();
         	wm.setType("connectSuc");
         	
@@ -63,7 +60,7 @@ public class MyWebSocket {
      */
     @OnClose
     public void onClose() {
-        webSocketSet.remove(this);  //从set中删除
+    
              //在线数减1
 
     }
@@ -74,11 +71,28 @@ public class MyWebSocket {
      * @param message 客户端发送过来的消息*/
     @OnMessage
     public void onMessage(String message, Session session) {
+    	  WsMsg<String> req = JSONObject.parseObject(message, WsMsg.class);
+         //System.out.println(message);
+         if(req.getType().equals("/qcode/login")){
+        	 String code = req.getBody();
+        	 wss.put(code, this);
+         }
+         
+     	WsMsg wm =new WsMsg();
+     	wm.setType("/qcode/loginSuc");
+     	
+     	send(wm,session);
         
-      System.out.println(message);
-      
+         
     }
-
+    public void send(WsMsg message, Session session){
+    	try {
+			session.getBasicRemote().sendText(JSONObject.toJSONString(message));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     /**
      * 发生错误时调用
      * */
