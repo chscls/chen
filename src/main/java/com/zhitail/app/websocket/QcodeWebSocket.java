@@ -95,7 +95,7 @@ public class QcodeWebSocket {
     public void send(WsMsg message, Session session){
     	try {
     		String x = JSONObject.toJSONString(message);
-    		System.out.println(x);
+    		
 			session.getBasicRemote().sendText(x);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
