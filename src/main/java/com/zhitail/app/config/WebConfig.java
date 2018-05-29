@@ -112,22 +112,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 private Connector createSslConnector() {
 	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 	        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-	        try {
-	            File keystore = new ClassPathResource("keystore.p12").getFile();
+	        
+	            File keystore = new File("D:/keystore.p12");
 	            /*File truststore = new ClassPathResource("sample.jks").getFile();*/
 	            connector.setScheme("https");
 	            connector.setSecure(true);
-	            connector.setPort(8443);
+	            connector.setPort(443);
 	            protocol.setSSLEnabled(true);
 	            protocol.setKeystoreFile(keystore.getAbsolutePath());
 	            protocol.setKeystorePass("mypassword");
 	           // protocol.setKeyPass(key_password);
 	            return connector;
-	        }
-	        catch (IOException ex) {
-	            throw new IllegalStateException("can't access keystore: [" + "keystore"
-	                    + "] or truststore: [" + "keystore" + "]", ex);
-	        }
+	      
+	     
 	    }
 
 
