@@ -43,6 +43,8 @@ import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyUser.Type;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.app.websocket.QcodeWebSocket;
+import com.zhitail.app.websocket.WsMsg;
 import com.zhitail.frame.util.service.Result;
 
 @RequestMapping("/wx/FyUserSvc")
@@ -52,6 +54,36 @@ public class FyUserSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyUserMng userMng;
+	
+	
+	
+	
+	@RequestMapping(value = "/qcodeLogin",method=RequestMethod.GET)
+	public Result qcodeLogin(String qcode,String openid ) {
+		
+		
+		QcodeWebSocket qq= (QcodeWebSocket) QcodeWebSocket.wss.get(qcode);
+		if(qq==null){
+			return Result.error("二维码登录已过期,请刷新网页并重新扫描");
+		}
+		WsMsg<FyUser> wm =new WsMsg<FyUser>();
+		wm.setType("/qcode/wxloginSuc");
+     	
+     	 FyUser user =   userMng.findByOpenid(openid);
+     	String t = loginManager.getToken(user);
+		   user.setToken(t);
+     	wm.setBody(user);
+     	qq.send(wm);
+		
+		
+     
+		return new Result("login:ok");
+		
+		
+		
+		
+		
+	}
 	@RequestMapping(value = "/register",method=RequestMethod.POST)
 	public Result wxcode(FyUser user) {
 		   user.setPassword("123456");

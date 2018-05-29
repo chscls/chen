@@ -37,7 +37,8 @@ public class QcodeWebSocket {
  
     //private static Map<String,MyWebSocket> wss = new ConcurrentHashMap<String,MyWebSocket>();
 
-    private static CacheMap<Object,Object> wss = CacheMap.getDefault();
+    public static CacheMap<Object,Object> wss = CacheMap.getDefault();
+    private Session session;
     @OnOpen
     public void onOpen(Session session) {
        
@@ -47,7 +48,7 @@ public class QcodeWebSocket {
         	x.put("type", "/qcode/connectSuc");
         	WsMsg wm =new WsMsg();
         	wm.setType("connectSuc");
-        	
+        	this.session = session;
         	session.getBasicRemote().sendText(JSONObject.toJSONString(wm));
         
         } catch (IOException e) {
@@ -77,7 +78,7 @@ public class QcodeWebSocket {
         	 String code = req.getBody();
         	 wss.put(code, this);
          }
-         
+     	this.session = session;
      	WsMsg wm =new WsMsg();
      	wm.setType("/qcode/loginSuc");
      	
@@ -87,11 +88,16 @@ public class QcodeWebSocket {
     }
     public void send(WsMsg message, Session session){
     	try {
-			session.getBasicRemote().sendText(JSONObject.toJSONString(message));
+    		String x = JSONObject.toJSONString(message);
+    		System.out.println(x);
+			session.getBasicRemote().sendText(x);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    public void send(WsMsg message){
+    	send(message,session);
     }
     /**
      * 发生错误时调用
