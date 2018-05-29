@@ -4,8 +4,10 @@ package com.zhitail.app.soa.wx;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -66,13 +68,18 @@ public class FyUserSvc {
 		if(qq==null){
 			return Result.error("二维码登录已过期,请刷新网页并重新扫描");
 		}
-		WsMsg<FyUser> wm =new WsMsg<FyUser>();
+		WsMsg<Map> wm =new WsMsg<Map>();
 		wm.setType("/qcode/wxloginSuc");
      	
-     	 FyUser user =   userMng.findByOpenid(openid);
-     	String t = loginManager.getToken(user);
-		   user.setToken(t);
-     	wm.setBody(user);
+     	 FyUser u =   userMng.findByOpenid(openid);
+     	Map<String,String> jo = new HashMap<String,String>();
+		jo.put("status", "ok");
+		jo.put("currentAuthority", u.getType().toString());
+		String token = loginManager.getToken(u);
+		jo.put("token", token);
+		
+		   
+     	wm.setBody(jo);
      	qq.send(wm);
 		
 		
