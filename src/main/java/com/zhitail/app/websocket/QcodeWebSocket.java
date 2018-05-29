@@ -39,6 +39,7 @@ public class QcodeWebSocket {
 
     public static CacheMap<Object,Object> wss = CacheMap.getDefault();
     private Session session;
+    private String code;
     @OnOpen
     public void onOpen(Session session) {
        
@@ -63,6 +64,9 @@ public class QcodeWebSocket {
     public void onClose() {
     
              //在线数减1
+    	if(code!=null){
+    	wss.remove(code);
+    	}
 
     }
 
@@ -76,7 +80,9 @@ public class QcodeWebSocket {
          //System.out.println(message);
          if(req.getType().equals("/qcode/login")){
         	 String code = req.getBody();
+        	 this.code = code;
         	 wss.put(code, this);
+        	
          }
      	this.session = session;
      	WsMsg wm =new WsMsg();
@@ -104,8 +110,10 @@ public class QcodeWebSocket {
      * */
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
-        error.printStackTrace();
+    	if(code!=null){
+        	wss.remove(code);
+        	}
+    
     }
 
 
