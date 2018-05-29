@@ -82,7 +82,7 @@ public class FyUserSvc {
      	wm.setBody(jo);
      	qq.send(wm);
 		
-		
+     	QcodeWebSocket.wss.remove(qcode);
      
 		return new Result("login:ok");
 		
