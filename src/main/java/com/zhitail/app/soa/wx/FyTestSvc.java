@@ -43,45 +43,5 @@ public class FyTestSvc {
 		return new Result(page);
 	}
 	
-	@RequestMapping(value = "/addTest", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addTest( String token,FyTest test) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
-		if(test.getId()==null){
-			test.setCreateTime(new Date());
-			FyUser u=userMng.findByUserName(loginManager.getUser(token));
-			test.setCode(UUID.randomUUID().toString().replace("-", ""));
-			test.setUserId(u.getId());
-			test = testMng.save(test);
-		}else{
-			test= testMng.update(test);
-		}
-		return new Result(test);
 	
-	}
-	@RequestMapping(value = "/updateTestQuestions", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result updateTestQuestions(String token,Long id, Long[] qids) {
-		
-		FyTest t  = testMng.updateTestQuestions(id,qids);
-		return new Result(t);
-
-		
-		
-	}
-	
-	
-	@RequestMapping(value = "/removeTest", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result removeTest(String token, Long[] ids) {
-
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
-		testMng.delete(ids);
-
-		return new Result(true);
-	
-
-	}
 }
