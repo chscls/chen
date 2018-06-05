@@ -31,7 +31,14 @@ public class FyTestSvc {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-	
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
+	public Result findTest(String token,String code) {
+		
+		FyTest test= testMng.findByCode(code);
+		
+		return new Result(test);
+	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
 	public Result queryTest(String token, Integer start,Integer count,FyTest search) {
 		if(!loginManager.verify(token)){

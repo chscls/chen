@@ -104,4 +104,10 @@ public class FyTestMngImpl implements FyTestMng {
 		finder.append(" order by bean.id desc");
 		return testDao.findListByFinder(finder);
 	}
+
+	@Override
+	public FyTest findByCode(String code) {
+		// TODO Auto-generated method stub
+		return testDao.findByCode(code);
+	}
 }
