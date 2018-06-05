@@ -21,14 +21,13 @@ import org.hibernate.annotations.IndexColumn;
 
 import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zhitail.app.entity.FyTest.Mode;
 import com.zhitail.app.entity.middle.FyQuestionItem;
 
 @Entity
 @Table(name = "fy_test_record")
 public class FyTestRecord {
-	public enum Mode{
-		free,limit,race
-	}
+
 	public enum Status{
 		create,process,complete
 	}

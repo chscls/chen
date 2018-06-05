@@ -25,4 +25,6 @@ public interface FyTestRecordMng {
 
 	public List<FyTestRecord> getList(Long id, Integer start, Integer count, FyTestRecord search);
 
+	public FyTestRecord addTestRecord(Long userId, Long testId);
+
 }

@@ -63,6 +63,13 @@ public class FyTest {
 		this.status = status;
 	}
 	private String title;
+	private String description;
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	private Date createTime;
 	private Long userId;
 	@Column(unique=true)

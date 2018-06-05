@@ -1,17 +1,20 @@
 package com.zhitail.app.manager.Impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.dao.FyTestRecordDao;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
+import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
@@ -22,6 +25,8 @@ import com.zhitail.frame.util.page.Pagination;
 public class FyTestRecordMngImpl implements FyTestRecordMng{
 	@Autowired
 	private FyTestRecordDao testRecordDao;
+	@Autowired
+	private FyTestMng testMng;
 	@Override
 	public FyTestRecord findById(Long id) {
 		// TODO Auto-generated method stub
@@ -130,6 +135,22 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		finder.setParam("userId",userId);
 		finder.append(" order by bean.id desc");
 		return testRecordDao.findListByFinder(finder);
+	}
+	@Override
+	public FyTestRecord addTestRecord(Long userId, Long testId) {
+		// TODO Auto-generated method stub
+		FyTest t = testMng.findById(testId);
+		FyTestRecord tr=new FyTestRecord();
+		tr.setCode(t.getCode());
+		tr.setCreateTime(new Date());
+		tr.setIsQuestionnaire(t.getIsQuestionnaire());
+		tr.setLimitSecond(t.getLimitSecond());
+		tr.setTitle(t.getTitle());
+		tr.setTeaId(t.getUserId());
+		tr.setMode(t.getMode());
+		tr.setUserId(userId);
+		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
+		return testRecordDao.save(tr);
 	}
 
 	
