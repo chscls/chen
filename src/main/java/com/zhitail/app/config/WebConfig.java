@@ -112,15 +112,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 private Connector createSslConnector() {
 	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 	        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-	        
-	            File keystore = new File("D:/your-name.jks");
+	        String x = env.getProperty("https.file");
+	        String y = env.getProperty("https.password");
+	            File keystore = new File(x);
 	            /*File truststore = new ClassPathResource("sample.jks").getFile();*/
 	            connector.setScheme("https");
 	            connector.setSecure(true);
 	            connector.setPort(443);
 	            protocol.setSSLEnabled(true);
 	            protocol.setKeystoreFile(keystore.getAbsolutePath());
-	            protocol.setKeystorePass("214719198680595");
+	            protocol.setKeystorePass(y);
 	           // protocol.setKeyPass(key_password);
 	            return connector;
 	      
