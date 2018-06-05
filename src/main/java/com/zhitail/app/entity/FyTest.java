@@ -117,11 +117,11 @@ public class FyTest {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public FyTest lite() {
+	public void lite() {
 		this.setCount(this.getQuestions().size());
 		this.setQuestions(null);
 		
-		return this;
+		
 		
 	}
 }

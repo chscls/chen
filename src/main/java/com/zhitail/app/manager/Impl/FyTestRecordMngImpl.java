@@ -111,6 +111,26 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
 	}
+	@Override
+	public List<FyTestRecord> getList(Long userId, Integer start, Integer count, FyTestRecord search) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
+
+		if (search.getTitle() != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + search.getTitle() + "%");
+		}
+		if (search.getOrgId()!= null) {
+			finder.append(" and bean.orgId =:orgId");
+			finder.setParam("orgId",search.getOrgId());
+		}
+		finder.setFirstResult(start);
+		finder.setMaxResults(count);
+		finder.append(" and bean.userId=:userId");
+		finder.setParam("userId",userId);
+		finder.append(" order by bean.id desc");
+		return testRecordDao.findListByFinder(finder);
+	}
 
 	
 }
