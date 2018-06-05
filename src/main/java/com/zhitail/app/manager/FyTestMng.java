@@ -22,4 +22,6 @@ public interface FyTestMng {
 
 	public List<FyTest> findByIds(Long[] orgIds);
 
+	public List<FyTest> getList(Long userId, Integer start, Integer count, FyTest search);
+
 }
