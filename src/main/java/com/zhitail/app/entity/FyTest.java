@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.IndexColumn;
 
@@ -29,6 +30,14 @@ public class FyTest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Transient
+	private Integer count=0;
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	private Boolean isQuestionnaire=false;
 	public Boolean getIsQuestionnaire() {
 		return isQuestionnaire;
@@ -107,5 +116,12 @@ public class FyTest {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public void lite() {
+		this.setCount(this.getQuestions().size());
+		this.setQuestions(null);
+		
+		
+		
 	}
 }

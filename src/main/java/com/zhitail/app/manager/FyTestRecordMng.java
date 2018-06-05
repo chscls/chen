@@ -23,4 +23,6 @@ public interface FyTestRecordMng {
 	public Pagination<FyTestRecord> getDetailPage(Integer pageNo,
 			Integer pageSize, FyTestRecord search);
 
+	public List<FyTestRecord> getList(Long id, Integer start, Integer count, FyTestRecord search);
+
 }

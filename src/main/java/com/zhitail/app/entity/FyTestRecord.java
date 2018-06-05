@@ -145,4 +145,11 @@ public class FyTestRecord {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	public void lite() {
+		// TODO Auto-generated method stub
+		
+		this.setJson("[]");
+		
+		
+	}
 }

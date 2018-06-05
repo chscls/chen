@@ -88,4 +88,20 @@ public class FyTestMngImpl implements FyTestMng {
 		return testDao.findListByFinder(finder);
 	}
 
+	@Override
+	public List<FyTest> getList(Long userId, Integer start, Integer count, FyTest search) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTest bean where 1=1");
+
+		if (search.getTitle() != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + search.getTitle() + "%");
+		}
+		finder.setFirstResult(start);
+		finder.setMaxResults(count);
+		finder.append(" and bean.userId=:userId");
+		finder.setParam("userId",userId);
+		finder.append(" order by bean.id desc");
+		return testDao.findListByFinder(finder);
+	}
 }
