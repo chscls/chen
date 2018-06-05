@@ -137,9 +137,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findListByFinder(finder);
 	}
 	@Override
-	public FyTestRecord addTestRecord(Long userId, Long testId) {
+	public FyTestRecord addTestRecord(Long userId, String code) {
 		// TODO Auto-generated method stub
-		FyTest t = testMng.findById(testId);
+		FyTest t = testMng.findByCode(code);
 		FyTestRecord tr=new FyTestRecord();
 		tr.setCode(t.getCode());
 		tr.setCreateTime(new Date());

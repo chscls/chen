@@ -59,14 +59,14 @@ public class FyTestRecordSvc {
 		
 	}
 	@RequestMapping(value = "/addTestRecord",method=RequestMethod.GET)
-	public Result addTestRecord(String token,Long testId) {
+	public Result addTestRecord(String token,String code) {
 		
 		
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),testId);
+		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),code);
 		
 	
 		return new Result(r );
