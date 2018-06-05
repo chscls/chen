@@ -36,7 +36,9 @@ public class FyTestSvc {
 	public Result findTest(String token,String code) {
 		
 		FyTest test= testMng.findByCode(code);
-		
+		if(test==null) {
+			return Result.error("该试卷不存在");
+		}
 		return new Result(test);
 	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)

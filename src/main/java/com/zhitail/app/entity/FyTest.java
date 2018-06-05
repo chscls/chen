@@ -31,9 +31,10 @@ public class FyTest {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Transient
-	private Integer count=0;
+	private Integer count=-1;
 	public Integer getCount() {
-		return count;
+		
+		return count>0?count:this.questions!=null?this.questions.size():0;
 	}
 	public void setCount(Integer count) {
 		this.count = count;
