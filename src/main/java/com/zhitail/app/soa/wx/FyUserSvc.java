@@ -45,7 +45,7 @@ import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyUser.Type;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
-import com.zhitail.app.soa.OpenIdManager;
+
 import com.zhitail.app.websocket.QcodeWebSocket;
 import com.zhitail.app.websocket.WsMsg;
 import com.zhitail.frame.util.service.Result;
@@ -55,8 +55,7 @@ import com.zhitail.frame.util.service.Result;
 public class FyUserSvc {
 	@Autowired
 	private LoginManager loginManager;
-	@Autowired
-	private OpenIdManager openIdManager;
+	
 	@Autowired
 	private FyUserMng userMng;
 	
@@ -114,7 +113,7 @@ public class FyUserSvc {
 		
 		
 
-		     String openid = openIdManager.getOpenId(code);
+		     String openid =  generateToken(code) ;
 		     if(openid==null) {
 		    	return Result.error("微信服务器错误"); 
 		     }
@@ -133,6 +132,39 @@ public class FyUserSvc {
 		   }
 		     
 	
+		
+	}
+	
+	private String generateToken(String sessionId) {
+		// TODO Auto-generated method stub
+		HttpClient client = HttpClients.createDefault();
+		String urlStr = "https://api.weixin.qq.com/sns/jscode2session";
+		
+		  List<NameValuePair> params = new ArrayList();  
+		  params.add(new BasicNameValuePair("appid", "wx26b77a934c0f8a53"));  
+		  params.add(new BasicNameValuePair("secret","735a6ebc880d367410f6cf9c97236e65")); 
+		  
+	      params.add(new BasicNameValuePair("js_code", sessionId));  
+	      params.add(new BasicNameValuePair("grant_type","authorization_code"));  
+		  HttpResponse response;
+		  try {
+		  String  str = EntityUtils.toString(new UrlEncodedFormEntity(params, Consts.UTF_8));  
+			 HttpGet get = new HttpGet(urlStr+"?"+str );
+			 response = client.execute(get);
+		      HttpEntity entity = response.getEntity();
+		     String  token = EntityUtils.toString(entity, "UTF-8");
+		   JSONObject jo=   JSONObject.parseObject(token);
+		    
+		     return jo.getString("openid");
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
 		
 	}
 	

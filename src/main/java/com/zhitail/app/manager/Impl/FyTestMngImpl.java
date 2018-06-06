@@ -102,6 +102,10 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.append(" and bean.userId=:userId");
 			finder.setParam("userId",search.getUserId() );
 		}
+		if (search.getIsSale()!= null) {
+			finder.append(" and bean.isSale=:isSale");
+			finder.setParam("isSale",search.getIsSale() );
+		}
 		finder.setFirstResult(start);
 		finder.setMaxResults(count);
 		

@@ -72,7 +72,10 @@ public class FyTestSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		search.setUserId(u.getId());
+		if(search.getIsSale()==null) {
+			search.setUserId(u.getId());
+		}
+		
 		List<FyTest> list = testMng.getList(start,count,search);
 		for(FyTest t:	list) {
 			t.lite();
