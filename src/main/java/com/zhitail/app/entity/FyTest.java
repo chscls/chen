@@ -73,7 +73,7 @@ public class FyTest {
 	private Date createTime;
 	private Long userId;
 	private Integer allowTime=1;
-	private Boolean isSale = false;
+	private Boolean isSale;
 	public Boolean getIsSale() {
 		return isSale;
 	}
