@@ -46,17 +46,20 @@ public class FyTestSvc {
 		if(test==null) {
 			return Result.error("该试卷不存在");
 		}
-		//test.lite();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord tr=new FyTestRecord();
 		tr.setCode(test.getCode());
 		tr.setUserId(u.getId());
+		Integer count= testRecordMng.getTotal(tr);
+		
+	
+		
 		List<FyTestRecord> records= testRecordMng.getList( 0, 5,tr);
 		for(FyTestRecord ftr:records) {
 			ftr.lite();
 		}
 		
-		Integer count= testRecordMng.getTotal(tr);
+		test.lite();
 		JSONObject jo = new JSONObject();
 		jo.put("test", test);
 		jo.put("records", records);
