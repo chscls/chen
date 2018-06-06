@@ -46,18 +46,22 @@ public class FyTestSvc {
 		if(test==null) {
 			return Result.error("该试卷不存在");
 		}
+		test.lite();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord tr=new FyTestRecord();
 		tr.setOrgId(test.getId());
 		tr.setUserId(u.getId());
 		List<FyTestRecord> records= testRecordMng.getList( 0, 5,tr);
-		
+		for(FyTestRecord ftr:records) {
+			ftr.lite();
+		}
 		
 		Integer count= testRecordMng.getTotal(tr);
 		JSONObject jo = new JSONObject();
 		jo.put("test", test);
 		jo.put("records", records);
 		jo.put("isAllow",test.getAllowTime()>=count );
+		jo.put("isMore", count>5 );
 		return new Result(jo);
 	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
