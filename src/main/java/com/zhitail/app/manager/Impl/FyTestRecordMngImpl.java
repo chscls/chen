@@ -13,6 +13,7 @@ import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.dao.FyTestRecordDao;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
+import com.zhitail.app.entity.FyTestRecord.Status;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
@@ -178,6 +179,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setTeaId(t.getUserId());
 		tr.setMode(t.getMode());
 		tr.setUserId(userId);
+		tr.setStatus(Status.create);
 		
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);

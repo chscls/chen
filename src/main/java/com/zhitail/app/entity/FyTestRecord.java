@@ -29,7 +29,7 @@ import com.zhitail.app.entity.middle.FyQuestionItem;
 public class FyTestRecord {
 
 	public enum Status{
-		create,process,complete
+		create,wait,complete
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +38,7 @@ public class FyTestRecord {
 	
 	private Mode mode;
 	private Double score;
+	private Status status;
 	public Double getScore() {
 		return score;
 	}
@@ -143,5 +144,11 @@ public class FyTestRecord {
 		this.setJson("[]");
 		
 		
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }
