@@ -11,7 +11,7 @@ public interface FyTestRecordMng {
 
 	public FyTestRecord findById(Long id);
 
-	public Pagination<Long> getPage(Long teaId,Integer pageNo, Integer pageSize,
+	public Pagination<Long> getPage(Integer pageNo, Integer pageSize,
 			FyTestRecord search);
 
 	public FyTestRecord update(FyTestRecord testRecord);
@@ -23,8 +23,10 @@ public interface FyTestRecordMng {
 	public Pagination<FyTestRecord> getDetailPage(Integer pageNo,
 			Integer pageSize, FyTestRecord search);
 
-	public List<FyTestRecord> getList(Long id, Integer start, Integer count, FyTestRecord search);
+	public List<FyTestRecord> getList(Integer start, Integer count, FyTestRecord search);
 
 	public FyTestRecord addTestRecord(Long userId, String code);
+
+	public Integer getTotal(  FyTestRecord search);
 
 }

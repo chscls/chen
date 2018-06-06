@@ -33,14 +33,25 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findOne(id);
 	}
 	@Override
-	public Pagination<Long> getPage(Long teaId,Integer pageNo, Integer pageSize,
+	public Pagination<Long> getPage(Integer pageNo, Integer pageSize,
 			FyTestRecord search) {
 		Finder finder0 = Finder.create(" from FyTestRecord bean where 1=1");
-		finder0.append(" and bean.teaId=:teaId");
-		finder0.setParam("teaId",teaId);
+	
 		if (search.getTitle() != null) {
 			finder0.append(" and bean.title like:title");
 			finder0.setParam("title", "%" + search.getTitle() + "%");
+		}
+		if (search.getOrgId()!= null) {
+			finder0.append(" and bean.orgId =:orgId");
+			finder0.setParam("orgId",search.getOrgId());
+		}
+		if (search.getTeaId()!= null) {
+			finder0.append(" and bean.teaId =:teaId");
+			finder0.setParam("teaId",search.getTeaId());
+		}
+		if (search.getUserId()!= null) {
+			finder0.append(" and bean.userId =:userId");
+			finder0.setParam("userId",search.getUserId());
 		}
 		
 //		/finder0.append(" group by bean.orgId ");
@@ -51,7 +62,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" select bean.orgId from FyTestRecord bean where 1=1");
 		finder.append(" and bean.teaId=:teaId");
-		finder.setParam("teaId",teaId);
+		finder.setParam("teaId",search.getTeaId());
 		if (search.getTitle() != null) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
@@ -103,13 +114,21 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
-		if (search.getTitle() != null) {
+		if (search!=null&&search.getTitle() != null) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-		if (search.getOrgId()!= null) {
+		if (search!=null&&search.getOrgId()!= null) {
 			finder.append(" and bean.orgId =:orgId");
 			finder.setParam("orgId",search.getOrgId());
+		}
+		if (search!=null&&search.getTeaId()!= null) {
+			finder.append(" and bean.teaId =:teaId");
+			finder.setParam("teaId",search.getTeaId());
+		}
+		if (search!=null&&search.getUserId()!= null) {
+			finder.append(" and bean.userId =:userId");
+			finder.setParam("userId",search.getUserId());
 		}
 		
 		finder.append(" order by bean.id desc");
@@ -117,22 +136,29 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 	@Override
-	public List<FyTestRecord> getList(Long userId, Integer start, Integer count, FyTestRecord search) {
+	public List<FyTestRecord> getList( Integer start, Integer count, FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
-		if (search.getTitle() != null) {
+		if (search!=null&&search.getTitle() != null) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-		if (search.getOrgId()!= null) {
+		if (search!=null&&search.getOrgId()!= null) {
 			finder.append(" and bean.orgId =:orgId");
 			finder.setParam("orgId",search.getOrgId());
 		}
+		if (search!=null&&search.getTeaId()!= null) {
+			finder.append(" and bean.teaId =:teaId");
+			finder.setParam("teaId",search.getTeaId());
+		}
+		if (search!=null&&search.getUserId()!= null) {
+			finder.append(" and bean.userId =:userId");
+			finder.setParam("userId",search.getUserId());
+		}
 		finder.setFirstResult(start);
 		finder.setMaxResults(count);
-		finder.append(" and bean.userId=:userId");
-		finder.setParam("userId",userId);
+		
 		finder.append(" order by bean.id desc");
 		return testRecordDao.findListByFinder(finder);
 	}
@@ -151,6 +177,30 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setUserId(userId);
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
+	}
+	@Override
+	public Integer getTotal( FyTestRecord search) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
+		
+		if (search!=null&&search.getTitle() != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + search.getTitle() + "%");
+		}
+		if (search!=null&&search.getOrgId()!= null) {
+			finder.append(" and bean.orgId =:orgId");
+			finder.setParam("orgId",search.getOrgId());
+		}
+		if (search!=null&&search.getTeaId()!= null) {
+			finder.append(" and bean.teaId =:teaId");
+			finder.setParam("teaId",search.getTeaId());
+		}
+		if (search!=null&&search.getUserId()!= null) {
+			finder.append(" and bean.userId =:userId");
+			finder.setParam("userId",search.getUserId());
+		}
+		int totalCount = testRecordDao.countQueryResult(finder);
+		return totalCount;
 	}
 
 	

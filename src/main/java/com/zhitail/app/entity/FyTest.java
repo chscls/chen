@@ -72,6 +72,13 @@ public class FyTest {
 	}
 	private Date createTime;
 	private Long userId;
+	private Integer allowTime=1;
+	public Integer getAllowTime() {
+		return allowTime;
+	}
+	public void setAllowTime(Integer allowTime) {
+		this.allowTime = allowTime;
+	}
 	@Column(unique=true)
 	private String code;
 	public String getCode() {

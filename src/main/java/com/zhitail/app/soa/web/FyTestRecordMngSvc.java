@@ -83,7 +83,8 @@ public class FyTestRecordMngSvc {
 		}
 		Pagination<FyTestRecordStatistics> page2 =new Pagination<FyTestRecordStatistics>();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		Pagination<Long> page = testRecordMng.getPage(u.getId(),pageNo,pageSize,search);
+		search.setUserId(u.getId());
+		Pagination<Long> page = testRecordMng.getPage(pageNo,pageSize,search);
 		if(page==null){
 			page2.setList(new ArrayList());
 			page2.setPageNo(pageNo);

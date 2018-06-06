@@ -48,7 +48,8 @@ public class FyTestRecordSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		List<FyTestRecord> list = testRecordMng.getList(u.getId(),start,count,search);
+		search.setUserId(u.getId());
+		List<FyTestRecord> list = testRecordMng.getList(start,count,search);
 		for(FyTestRecord r:list) {
 			r.lite();
 		}
