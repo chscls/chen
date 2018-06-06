@@ -60,8 +60,10 @@ public class FyTestSvc {
 		JSONObject jo = new JSONObject();
 		jo.put("test", test);
 		jo.put("records", records);
+		jo.put("isNew",records.size()==0 );
 		jo.put("isAllow",test.getAllowTime()>=count );
 		jo.put("isMore", count>5 );
+		jo.put("total", count );
 		return new Result(jo);
 	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
