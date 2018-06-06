@@ -175,6 +175,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setTeaId(t.getUserId());
 		tr.setMode(t.getMode());
 		tr.setUserId(userId);
+		tr.setOrgId(t.getId());
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
 	}
