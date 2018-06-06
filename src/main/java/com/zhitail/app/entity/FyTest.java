@@ -73,6 +73,13 @@ public class FyTest {
 	private Date createTime;
 	private Long userId;
 	private Integer allowTime=1;
+	private Boolean isSale = false;
+	public Boolean getIsSale() {
+		return isSale;
+	}
+	public void setIsSale(Boolean isSale) {
+		this.isSale = isSale;
+	}
 	public Integer getAllowTime() {
 		return allowTime;
 	}

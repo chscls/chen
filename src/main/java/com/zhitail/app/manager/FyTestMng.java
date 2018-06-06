@@ -22,7 +22,7 @@ public interface FyTestMng {
 
 	public List<FyTest> findByCodes(String[] codes);
 
-	public List<FyTest> getList(Long userId, Integer start, Integer count, FyTest search);
+	public List<FyTest> getList(Integer start, Integer count, FyTest search);
 
 	public FyTest findByCode(String code);
 
