@@ -208,6 +208,12 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		int totalCount = testRecordDao.countQueryResult(finder);
 		return totalCount;
 	}
+	@Override
+	public FyTestRecord submit(Long id, String answers) {
+		// TODO Auto-generated method stub
+		FyTestRecord ftr=this.findById(id);
+		return ftr;
+	}
 
 	
 }

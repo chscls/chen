@@ -39,7 +39,19 @@ public class FyTestRecordSvc {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-
+	
+	
+	@RequestMapping(value = "/submit",method=RequestMethod.POST)
+	public Result submit(String token,Long id,String answers) {
+		
+		
+		FyTestRecord r = testRecordMng.submit(id,answers);
+		
+		
+		return new Result(r );
+		
+		
+	}
 	@RequestMapping(value = "/queryTestRecord",method=RequestMethod.GET)
 	public Result queryTestRecord(String token,Integer start,Integer count,FyTestRecord search) {
 		

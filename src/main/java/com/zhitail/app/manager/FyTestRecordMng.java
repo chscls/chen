@@ -33,4 +33,6 @@ public interface FyTestRecordMng {
 
 	public FyTestRecord addTestRecord(Long userId, String code, Long recordId);
 
+	public FyTestRecord submit(Long id, String answers);
+
 }
