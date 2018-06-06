@@ -33,7 +33,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findOne(id);
 	}
 	@Override
-	public Pagination<Long> getPage(Integer pageNo, Integer pageSize,
+	public Pagination<String> getPage(Integer pageNo, Integer pageSize,
 			FyTestRecord search) {
 		Finder finder0 = Finder.create(" from FyTestRecord bean where 1=1");
 	
@@ -42,8 +42,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder0.setParam("title", "%" + search.getTitle() + "%");
 		}
 		if (search.getCode()!= null) {
-			finder0.append(" and bean.orgId =:orgId");
-			finder0.setParam("orgId",search.getCode());
+			finder0.append(" and bean.code =:code");
+			finder0.setParam("code",search.getCode());
 		}
 		if (search.getTeaId()!= null) {
 			finder0.append(" and bean.teaId =:teaId");
@@ -60,7 +60,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		Pagination<FyTestRecord> p = testRecordDao.findPageByFinder(finder0, pageNo, pageSize);
 		if(p.getList().size()>0){
 		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" select bean.orgId from FyTestRecord bean where 1=1");
+		Finder finder = Finder.create(" select bean.code from FyTestRecord bean where 1=1");
 		finder.append(" and bean.teaId=:teaId");
 		finder.setParam("teaId",search.getTeaId());
 		if (search.getTitle() != null) {
@@ -68,10 +68,10 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
 		
-		finder.append(" group by bean.orgId ");
+		finder.append(" group by bean.code ");
 		finder.append(" order by bean.id desc");
 		
-		return testRecordDao.findIdsByFinder(finder, pageNo, pageSize);
+		return testRecordDao.findCodesByFinder(finder, pageNo, pageSize);
 		}else{
 			return null;
 		}
@@ -90,15 +90,15 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		}
 	}
 	@Override
-	public List<FyTestRecordStatistics> groupByIds(Long[] orgIds) {
+	public List<FyTestRecordStatistics> groupByCodes(String[] codes) {
 		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.orgId,count(bean.orgId),max(bean.score),min(bean.score),avg(bean.score)) from FyTestRecord bean where 1=1");
+		Finder finder = Finder.create(" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.code,count(bean.orgId),max(bean.score),min(bean.score),avg(bean.score)) from FyTestRecord bean where 1=1");
 
-		if (orgIds!= null) {
-			finder.append(" and bean.orgId in:orgIds");
-			finder.setParamList("orgIds", orgIds);
+		if (codes!= null) {
+			finder.append(" and bean.code in:codes");
+			finder.setParamList("codes", codes);
 		}
-		finder.append(" group by bean.orgId ");
+		finder.append(" group by bean.code ");
 		finder.append(" order by bean.id desc");
 		List<Object> list = testRecordDao.findObjectListByFinder(finder);
 		List<FyTestRecordStatistics> xx=new ArrayList<FyTestRecordStatistics>();
@@ -119,8 +119,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
 		if (search!=null&&search.getCode()!= null) {
-			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("orgId",search.getCode());
+			finder.append(" and bean.code =:code");
+			finder.setParam("code",search.getCode());
 		}
 		if (search!=null&&search.getTeaId()!= null) {
 			finder.append(" and bean.teaId =:teaId");
@@ -145,8 +145,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
 		if (search!=null&&search.getCode()!= null) {
-			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("orgId",search.getCode());
+			finder.append(" and bean.code =:code");
+			finder.setParam("code",search.getCode());
 		}
 		if (search!=null&&search.getTeaId()!= null) {
 			finder.append(" and bean.teaId =:teaId");
@@ -189,8 +189,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
 		if (search!=null&&search.getCode()!= null) {
-			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("orgId",search.getCode());
+			finder.append(" and bean.code =:code");
+			finder.setParam("code",search.getCode());
 		}
 		if (search!=null&&search.getTeaId()!= null) {
 			finder.append(" and bean.teaId =:teaId");

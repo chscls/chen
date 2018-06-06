@@ -215,5 +215,28 @@ public Pagination<Long> findIdsByFinder(Finder finder, int pageNo, int pageSize)
 }
 
 
+
+@Override
+public Pagination<String> findCodesByFinder(Finder finder, int pageNo, int pageSize) {
+	// TODO Auto-generated method stub
+	int totalCount = countQueryResult(finder);
+	Pagination<String> p = new Pagination<String>(pageNo, pageSize, totalCount);
+	if (totalCount < 1) {
+		p.setList(new ArrayList<String>());
+		return p;
+	}
+	Query query = getSession().createQuery(finder.getOrigHql());
+	finder.setParamsToQuery(query);
+	query.setFirstResult(p.getFirstResult());
+	query.setMaxResults(p.getPageSize());
+	if (finder.isCacheable()) {
+		query.setCacheable(true);
+	}
+	List<String> list = query.list();
+	p.setList(list);
+	return p;
+}
+
+
 }
 

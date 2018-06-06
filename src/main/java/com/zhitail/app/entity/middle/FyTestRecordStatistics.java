@@ -3,7 +3,7 @@ package com.zhitail.app.entity.middle;
 import com.zhitail.app.entity.FyTest;
 
 public class FyTestRecordStatistics {
-		private Long orgId;
+		private String code;
 		private Long count;
 		private Double maxScore;
 		private Double minScore;
@@ -21,8 +21,8 @@ public class FyTestRecordStatistics {
 			this.count = count;
 		}
 		private FyTest test;
-		public FyTestRecordStatistics (Long orgId,Long count,Double maxScore,Double minScore,Double avgScore){
-			this.orgId=orgId;
+		public FyTestRecordStatistics (String code,Long count,Double maxScore,Double minScore,Double avgScore){
+			this.code=code;
 			this.count=count;
 			this.maxScore=maxScore;
 			this.minScore=minScore;
@@ -40,11 +40,12 @@ public class FyTestRecordStatistics {
 		public void setTest(FyTest test) {
 			this.test = test;
 		}
-		public Long getOrgId() {
-			return orgId;
+	
+		public String getCode() {
+			return code;
 		}
-		public void setOrgId(Long orgId) {
-			this.orgId = orgId;
+		public void setCode(String code) {
+			this.code = code;
 		}
 		public Double getMaxScore() {
 			return maxScore;

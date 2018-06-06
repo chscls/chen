@@ -84,7 +84,7 @@ public class FyTestRecordMngSvc {
 		Pagination<FyTestRecordStatistics> page2 =new Pagination<FyTestRecordStatistics>();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		search.setUserId(u.getId());
-		Pagination<Long> page = testRecordMng.getPage(pageNo,pageSize,search);
+		Pagination<String> page = testRecordMng.getPage(pageNo,pageSize,search);
 		if(page==null){
 			page2.setList(new ArrayList());
 			page2.setPageNo(pageNo);
@@ -93,15 +93,15 @@ public class FyTestRecordMngSvc {
 			return new Result(page2);
 		}
 		
-	List<FyTestRecordStatistics> list2=	testRecordMng.groupByIds(page.getList().toArray(new Long[page.getList().size()]));
+	List<FyTestRecordStatistics> list2=	testRecordMng.groupByCodes(page.getList().toArray(new String[page.getList().size()]));
 	
-	List<FyTest> list =	testMng.findByIds(page.getList().toArray(new Long[page.getList().size()]));
-	Map<Long,FyTest> map = new HashMap<Long,FyTest>();
+	List<FyTest> list =	testMng.findByCodes(page.getList().toArray(new String[page.getList().size()]));
+	Map<String,FyTest> map = new HashMap<String,FyTest>();
 	for(FyTest t:list){
-		map.put(t.getId(), t);
+		map.put(t.getCode(), t);
 	}
 	for(FyTestRecordStatistics  s:list2){
-		FyTest lite = map.get(s.getOrgId());
+		FyTest lite = map.get(s.getCode());
 		lite.setQuestions(null);
 		
 		s.setTest(lite );

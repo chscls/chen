@@ -20,7 +20,7 @@ public interface FyTestMng {
 
 	public FyTest  updateTestQuestions(Long id, Long[] qids);
 
-	public List<FyTest> findByIds(Long[] orgIds);
+	public List<FyTest> findByCodes(String[] codes);
 
 	public List<FyTest> getList(Long userId, Integer start, Integer count, FyTest search);
 

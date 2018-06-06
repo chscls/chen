@@ -76,13 +76,13 @@ public class FyTestMngImpl implements FyTestMng {
 	}
 
 	@Override
-	public List<FyTest> findByIds(Long[] ids) {
+	public List<FyTest> findByCodes(String[] codes) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTest bean where 1=1");
 
-		if (ids != null) {
-			finder.append(" and bean.id in:ids");
-			finder.setParamList("ids", ids );
+		if (codes!= null) {
+			finder.append(" and bean.code in:codes");
+			finder.setParamList("codes", codes );
 		}
 
 		finder.append(" order by bean.id desc");
