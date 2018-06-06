@@ -25,10 +25,12 @@ public interface FyTestRecordMng {
 
 	public List<FyTestRecord> getList(Integer start, Integer count, FyTestRecord search);
 
-	public FyTestRecord addTestRecord(Long userId, String code);
+	
 
 	public Integer getTotal(  FyTestRecord search);
 
-	List<FyTestRecordStatistics> groupByCodes(String[] codes);
+	public  List<FyTestRecordStatistics> groupByCodes(String[] codes);
+
+	public FyTestRecord addTestRecord(Long userId, String code, Long recordId);
 
 }

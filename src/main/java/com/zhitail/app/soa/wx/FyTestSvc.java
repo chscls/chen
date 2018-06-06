@@ -46,7 +46,7 @@ public class FyTestSvc {
 		if(test==null) {
 			return Result.error("该试卷不存在");
 		}
-		test.lite();
+		//test.lite();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord tr=new FyTestRecord();
 		tr.setCode(test.getCode());
