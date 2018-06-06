@@ -41,9 +41,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder0.append(" and bean.title like:title");
 			finder0.setParam("title", "%" + search.getTitle() + "%");
 		}
-		if (search.getOrgId()!= null) {
+		if (search.getCode()!= null) {
 			finder0.append(" and bean.orgId =:orgId");
-			finder0.setParam("orgId",search.getOrgId());
+			finder0.setParam("orgId",search.getCode());
 		}
 		if (search.getTeaId()!= null) {
 			finder0.append(" and bean.teaId =:teaId");
@@ -118,9 +118,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-		if (search!=null&&search.getOrgId()!= null) {
+		if (search!=null&&search.getCode()!= null) {
 			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("orgId",search.getOrgId());
+			finder.setParam("orgId",search.getCode());
 		}
 		if (search!=null&&search.getTeaId()!= null) {
 			finder.append(" and bean.teaId =:teaId");
@@ -144,9 +144,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-		if (search!=null&&search.getOrgId()!= null) {
+		if (search!=null&&search.getCode()!= null) {
 			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("orgId",search.getOrgId());
+			finder.setParam("orgId",search.getCode());
 		}
 		if (search!=null&&search.getTeaId()!= null) {
 			finder.append(" and bean.teaId =:teaId");
@@ -175,7 +175,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setTeaId(t.getUserId());
 		tr.setMode(t.getMode());
 		tr.setUserId(userId);
-		tr.setOrgId(t.getId());
+		
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
 	}
@@ -188,9 +188,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
-		if (search!=null&&search.getOrgId()!= null) {
+		if (search!=null&&search.getCode()!= null) {
 			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("orgId",search.getOrgId());
+			finder.setParam("orgId",search.getCode());
 		}
 		if (search!=null&&search.getTeaId()!= null) {
 			finder.append(" and bean.teaId =:teaId");

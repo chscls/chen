@@ -61,6 +61,7 @@ public class FyTestMngSvc {
 			test.setUserId(u.getId());
 			test = testMng.save(test);
 		}else{
+			test.setCode(UUID.randomUUID().toString().replace("-", ""));
 			test= testMng.update(test);
 		}
 		return new Result(test);

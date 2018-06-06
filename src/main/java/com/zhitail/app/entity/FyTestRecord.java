@@ -35,14 +35,7 @@ public class FyTestRecord {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	public Long getOrgId() {
-		return orgId;
-	}
-	public void setOrgId(Long orgId) {
-		this.orgId = orgId;
-	}
-
-	private Long orgId;
+	
 	private Mode mode;
 	private Double score;
 	public Double getScore() {

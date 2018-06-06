@@ -1,6 +1,7 @@
 package com.zhitail.app.manager.Impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,7 +71,7 @@ public class FyTestMngImpl implements FyTestMng {
 		for(Long qid:qids){
 		list.add(questionMng.findById(qid));
 		}
-		
+		t.setCode(UUID.randomUUID().toString().replace("-", ""));
 		return update(t);
 	}
 

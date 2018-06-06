@@ -49,7 +49,7 @@ public class FyTestSvc {
 		test.lite();
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord tr=new FyTestRecord();
-		tr.setOrgId(test.getId());
+		tr.setCode(test.getCode());
 		tr.setUserId(u.getId());
 		List<FyTestRecord> records= testRecordMng.getList( 0, 5,tr);
 		for(FyTestRecord ftr:records) {
