@@ -291,7 +291,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 				is.get(i).setAnswer(a[i]);
 				if(!q.getIsQuestionnaire()){
 				if(a[i].equals(is.get(i).getContent())){
-					q.setGoal(avg+q.getGoal());
+					q.setGoal(avg+(q.getGoal()!=null?q.getGoal():0.0));
 				}
 				}
 			
