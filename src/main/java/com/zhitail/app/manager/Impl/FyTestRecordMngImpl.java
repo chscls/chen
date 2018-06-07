@@ -1,9 +1,11 @@
 package com.zhitail.app.manager.Impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -289,8 +291,25 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			}
 		}
 		private void checkCheckBox(FyQuestion q,Integer[] as) {
-			q.setGoal(0.0);
+			
+			List<Integer> x = new ArrayList<Integer>();
+			Arrays.sort(as);
+			for(int i=0;i<q.getItems().size();i++) {
+				if(ArrayUtils.contains(as,i)) {
+					q.getItems().get(i).setIsAnswer(true);
+				}else {
+					q.getItems().get(i).setIsAnswer(false);
+				}
+				if(q.getItems().get(i).getIsSolution()) {
+					x.add(i);
+				}
+				
+				
+			}
+			if(!q.getIsQuestionnaire()){
+			q.setGoal(x.toArray(new Integer[x.size()]).equals(as)?q.getGoal():0.0);
 			q.setIsGrade(true);
+			}
 		}
 		
 	
