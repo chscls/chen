@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.dao.FyTestRecordDao;
+import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
+import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyTestRecord.Status;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
@@ -212,8 +215,58 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 	public FyTestRecord submit(Long id, String answers) {
 		// TODO Auto-generated method stub
 		FyTestRecord ftr=this.findById(id);
-		return ftr;
+		JSONArray ja = JSONArray.parseArray(answers);
+		List<FyQuestion> qs = ftr.getQuestions();
+		FyQuestion q;
+		for(int i=0;i<qs.size();i++) {
+			q=qs.get(i);
+			
+			if(q.getType()==Type.single||q.getType()==Type.judge) {
+				Integer a=ja.getInteger(i);
+				checkRadio(q,a);
+			}else if(q.getType()==Type.mutiply) {
+			JSONArray temp=	ja.getJSONArray(i);
+				Integer[] a=temp.toArray(new Integer[temp.size()]);
+				checkCheckBox(q,a);
+			}else if(q.getType()==Type.fill) {
+				JSONArray temp=	ja.getJSONArray(i);
+				String[] a=temp.toArray(new String[temp.size()]);
+				checkFill(q,a);
+			}else {
+				String a=ja.getString(i);
+				checkAsk(q,a);
+			}
+		}
+		ftr.setJson(JSONObject.toJSONString(qs));
+		
+		return update(ftr);
 	}
-
+		private void checkAsk(FyQuestion q, String a) {
+		// TODO Auto-generated method stub
+			q.getItems().get(0).setAnswer(a);
+		
+	}
+		private void checkFill(FyQuestion q, String[] a) {
+		// TODO Auto-generated method stub
+			Double avg = q.getScore()!=0?q.getScore()/q.getItems().size():0;
+			q.setGoal(0.0);
+			for(int i=0;i<q.getItems().size();i++) {
+				q.getItems().get(i).setAnswer(a[i]);
+				if(a[i].equals(q.getItems().get(i).getContent())){
+					q.setGoal(avg+q.getGoal());
+				}
+				q.setIsGrade(true);
+			}
+		
+	}
+		private void checkRadio(FyQuestion q,Integer a) {
+			
+			
+		}
+		private void checkCheckBox(FyQuestion q,Integer[] as) {
+			
+			
+		}
+		
 	
 }
