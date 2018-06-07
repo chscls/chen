@@ -38,6 +38,21 @@ public class FyTestRecord {
 	
 	private Mode mode;
 	private Double score;
+	private Double goal;
+	private String uuid;
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	public Double getGoal() {
+		return goal;
+	}
+	public void setGoal(Double goal) {
+		this.goal = goal;
+	}
+
 	private Status status;
 	public Double getScore() {
 		return score;

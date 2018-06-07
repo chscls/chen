@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyTestRecord.Status;
+import com.zhitail.app.entity.middle.FyQuestionItem;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
@@ -185,7 +187,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setMode(t.getMode());
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
-		
+		tr.setUuid(UUID.randomUUID().toString());
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
 	}
@@ -222,7 +224,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		FyQuestion q;
 		for(int i=0;i<qs.size();i++) {
 			q=qs.get(i);
-			
+		
 			if(q.getType()==Type.single||q.getType()==Type.judge) {
 				Integer a=ja.getInteger(i);
 				checkRadio(q,a);
@@ -239,31 +241,62 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 				checkAsk(q,a);
 			}
 		}
-		ftr.setJson(JSONObject.toJSONString(qs));
 		
+		
+		checkGoal(qs,ftr);
 		return update(ftr);
 	}
+		
+		private void checkGoal(List<FyQuestion> qs,FyTestRecord ftr) {
+			Boolean isAllGrade=true;
+			Double allGoal=0.0;
+			for(FyQuestion q :qs) {
+				if(!q.getIsGrade()) {
+					if(isAllGrade) {
+						isAllGrade=false;
+					
+					}
+					
+				}
+				if(q.getGoal()!=null){
+					allGoal=allGoal+q.getGoal();
+				}
+				
+			}
+			ftr.setGoal(allGoal);
+			if(isAllGrade) {
+				ftr.setStatus(Status.complete);
+			}
+			
+			ftr.setJson(JSONObject.toJSONString(qs));
+		// TODO Auto-generated method stub
+		
+		}
 		private void checkAsk(FyQuestion q, String a) {
 		// TODO Auto-generated method stub
-			q.getItems().get(0).setAnswer(a);
+			List<FyQuestionItem> is=q.getItems();
+			is.get(0).setAnswer(a);
+			q.setJson(JSONObject.toJSONString(is));
 		
 	}
 		private void checkFill(FyQuestion q, String[] a) {
 		// TODO Auto-generated method stub
+			List<FyQuestionItem> is=q.getItems();
 			Double avg=0.0;
 			if(!q.getIsQuestionnaire()) {
-				 avg = q.getScore()!=0?q.getScore()/q.getItems().size():0;
+				 avg = q.getScore()!=0?q.getScore()/is.size():0;
 			}
 			
-			for(int i=0;i<q.getItems().size();i++) {
-				q.getItems().get(i).setAnswer(a[i]);
+			for(int i=0;i<is.size();i++) {
+				is.get(i).setAnswer(a[i]);
 				if(!q.getIsQuestionnaire()){
-				if(a[i].equals(q.getItems().get(i).getContent())){
+				if(a[i].equals(is.get(i).getContent())){
 					q.setGoal(avg+q.getGoal());
 				}
 				}
 			
 			}
+			q.setJson(JSONObject.toJSONString(is));
 			if(!q.getIsQuestionnaire()){
 			q.setGoal(0.0);
 			q.setIsGrade(true);
@@ -271,41 +304,43 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		
 	}
 		private void checkRadio(FyQuestion q,Integer a) {
-		
+			List<FyQuestionItem> is=q.getItems();
 			int o=0;
-			for(int i=0;i<q.getItems().size();i++) {
+			for(int i=0;i<is.size();i++) {
 				if(i==a) {
-					q.getItems().get(i).setIsAnswer(true);
+					is.get(i).setIsAnswer(true);
 				}else {
-					q.getItems().get(i).setIsAnswer(false);
+					is.get(i).setIsAnswer(false);
 				}
-				if(!q.getIsQuestionnaire()&&q.getItems().get(i).getIsSolution()) {
+				if(!q.getIsQuestionnaire()&&is.get(i).getIsSolution()) {
 					o=i;
 				}
 				
 				
 			}
+			q.setJson(JSONObject.toJSONString(is));
 			if(!q.getIsQuestionnaire()){
 			q.setGoal(a==o?q.getScore():0.0);
 			q.setIsGrade(true);
 			}
 		}
 		private void checkCheckBox(FyQuestion q,Integer[] as) {
-			
+			List<FyQuestionItem> is=q.getItems();
 			List<Integer> x = new ArrayList<Integer>();
 			Arrays.sort(as);
-			for(int i=0;i<q.getItems().size();i++) {
+			for(int i=0;i<is.size();i++) {
 				if(ArrayUtils.contains(as,i)) {
-					q.getItems().get(i).setIsAnswer(true);
+					is.get(i).setIsAnswer(true);
 				}else {
-					q.getItems().get(i).setIsAnswer(false);
+					is.get(i).setIsAnswer(false);
 				}
-				if(q.getItems().get(i).getIsSolution()) {
+				if(is.get(i).getIsSolution()) {
 					x.add(i);
 				}
 				
 				
 			}
+			q.setJson(JSONObject.toJSONString(is));
 			if(!q.getIsQuestionnaire()){
 			q.setGoal(x.toArray(new Integer[x.size()]).equals(as)?q.getGoal():0.0);
 			q.setIsGrade(true);
