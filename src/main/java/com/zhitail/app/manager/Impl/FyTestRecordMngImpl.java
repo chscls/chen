@@ -248,24 +248,49 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 	}
 		private void checkFill(FyQuestion q, String[] a) {
 		// TODO Auto-generated method stub
-			Double avg = q.getScore()!=0?q.getScore()/q.getItems().size():0;
-			q.setGoal(0.0);
+			Double avg=0.0;
+			if(!q.getIsQuestionnaire()) {
+				 avg = q.getScore()!=0?q.getScore()/q.getItems().size():0;
+			}
+			
 			for(int i=0;i<q.getItems().size();i++) {
 				q.getItems().get(i).setAnswer(a[i]);
+				if(!q.getIsQuestionnaire()){
 				if(a[i].equals(q.getItems().get(i).getContent())){
 					q.setGoal(avg+q.getGoal());
 				}
-				q.setIsGrade(true);
+				}
+			
+			}
+			if(!q.getIsQuestionnaire()){
+			q.setGoal(0.0);
+			q.setIsGrade(true);
 			}
 		
 	}
 		private void checkRadio(FyQuestion q,Integer a) {
-			
-			
+		
+			int o=0;
+			for(int i=0;i<q.getItems().size();i++) {
+				if(i==a) {
+					q.getItems().get(i).setIsAnswer(true);
+				}else {
+					q.getItems().get(i).setIsAnswer(false);
+				}
+				if(!q.getIsQuestionnaire()&&q.getItems().get(i).getIsSolution()) {
+					o=i;
+				}
+				
+				
+			}
+			if(!q.getIsQuestionnaire()){
+			q.setGoal(a==o?q.getScore():0.0);
+			q.setIsGrade(true);
+			}
 		}
 		private void checkCheckBox(FyQuestion q,Integer[] as) {
-			
-			
+			q.setGoal(0.0);
+			q.setIsGrade(true);
 		}
 		
 	
