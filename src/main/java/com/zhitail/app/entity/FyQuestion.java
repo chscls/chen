@@ -34,6 +34,20 @@ public class FyQuestion {
 	private String title;
 	private Integer difficulty=0;
 	private Double score;
+	private Double goal;
+	private Boolean isGrade =  false;
+	public Boolean getIsGrade() {
+		return isGrade;
+	}
+	public void setIsGrade(Boolean isGrade) {
+		this.isGrade = isGrade;
+	}
+	public Double getGoal() {
+		return goal;
+	}
+	public void setGoal(Double goal) {
+		this.goal = goal;
+	}
 	@JsonIgnore
 	private String tagsJson;
 	@Transient
