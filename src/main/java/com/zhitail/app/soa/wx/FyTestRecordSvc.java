@@ -80,7 +80,7 @@ public class FyTestRecordSvc {
 
 			variables.put("title", "用户列表");
 			variables.put("testRecord", testRecord);
-
+		
 			String htmlStr = generate(variables,"recordTemplate.html");
 
 			OutputStream out  = response.getOutputStream();//输出流  
