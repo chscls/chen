@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>${testRecord.title}</title>
+
+</head>
+<body>
+	
+	<div >
+		
+		<#list testRecord.questions as q>
+		<span>${q_index+1}.${q.title}</span>
+		
+		</#list>
+	</div>
+	
+</body>
+</html>
