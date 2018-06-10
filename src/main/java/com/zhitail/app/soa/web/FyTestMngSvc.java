@@ -36,7 +36,6 @@ import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
-import com.zhitail.test.entity.User;
 
 import com.zhitail.test.generator.PdfGenerator;
 

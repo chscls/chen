@@ -76,6 +76,7 @@ public class PdfGenerator {
                     @Override
                     public Font getFont(String fontname, String encoding,
                                         float size, final int style) {
+                    	System.out.println(fontname);
                         if (fontname == null) {
                         	// 操作系统需要有该字体, 没有则需要安装; 当然也可以将字体放到项目中， 再从项目中读取
                             fontname = "SimSun";        
