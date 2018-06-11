@@ -39,7 +39,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 				List<Long> qids = f.getQuestionIds();
 				qids.remove(id);
 				String json = JSONArray.toJSONString(qids);
-				f.setJson(json.substring(1, json.length() - 1));
+				f.setJson(json.substring(1, json.length() - 1)+",");
 				testMng.update(f);
 
 			}

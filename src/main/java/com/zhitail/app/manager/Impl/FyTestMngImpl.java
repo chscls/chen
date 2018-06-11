@@ -69,7 +69,7 @@ public class FyTestMngImpl implements FyTestMng {
 		FyTest  t= testDao.findOne(id);
 		// TODO Auto-generated method stub
 		String json =JSONArray.toJSONString(qids);
-		t.setJson(json.substring(1, json.length()-1));
+		t.setJson(json.substring(1, json.length()-1)+",");
 		t.refreshCode();
 		return update(t);
 	}
