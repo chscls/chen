@@ -346,6 +346,11 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 			q.setIsGrade(true);
 			}
 		}
+		@Override
+		public FyTestRecord findByUuid(String uuid) {
+			// TODO Auto-generated method stub
+			return testRecordDao.findByUuid(uuid);
+		}
 		
 	
 }

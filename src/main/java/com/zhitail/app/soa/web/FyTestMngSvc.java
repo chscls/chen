@@ -1,8 +1,22 @@
 package com.zhitail.app.soa.web;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
+import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyTestMng;
@@ -21,6 +36,11 @@ import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
+
+import com.zhitail.test.generator.PdfGenerator;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 @RequestMapping("/services/FyTestMngSvc")
 @RestController
 public class FyTestMngSvc {
@@ -30,6 +50,7 @@ public class FyTestMngSvc {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
+	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {

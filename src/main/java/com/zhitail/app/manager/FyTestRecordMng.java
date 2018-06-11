@@ -35,4 +35,6 @@ public interface FyTestRecordMng {
 
 	public FyTestRecord submit(Long id, String answers);
 
+	public FyTestRecord findByUuid(String code);
+
 }

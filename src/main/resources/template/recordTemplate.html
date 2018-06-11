@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>${testRecord.title}</title>
+
+<style> 
+@font-face
+{
+font-family: myFirstFont;
+src: url('Sansation_Light.ttf'),
+     url('Sansation_Light.eot'); /* IE9+ */
+}
+
+</style>
+</head>
+<body>
+	<#assign abc=['A','B']/>
+	<div >
+		
+		<#list testRecord.questions as q>
+		<ul style="list-style-type: none">
+		
+		<li>${q_index+1}.${q.title}</li>
+		<#if q.type=="single">
+		<#list q.items as item>
+		<li>${abc[item_index]}.${item.content}</li>
+		
+		</#list>
+
+		<#elseif q.type=="mutiply">
+		<#list q.items as item>
+		<li>${abc[item_index]}.${item.content}</li>
+		
+		</#list>
+		<#elseif q.type=="judge">
+		<#list q.items as item>
+		<li>${abc[item_index]}.${item.content}</li>
+		
+		</#list>
+		<#elseif q.type=="fill">
+		<#list q.items as item>
+		<li>${item_index+1}.${item.answer}</li>
+		
+		</#list>
+		<#elseif q.type=="ask">
+		<#list q.items as item>
+		<li>${item.answer}</li>
+		
+		</#list>
+		</#if>
+		</ul>
+		
+		</#list>
+	</div>
+	
+</body>
+</html>
