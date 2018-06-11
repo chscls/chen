@@ -55,19 +55,27 @@ public class FyTestMngSvc {
 	private FyUserMng userMng;
 	
 	private FyTest fullQuestions(FyTest test) {
-		Long[] qids = new Long[test.getQuestionIds().size()];
-		List<FyQuestion> qs=questionMng.findByIds(qids);
-		Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
-		for(FyQuestion q:qs) {
-			map.put(q.getId(), q);
-		}
-		List<FyQuestion> fqs = new ArrayList<FyQuestion>();
-		for(Long id:qids) {
-			if(map.containsKey(id)) {
-			fqs.add(map.get(id));
+		
+		List<Long> ids = test.getQuestionIds();
+		if(ids.size()>0) {
+			Long[] qids = new Long[ids.size()];
+			List<FyQuestion> qs=questionMng.findByIds(qids);
+			Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
+			for(FyQuestion q:qs) {
+				map.put(q.getId(), q);
 			}
+			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+			for(Long id:qids) {
+				if(map.containsKey(id)) {
+				fqs.add(map.get(id));
+				}
+			}
+			test.setQuestions(fqs);
+		
+		}else {
+		test.setQuestions(new ArrayList<FyQuestion>());
 		}
-		test.setQuestions(fqs);
+		
 		return test;
 	}
 	@TokenAuth(value="token")
@@ -75,14 +83,7 @@ public class FyTestMngSvc {
 	public Result findQuestion(String token,Long id) {
 		
 		FyTest test= testMng.findById(id);
-		List<Long> ids = test.getQuestionIds();
-		if(ids.size()>0) {
-	
-			fullQuestions(test);
-		
-		}else {
-		test.setQuestions(new ArrayList<FyQuestion>());
-		}
+		fullQuestions(test);
 		return new Result(test);
 	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
@@ -122,6 +123,7 @@ public class FyTestMngSvc {
 	public Result updateTestQuestions(String token,Long id, Long[] qids) {
 		
 		FyTest t  = testMng.updateTestQuestions(id,qids);
+		fullQuestions(t);
 		return new Result(t);
 
 		
