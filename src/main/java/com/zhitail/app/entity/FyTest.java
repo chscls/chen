@@ -3,6 +3,7 @@ package com.zhitail.app.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -160,5 +161,9 @@ public class FyTest {
 		
 		
 		
+	}
+	public void refreshCode() {
+		// TODO Auto-generated method stub
+		this.setCode(UUID.randomUUID().toString().replace("-", ""));
 	}
 }

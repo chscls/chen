@@ -108,11 +108,11 @@ public class FyTestMngSvc {
 		if(test.getId()==null){
 			test.setCreateTime(new Date());
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
-			test.setCode(UUID.randomUUID().toString().replace("-", ""));
+			test.refreshCode();
 			test.setUserId(u.getId());
 			test = testMng.save(test);
 		}else{
-			test.setCode(UUID.randomUUID().toString().replace("-", ""));
+			test.refreshCode();
 			test= testMng.update(test);
 		}
 		fullQuestions(test);

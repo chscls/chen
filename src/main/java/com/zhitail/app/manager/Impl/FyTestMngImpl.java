@@ -70,7 +70,7 @@ public class FyTestMngImpl implements FyTestMng {
 		// TODO Auto-generated method stub
 		String json =JSONArray.toJSONString(qids);
 		t.setJson(json.substring(1, json.length()-1));
-		t.setCode(UUID.randomUUID().toString().replace("-", ""));
+		t.refreshCode();
 		return update(t);
 	}
 
@@ -116,5 +116,17 @@ public class FyTestMngImpl implements FyTestMng {
 	public FyTest findByCode(String code) {
 		// TODO Auto-generated method stub
 		return testDao.findByCode(code);
+	}
+
+	@Override
+	public List<FyTest> findByQuestionId(Long id) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTest bean where 1=1");
+
+		if (id != null) {
+			finder.append(" and bean.json like:id");
+			finder.setParam("id", "%" + id + ",%");
+		}
+		return testDao.findListByFinder(finder);
 	}
 }

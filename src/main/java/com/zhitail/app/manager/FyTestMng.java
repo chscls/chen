@@ -26,4 +26,6 @@ public interface FyTestMng {
 
 	public FyTest findByCode(String code);
 
+	public List<FyTest> findByQuestionId(Long id);
+
 }
