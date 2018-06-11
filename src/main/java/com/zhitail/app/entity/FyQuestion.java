@@ -34,6 +34,7 @@ public class FyQuestion {
 	private String title;
 	private Integer difficulty=0;
 	private Double score;
+	@Transient
 	private Double goal;
 	private Boolean isGrade =  false;
 	public Boolean getIsGrade() {
