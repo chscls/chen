@@ -67,7 +67,7 @@ public class FyTestSvc {
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
-	public Result findTest(String token,Long code) {
+	public Result findTest(String token,String code) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}

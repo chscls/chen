@@ -92,13 +92,14 @@ public class FyTest {
 	public void setAllowTime(Integer allowTime) {
 		this.allowTime = allowTime;
 	}
-	@Column(unique=true)
-	private Long code;
+	@Column(unique=true,length=18)
+	private String code;
 	
-	public Long getCode() {
+	
+	public String getCode() {
 		return code;
 	}
-	public void setCode(Long code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 	public Long getUserId() {
@@ -166,6 +167,6 @@ public class FyTest {
 	}
 	public void refreshCode() {
 		// TODO Auto-generated method stub
-		this.code=Application.getSnowflakeIdWorker().nextId();
+		this.code=Application.getSnowflakeIdWorker().nextId()+"";
 	}
 }

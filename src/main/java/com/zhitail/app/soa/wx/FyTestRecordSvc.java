@@ -124,7 +124,7 @@ public class FyTestRecordSvc {
 		
 	}
 	@RequestMapping(value = "/addTestRecord",method=RequestMethod.GET)
-	public Result addTestRecord(String token,Long code,Long recordId) {
+	public Result addTestRecord(String token,String code,Long recordId) {
 		
 		
 		if(!loginManager.verify(token)){

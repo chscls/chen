@@ -41,8 +41,8 @@ public class FyTestRecord {
 	private Mode mode;
 	private Double score;
 	private Double goal;
-	@Column(unique=true)
-	private Long uuid;
+	@Column(unique=true,length=18)
+	private String uuid;
 	
 	public Double getGoal() {
 		return goal;
@@ -80,8 +80,8 @@ public class FyTestRecord {
 	private Date createTime;
 	private Long userId;
 	private Long teaId;
-	@Column(unique=true)
-	private Long code;
+	@Column(unique=true,length=18)
+	private String code;
 	public Long getTeaId() {
 		return teaId;
 	}
@@ -116,18 +116,7 @@ public class FyTestRecord {
 		this.json = json;
 	}
 	
-	public Long getUuid() {
-		return uuid;
-	}
-	public void setUuid(Long uuid) {
-		this.uuid = uuid;
-	}
-	public Long getCode() {
-		return code;
-	}
-	public void setCode(Long code) {
-		this.code = code;
-	}
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -174,6 +163,18 @@ public class FyTestRecord {
 	}
 	public void reFreshUuid() {
 		// TODO Auto-generated method stub
-		this.uuid=Application.getSnowflakeIdWorker().nextId();
+		this.uuid=Application.getSnowflakeIdWorker().nextId()+"";
+	}
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

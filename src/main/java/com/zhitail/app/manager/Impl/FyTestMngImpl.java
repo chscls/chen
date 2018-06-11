@@ -113,7 +113,7 @@ public class FyTestMngImpl implements FyTestMng {
 	}
 
 	@Override
-	public FyTest findByCode(Long code) {
+	public FyTest findByCode(String code) {
 		// TODO Auto-generated method stub
 		return testDao.findByCode(code);
 	}

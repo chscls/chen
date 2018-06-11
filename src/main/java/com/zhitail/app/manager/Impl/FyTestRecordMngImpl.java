@@ -171,7 +171,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findListByFinder(finder);
 	}
 	@Override
-	public FyTestRecord addTestRecord(Long userId,Long code,Long recordId) {
+	public FyTestRecord addTestRecord(Long userId,String code,Long recordId) {
 		if(recordId!=null) {
 			return  findById(recordId);
 		}
