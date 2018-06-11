@@ -1,5 +1,6 @@
 package com.zhitail.app.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.IndexColumn;
+
+import com.alibaba.fastjson.JSONArray;
 
 @Entity
 @Table(name = "fy_test")
@@ -100,14 +104,24 @@ public class FyTest {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	/**
-	 * 包含的问题
-	 */
-	@ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-	@IndexColumn(name="priority")
-	@JoinTable(name="fy_test_question",joinColumns={@JoinColumn(name="test_id",referencedColumnName="id")},
-			inverseJoinColumns={@JoinColumn(name="question_id",referencedColumnName="id")}
-	)
+
+	public List<Long> getQuestionIds() {
+		if(json!=null){
+			String x = "["+this.json.substring(0, json.length()-1)+"]";
+			return JSONArray.parseArray(x,Long.class);
+			}else{
+				return new ArrayList<Long>(0);
+			}
+	}
+	@Lob
+	private String json;
+	public String getJson() {
+		return json;
+	}
+	public void setJson(String json) {
+		this.json = json;
+	}
+	@Transient
 	private List<FyQuestion> questions;
 	public List<FyQuestion> getQuestions() {
 		return questions;
@@ -140,7 +154,8 @@ public class FyTest {
 		this.createTime = createTime;
 	}
 	public void lite() {
-		this.setCount(this.getQuestions().size());
+		this.setCount(this.getQuestionIds().size());
+		this.setJson(null);
 		this.setQuestions(null);
 		
 		

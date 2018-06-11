@@ -30,6 +30,7 @@ import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyTestMng;
+import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
@@ -49,14 +50,39 @@ public class FyTestMngSvc {
 	@Autowired
 	private FyTestMng testMng;
 	@Autowired
+	private FyQuestionMng questionMng;
+	@Autowired
 	private FyUserMng userMng;
 	
+	private FyTest fullQuestions(FyTest test) {
+		Long[] qids = new Long[test.getQuestionIds().size()];
+		List<FyQuestion> qs=questionMng.findByIds(qids);
+		Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
+		for(FyQuestion q:qs) {
+			map.put(q.getId(), q);
+		}
+		List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+		for(Long id:qids) {
+			if(map.containsKey(id)) {
+			fqs.add(map.get(id));
+			}
+		}
+		test.setQuestions(fqs);
+		return test;
+	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {
 		
 		FyTest test= testMng.findById(id);
+		List<Long> ids = test.getQuestionIds();
+		if(ids.size()>0) {
+	
+			fullQuestions(test);
 		
+		}else {
+		test.setQuestions(new ArrayList<FyQuestion>());
+		}
 		return new Result(test);
 	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
@@ -66,7 +92,10 @@ public class FyTestMngSvc {
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize,search);
-		
+		for(FyTest ft:page.getList()) {
+			ft.lite();
+			
+		}
 		return new Result(page);
 	}
 	

@@ -1,5 +1,7 @@
 package com.zhitail.app.manager;
 
+import java.util.List;
+
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.frame.util.page.Pagination;
@@ -18,5 +20,7 @@ public interface FyQuestionMng {
 
 	public Pagination<FyQuestion> getPage(Long[] alreadyIds, Integer pageNo, Integer pageSize,
 			Long userId, String title, String type, String difficulty, String status);
+
+	public List<FyQuestion> findByIds(Long[] qids);
 
 }

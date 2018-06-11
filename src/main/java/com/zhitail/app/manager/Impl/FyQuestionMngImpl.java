@@ -92,5 +92,17 @@ public class FyQuestionMngImpl implements FyQuestionMng{
 		finder.append(" order by bean.id desc");
 		return questionDao.findPageByFinder(finder, pageNo, pageSize);
 	}
+	@Override
+	public List<FyQuestion> findByIds(Long[] qids) {
+		// TODO Auto-generated method stub
+			Finder finder = Finder.create(" from FyQuestion bean where bean.id in:qids");
+		
+	
+			
+			finder.setParamList("qids",qids);
+	
+		
+		return questionDao.findListByFinder(finder);
+	}
 
 }
