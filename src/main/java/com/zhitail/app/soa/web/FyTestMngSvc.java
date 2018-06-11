@@ -58,7 +58,7 @@ public class FyTestMngSvc {
 		
 		List<Long> ids = test.getQuestionIds();
 		if(ids.size()>0) {
-			Long[] qids = new Long[ids.size()];
+			Long[] qids = ids.toArray(new Long[ids.size()]);
 			List<FyQuestion> qs=questionMng.findByIds(qids);
 			Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
 			for(FyQuestion q:qs) {
