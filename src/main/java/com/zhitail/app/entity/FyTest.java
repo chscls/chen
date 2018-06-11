@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.IndexColumn;
 
+import com.Application;
 import com.alibaba.fastjson.JSONArray;
 
 @Entity
@@ -92,11 +93,12 @@ public class FyTest {
 		this.allowTime = allowTime;
 	}
 	@Column(unique=true)
-	private String code;
-	public String getCode() {
+	private Long code;
+	
+	public Long getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public void setCode(Long code) {
 		this.code = code;
 	}
 	public Long getUserId() {
@@ -164,6 +166,6 @@ public class FyTest {
 	}
 	public void refreshCode() {
 		// TODO Auto-generated method stub
-		this.setCode(UUID.randomUUID().toString().replace("-", ""));
+		this.code=Application.getSnowflakeIdWorker().nextId();
 	}
 }

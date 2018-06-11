@@ -96,7 +96,7 @@ public class FyTestRecordMngSvc {
 	List<FyTestRecordStatistics> list2=	testRecordMng.groupByCodes(page.getList().toArray(new String[page.getList().size()]));
 	
 	List<FyTest> list =	testMng.findByCodes(page.getList().toArray(new String[page.getList().size()]));
-	Map<String,FyTest> map = new HashMap<String,FyTest>();
+	Map<Long,FyTest> map = new HashMap<Long,FyTest>();
 	for(FyTest t:list){
 		map.put(t.getCode(), t);
 	}

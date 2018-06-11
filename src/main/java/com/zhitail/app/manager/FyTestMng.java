@@ -24,7 +24,7 @@ public interface FyTestMng {
 
 	public List<FyTest> getList(Integer start, Integer count, FyTest search);
 
-	public FyTest findByCode(String code);
+	public FyTest findByCode(Long code);
 
 	public List<FyTest> findByQuestionId(Long id);
 

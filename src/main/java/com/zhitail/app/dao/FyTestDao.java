@@ -13,6 +13,6 @@ import com.zhitail.frame.util.jpa.BaseRepository;
 public interface FyTestDao extends BaseRepository<FyTest,Long> {
  	@Query("select d from FyTest d where d.code =:code") 
 	
- 	public FyTest findByCode(@Param(value = "code") String code);
+ 	public FyTest findByCode(@Param(value = "code") Long code);
 
 }

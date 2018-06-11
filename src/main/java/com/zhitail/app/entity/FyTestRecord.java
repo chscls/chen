@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.IndexColumn;
 
+import com.Application;
 import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.FyTest.Mode;
@@ -39,13 +41,9 @@ public class FyTestRecord {
 	private Mode mode;
 	private Double score;
 	private Double goal;
-	private String uuid;
-	public String getUuid() {
-		return uuid;
-	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
+	@Column(unique=true)
+	private Long uuid;
+	
 	public Double getGoal() {
 		return goal;
 	}
@@ -82,7 +80,8 @@ public class FyTestRecord {
 	private Date createTime;
 	private Long userId;
 	private Long teaId;
-	private String code;
+	@Column(unique=true)
+	private Long code;
 	public Long getTeaId() {
 		return teaId;
 	}
@@ -116,10 +115,17 @@ public class FyTestRecord {
 	public void setJson(String json) {
 		this.json = json;
 	}
-	public String getCode() {
+	
+	public Long getUuid() {
+		return uuid;
+	}
+	public void setUuid(Long uuid) {
+		this.uuid = uuid;
+	}
+	public Long getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public void setCode(Long code) {
 		this.code = code;
 	}
 	public Long getUserId() {
@@ -165,5 +171,9 @@ public class FyTestRecord {
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	public void reFreshUuid() {
+		// TODO Auto-generated method stub
+		this.uuid=Application.getSnowflakeIdWorker().nextId();
 	}
 }

@@ -171,7 +171,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		return testRecordDao.findListByFinder(finder);
 	}
 	@Override
-	public FyTestRecord addTestRecord(Long userId, String code,Long recordId) {
+	public FyTestRecord addTestRecord(Long userId,Long code,Long recordId) {
 		if(recordId!=null) {
 			return  findById(recordId);
 		}
@@ -187,7 +187,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setMode(t.getMode());
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
-		tr.setUuid(UUID.randomUUID().toString());
+		tr.reFreshUuid();
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
 	}

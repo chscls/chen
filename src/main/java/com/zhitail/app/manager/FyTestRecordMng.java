@@ -31,7 +31,7 @@ public interface FyTestRecordMng {
 
 	public  List<FyTestRecordStatistics> groupByCodes(String[] codes);
 
-	public FyTestRecord addTestRecord(Long userId, String code, Long recordId);
+	public FyTestRecord addTestRecord(Long userId, Long code, Long recordId);
 
 	public FyTestRecord submit(Long id, String answers);
 

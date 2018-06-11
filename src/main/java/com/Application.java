@@ -24,6 +24,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
+import com.zhitail.test.SnowflakeIdWorker;
 
 
 
@@ -37,12 +38,23 @@ import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
 @EnableCircuitBreaker*/
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
-	
+	private static long datacenterId = 0L;
+	private static long workerId = 0L;
+	private static SnowflakeIdWorker instance;
 	public static void main(String[] args) {
 			SpringApplication.run(Application.class, args);
 	
 	}
-	
+	 
+	 public static SnowflakeIdWorker getSnowflakeIdWorker(){
+		 if(instance!=null) {
+			 return instance;
+		 }else {
+		 return new SnowflakeIdWorker(workerId,datacenterId);
+		 }
+		 
+	 }
+	 
 	 @Bean  
 	    public MultipartConfigElement multipartConfigElement() {  
 	        MultipartConfigFactory factory = new MultipartConfigFactory();  
