@@ -3,7 +3,9 @@ package com.zhitail.app.manager.Impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -22,6 +24,7 @@ import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyTestRecord.Status;
 import com.zhitail.app.entity.middle.FyQuestionItem;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
+import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
 import com.zhitail.frame.util.hibernate.Finder;
@@ -35,6 +38,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 	private FyTestRecordDao testRecordDao;
 	@Autowired
 	private FyTestMng testMng;
+	@Autowired
+	private FyQuestionMng questionMng;
 	@Override
 	public FyTestRecord findById(Long id) {
 		// TODO Auto-generated method stub
@@ -170,13 +175,39 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		finder.append(" order by bean.id desc");
 		return testRecordDao.findListByFinder(finder);
 	}
+private void fullQuestions(FyTest test) {
+		
+		List<Long> ids = test.getQuestionIds();
+		if(ids.size()>0) {
+			Long[] qids = ids.toArray(new Long[ids.size()]);
+			List<FyQuestion> qs=questionMng.findByIds(qids);
+			Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
+			for(FyQuestion q:qs) {
+				map.put(q.getId(), q);
+			}
+			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+			for(Long id:qids) {
+				if(map.containsKey(id)) {
+				fqs.add(map.get(id));
+				}
+			}
+			test.setQuestions(fqs);
+		
+		}else {
+		test.setQuestions(new ArrayList<FyQuestion>());
+		}
+		
+		
+	}
 	@Override
 	public FyTestRecord addTestRecord(Long userId,String code,Long recordId) {
 		if(recordId!=null) {
 			return  findById(recordId);
 		}
+		
 		// TODO Auto-generated method stub
 		FyTest t = testMng.findByCode(code);
+		
 		FyTestRecord tr=new FyTestRecord();
 		tr.setCode(t.getCode());
 		tr.setCreateTime(new Date());
@@ -188,6 +219,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng{
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
 		tr.reFreshUuid();
+		fullQuestions(t);
 		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
 	}
