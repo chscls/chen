@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zhitail.app.dao.FyQuestionDao;
 import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.entity.FyQuestion;
@@ -67,10 +68,8 @@ public class FyTestMngImpl implements FyTestMng {
 	public FyTest updateTestQuestions(Long id, Long[] qids) {
 		FyTest  t= testDao.findOne(id);
 		// TODO Auto-generated method stub
-		List<FyQuestion>  list =t.getQuestions();
-		for(Long qid:qids){
-		list.add(questionMng.findById(qid));
-		}
+		String json =JSONArray.toJSONString(qids);
+		t.setJson(json.substring(1, json.length()-1));
 		t.setCode(UUID.randomUUID().toString().replace("-", ""));
 		return update(t);
 	}

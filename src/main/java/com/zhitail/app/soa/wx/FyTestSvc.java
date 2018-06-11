@@ -1,7 +1,10 @@
 package com.zhitail.app.soa.wx;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
+import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
@@ -35,7 +39,25 @@ public class FyTestSvc {
 	@Autowired
 	private FyTestRecordMng testRecordMng;
 	@Autowired
+	private FyQuestionMng questionMng;
+	@Autowired
 	private FyUserMng userMng;
+	private FyTest fullQuestions(FyTest test) {
+		Long[] qids = new Long[test.getQuestionIds().size()];
+		List<FyQuestion> qs=questionMng.findByIds(qids);
+		Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
+		for(FyQuestion q:qs) {
+			map.put(q.getId(), q);
+		}
+		List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+		for(Long id:qids) {
+			if(map.containsKey(id)) {
+			fqs.add(map.get(id));
+			}
+		}
+		test.setQuestions(fqs);
+		return test;
+	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findTest(String token,String code) {

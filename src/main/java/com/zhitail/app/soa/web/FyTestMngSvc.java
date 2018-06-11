@@ -114,6 +114,7 @@ public class FyTestMngSvc {
 			test.setCode(UUID.randomUUID().toString().replace("-", ""));
 			test= testMng.update(test);
 		}
+		fullQuestions(test);
 		return new Result(test);
 	
 	}
