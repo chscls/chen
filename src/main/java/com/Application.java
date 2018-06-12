@@ -41,21 +41,17 @@ import com.zhitail.test.SnowflakeIdWorker;
 public class Application {
 	private static long datacenterId = 0L;
 	private static long workerId = 0L;
-	private static Integer port=8080;
 	private static SnowflakeIdWorker instance;
 	public static void main(String[] args) {
 		if(args!=null&&args.length>0) {
-			port=Integer.parseInt(args[0]);
-			datacenterId=Long.parseLong(args[1]);
-			workerId= Long.parseLong(args[2]);
+			
+			datacenterId=Long.parseLong(args[0]);
+			workerId= Long.parseLong(args[1]);
 		}
 			SpringApplication.run(Application.class, args);
 	
 	}
-	 public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {  
-	  
-	        configurableEmbeddedServletContainer.setPort(port);  
-	    }  
+	
 	 public static SnowflakeIdWorker getSnowflakeIdWorker(){
 		 if(instance!=null) {
 			 return instance;

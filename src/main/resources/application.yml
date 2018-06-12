@@ -54,7 +54,7 @@ com:
   zhiyong:
     resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/
 server:
-  port: 52001
+  port: 52000
 eureka:
   instance:
     hostname: 127.0.0.1
@@ -65,9 +65,4 @@ eureka:
 ribbon:
   ConnectTimeout: 60000
   ReadTimeout: 60000
-convert:
-  extFile: d:/mooc3/rs200/extFile
-  port: 8899
-  convert_doc_office_home: d:/LibreOffice5
-  convert_video_size: org,848X480
 
