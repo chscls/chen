@@ -29,7 +29,7 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-      redisson-config: classpath:conf/redisson.yaml
+      redisson-config: classpath:conf/zymoocs.yaml
       hibernate:
         cache:
           use_structured_entries: true

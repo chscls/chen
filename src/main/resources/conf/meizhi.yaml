@@ -14,7 +14,7 @@ singleServerConfig:
   subscriptionsPerConnection: 5
   clientName: null
   address:
-  - "//127.0.0.1:6379"
+  - "//www.zymoocs.com:6379"
   password: chenerping
   subscriptionConnectionMinimumIdleSize: 1
   subscriptionConnectionPoolSize: 25
