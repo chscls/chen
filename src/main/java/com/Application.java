@@ -6,6 +6,7 @@ import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -40,12 +41,21 @@ import com.zhitail.test.SnowflakeIdWorker;
 public class Application {
 	private static long datacenterId = 0L;
 	private static long workerId = 0L;
+	private static Integer port=8080;
 	private static SnowflakeIdWorker instance;
 	public static void main(String[] args) {
+		if(args!=null&&args.length>0) {
+			port=Integer.parseInt(args[0]);
+			datacenterId=Long.parseLong(args[1]);
+			workerId= Long.parseLong(args[2]);
+		}
 			SpringApplication.run(Application.class, args);
 	
 	}
-	 
+	 public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {  
+	  
+	        configurableEmbeddedServletContainer.setPort(port);  
+	    }  
 	 public static SnowflakeIdWorker getSnowflakeIdWorker(){
 		 if(instance!=null) {
 			 return instance;

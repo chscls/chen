@@ -12,7 +12,7 @@ spring:
     check-template-location: true
     enabled: true
   application:
-    name: eureka.client
+    name: PinTiDuo-service
   data:
     jpa:
       repositories:
@@ -54,14 +54,14 @@ com:
   zhiyong:
     resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/
 server:
-  port: 52000
+  port: 52001
 eureka:
   instance:
-    hostname: localhost
-    appname: eureka.client.01
+    hostname: 127.0.0.1
+    appname: PinTiDuo-service
   client:
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:7888/eureka/
 ribbon:
   ConnectTimeout: 60000
   ReadTimeout: 60000
@@ -70,7 +70,4 @@ convert:
   port: 8899
   convert_doc_office_home: d:/LibreOffice5
   convert_video_size: org,848X480
-https:
-  password: 214719198680595
-  file: D:/your-name.jks
-  port: 443
+
