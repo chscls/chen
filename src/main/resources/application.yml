@@ -1,0 +1,76 @@
+---
+spring:
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    time-zone: GMT+8
+  freemarker:
+    charset: UTF-8
+    cache: false
+    content-type: text/html
+    template-loader-path: classpath:/template
+    suffix: .html
+    check-template-location: true
+    enabled: true
+  application:
+    name: eureka.client
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  datasource:
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chen?characterEncoding=UTF-8
+    username: root
+  jpa:
+    show-sql: false
+    open-in-view: true 
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      redisson-config: classpath:conf/redisson.yaml
+      hibernate:
+        cache:
+          use_structured_entries: true
+          use_second_level_cache: true
+          region_prefix: hibernate
+          region:
+            factory_class: org.hibernate.cache.redis.hibernate52.SingletonRedisRegionFactory
+          use_query_cache: true
+        generate_statistics: false
+      redis:
+        expiryInSeconds:
+          default: 120
+          hibernate:
+            common: 0
+            account: 1200
+  redis:
+    database: 0
+    port: 6379
+    expire: 1800
+    host: localhost
+com:
+  zhiyong:
+    resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/
+server:
+  port: 52000
+eureka:
+  instance:
+    hostname: localhost
+    appname: eureka.client.01
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 60000
+convert:
+  extFile: d:/mooc3/rs200/extFile
+  port: 8899
+  convert_doc_office_home: d:/LibreOffice5
+  convert_video_size: org,848X480
+https:
+  password: 214719198680595
+  file: D:/your-name.jks
+  port: 443

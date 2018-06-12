@@ -31,8 +31,8 @@ import com.zhitail.test.SnowflakeIdWorker;
 
 @SpringBootApplication
 @ServletComponentScan
-/*@EnableEurekaClient
-@EnableZuulProxy
+@EnableEurekaClient
+/*@EnableZuulProxy
 @EnableFeignClients
 @EnableEurekaServer
 @EnableCircuitBreaker*/
