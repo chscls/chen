@@ -1,6 +1,9 @@
 package com;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
@@ -45,13 +49,17 @@ public class Application {
 	private static long workerId = 0L;
 	private static Integer port=8080;
 	private static SnowflakeIdWorker instance;
+	private static String yaml="application.yml";
 	public static void main(String[] args) {
 		if(args!=null&&args.length>0) {
 			port=Integer.parseInt(args[0]);
 			datacenterId=Long.parseLong(args[1]);
 			workerId= Long.parseLong(args[2]);
+			yaml= args[3];
 		}
-			SpringApplication.run(Application.class, args);
+	    new SpringApplicationBuilder(Application.class)
+        .properties("spring.config.location=classpath:/"+yaml).run(args);
+			
 	
 	}
 	 public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {  
