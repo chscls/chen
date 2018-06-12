@@ -33,9 +33,7 @@ import com.zhitail.frame.util.jpa.BaseRepositoryFactoryBean;
 import com.zhitail.test.SnowflakeIdWorker;
 
 
-@EnableEurekaServer
-@EnableZuulProxy
-/*########################################*/
+
 @SpringBootApplication
 @ServletComponentScan
 @EnableEurekaClient
@@ -78,31 +76,6 @@ public class Application {
 	    }  
 	 
 	 
-	 @Bean
-	    public EmbeddedServletContainerFactory servletContainer() {
-	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http
-	        return tomcat;
-	    }
-
-	 private Connector createSslConnector() {
-	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-	        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-	        String x = env.getProperty("https.file");
-	        String y = env.getProperty("https.password");
-	        String p = env.getProperty("https.port");
-	            File keystore = new File(x);
-	            /*File truststore = new ClassPathResource("sample.jks").getFile();*/
-	            connector.setScheme("https");
-	            connector.setSecure(true);
-	            connector.setPort(Integer.parseInt(p));
-	            protocol.setSSLEnabled(true);
-	            protocol.setKeystoreFile(keystore.getAbsolutePath());
-	            protocol.setKeystorePass(y);
-	           // protocol.setKeyPass(key_password);
-	            return connector;
-	      
-	     
-	    }
+	
 	 
 }
