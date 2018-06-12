@@ -10,7 +10,7 @@
 	<groupId>com.cdzhiyong</groupId>
 	<artifactId>chen</artifactId>
 	<version>1.0</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<properties>
 		<hibernate.version>5.2.4.Final</hibernate.version>
 		<java.version>1.8</java.version>
