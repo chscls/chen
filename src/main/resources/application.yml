@@ -57,14 +57,13 @@ server:
   port: 52000
 eureka:
   instance:
-  
-    hostname: 127.0.0.1
+    hostname: localhost
     appname: PinTiDuo-service
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
-  client:
+  client: 
     serviceUrl:
-      defaultZone:http://127.0.0.1:7888/eureka/
+      defaultZone: http://localhost:7888/eureka/
 ribbon:
   ConnectTimeout: 60000
   ReadTimeout: 60000
