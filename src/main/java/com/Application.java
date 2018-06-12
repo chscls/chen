@@ -49,7 +49,7 @@ public class Application {
 	private static long workerId = 0L;
 	private static Integer port=8080;
 	private static SnowflakeIdWorker instance;
-	private static String yaml="application.yml";
+	private static String yaml="application";
 	public static void main(String[] args) {
 		if(args!=null&&args.length>0) {
 			port=Integer.parseInt(args[0]);
@@ -58,7 +58,7 @@ public class Application {
 			yaml= args[3];
 		}
 	    new SpringApplicationBuilder(Application.class)
-        .properties("spring.config.location=classpath:/"+yaml).run(args);
+        .properties("spring.config.location=classpath:/"+yaml+".yml").run(args);
 			
 	
 	}
