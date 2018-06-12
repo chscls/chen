@@ -46,10 +46,11 @@ spring:
             common: 0
             account: 1200
   redis:
-    database: 0
+    database: 2
     port: 6379
     expire: 1800
-    host: localhost
+    host: www.zymoocs.com
+    password: chenerping
 com:
   zhiyong:
     resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/
@@ -60,38 +61,16 @@ eureka:
     enable-self-preservation: false        # 关闭自我保护模式（缺省为打开）
     eviction-interval-timer-in-ms: 5000       # 
   instance:
-    hostname: localhost
+    hostname: eas.msvtc.net
     appname: PinTiDuo-service
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
   client: 
     registry-fetch-interval-seconds: 5
     serviceUrl:
-      defaultZone: http://localhost:52000/eureka/
+      defaultZone: http://www.zymoocs.com:7888/eureka/
 ribbon:
   ConnectTimeout: 60000
   ReadTimeout: 60000
 
 
-https:
-  password: 214719198680595
-  file: D:/your-name.jks
-  port: 443
-  
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 20000
-zuul: 
-  host:
-    connect-timeout-millis: 20000
-    socket-timeout-millis: 20000
-  
-  routes:
-    PinTiDuo-service: 
-      path: /ptd/**
-      serviceId: PinTiDuo-service
-      sensitiveHeaders: 
