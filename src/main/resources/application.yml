@@ -78,7 +78,7 @@ oauth2:
       clientId: PinTiDuo-service
       clientSecret: cdzysoft
       grant-type: implicit,refresh_token,password,authorization_code
-      scope: service
+      scope: read,write,trust
       access-token-validity-seconds: 3600
 
 
