@@ -1,4 +1,6 @@
 ---
+server:
+  port: 52000
 spring:
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
@@ -53,8 +55,7 @@ spring:
 com:
   zhiyong:
     resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/
-server:
-  port: 52000
+
 eureka:
   server:
     enable-self-preservation: false        # 关闭自我保护模式（缺省为打开）

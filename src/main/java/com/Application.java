@@ -7,8 +7,7 @@ import java.util.Properties;
 
 import javax.servlet.MultipartConfigElement;
 
-import org.apache.catalina.connector.Connector;
-import org.apache.coyote.http11.Http11NioProtocol;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -41,7 +40,7 @@ import com.zhitail.test.SnowflakeIdWorker;
 
 @SpringBootApplication
 @ServletComponentScan
-@EnableEurekaClient
+//@EnableEurekaClient
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 public class Application {
 	@Autowired

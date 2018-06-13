@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhitail.frame.common.upload.FileWebUploader;
 
-import org.apache.catalina.connector.Connector;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.coyote.http11.Http11NioProtocol;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
