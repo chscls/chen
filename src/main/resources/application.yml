@@ -72,5 +72,13 @@ eureka:
 ribbon:
   ConnectTimeout: 60000
   ReadTimeout: 60000
+  
+oauth2: 
+    client: 
+      clientId: PinTiDuo-service
+      clientSecret: cdzysoft
+      grant-type: implicit,refresh_token,password,authorization_code
+      scope: service
+      access-token-validity-seconds: 3600
 
 
