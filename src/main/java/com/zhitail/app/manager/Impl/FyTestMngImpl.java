@@ -1,6 +1,9 @@
 package com.zhitail.app.manager.Impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import com.zhitail.app.dao.FyQuestionDao;
 import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
+import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.frame.util.hibernate.Finder;
@@ -87,7 +91,32 @@ public class FyTestMngImpl implements FyTestMng {
 		finder.append(" order by bean.id desc");
 		return testDao.findListByFinder(finder);
 	}
+	public void fullQuestions(FyTest test) {
 
+		List<QuestionConfig> ids = test.getQuestionConfigs();
+		if (ids.size() > 0) {
+			Long[] qids = new Long[ids.size()];
+			for(int i=0;i<ids.size();i++) {
+				qids[i]=ids.get(i).getId();
+			}
+			List<FyQuestion> qs = questionMng.findByIds(qids);
+			Map<Long, FyQuestion> map = new HashMap<Long, FyQuestion>(qs.size());
+			for (FyQuestion q : qs) {
+				map.put(q.getId(), q);
+			}
+			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+			for (Long id : qids) {
+				if (map.containsKey(id)) {
+					fqs.add(map.get(id));
+				}
+			}
+			test.setQuestions(fqs);
+
+		} else {
+			test.setQuestions(new ArrayList<FyQuestion>());
+		}
+
+	}
 	@Override
 	public List<FyTest> getList(Integer start, Integer count, FyTest search) {
 		// TODO Auto-generated method stub

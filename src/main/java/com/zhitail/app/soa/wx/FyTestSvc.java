@@ -42,29 +42,7 @@ public class FyTestSvc {
 	private FyQuestionMng questionMng;
 	@Autowired
 	private FyUserMng userMng;
-	private FyTest fullQuestions(FyTest test) {
-		List<Long> ids = test.getQuestionIds();
-		if(ids.size()>0) {
-			Long[] qids = ids.toArray(new Long[ids.size()]);
-			List<FyQuestion> qs=questionMng.findByIds(qids);
-			Map<Long,FyQuestion> map=new HashMap<Long,FyQuestion>(qs.size());
-			for(FyQuestion q:qs) {
-				map.put(q.getId(), q);
-			}
-			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
-			for(Long id:qids) {
-				if(map.containsKey(id)) {
-				fqs.add(map.get(id));
-				}
-			}
-			test.setQuestions(fqs);
-		
-		}else {
-		test.setQuestions(new ArrayList<FyQuestion>());
-		}
-		
-		return test;
-	}
+	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findTest(String token,String code) {

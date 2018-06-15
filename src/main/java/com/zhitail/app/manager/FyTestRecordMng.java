@@ -8,7 +8,7 @@ import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.frame.util.page.Pagination;
 
 public interface FyTestRecordMng {
-
+	
 	public FyTestRecord findById(Long id);
 
 	public Pagination<String> getPage(Integer pageNo, Integer pageSize,

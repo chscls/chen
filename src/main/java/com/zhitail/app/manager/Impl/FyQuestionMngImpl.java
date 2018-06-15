@@ -15,6 +15,7 @@ import com.zhitail.app.entity.FyQuestion.Status;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyTest;
+import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.frame.util.hibernate.Finder;
@@ -34,12 +35,13 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		for (Long id : ids) {
 			List<FyTest> ft = testMng.findByQuestionId(id);
+			QuestionConfig qc = new QuestionConfig(id);
 			for (FyTest f : ft) {
 				f.refreshCode();
-				List<Long> qids = f.getQuestionIds();
-				qids.remove(id);
-				String json = JSONArray.toJSONString(qids);
-				f.setJson(json.substring(1, json.length() - 1)+",");
+				List<QuestionConfig> qids = f.getQuestionConfigs();
+				qids.remove(qc);
+				
+				f.setJson(JSONArray.toJSONString(qids));
 				testMng.update(f);
 
 			}

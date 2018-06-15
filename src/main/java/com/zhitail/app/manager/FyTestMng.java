@@ -7,7 +7,7 @@ import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 
 public interface FyTestMng {
-
+	public  void fullQuestions(FyTest test) ;
 	public Pagination<FyTest> getPage(Long userId, Integer pageNo, Integer pageSize, FyTest search);
 
 	public FyTest update(FyTest test);

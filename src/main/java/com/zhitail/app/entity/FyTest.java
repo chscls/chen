@@ -23,6 +23,7 @@ import org.hibernate.annotations.IndexColumn;
 
 import com.Application;
 import com.alibaba.fastjson.JSONArray;
+import com.zhitail.app.entity.middle.QuestionConfig;
 
 @Entity
 @Table(name = "fy_test")
@@ -109,12 +110,12 @@ public class FyTest {
 		this.userId = userId;
 	}
 
-	public List<Long> getQuestionIds() {
+	public List<QuestionConfig> getQuestionConfigs() {
 		if(json!=null){
-			String x = "["+this.json.substring(0, json.length()-1)+"]";
-			return JSONArray.parseArray(x,Long.class);
+			
+			return JSONArray.parseArray(json,QuestionConfig.class);
 			}else{
-				return new ArrayList<Long>(0);
+				return new ArrayList<QuestionConfig>(0);
 			}
 	}
 	@Lob
@@ -158,7 +159,7 @@ public class FyTest {
 		this.createTime = createTime;
 	}
 	public void lite() {
-		this.setCount(this.getQuestionIds().size());
+		this.setCount(this.getQuestionConfigs().size());
 		this.setJson(null);
 		this.setQuestions(null);
 		
