@@ -67,12 +67,12 @@ public class FyTestMngSvc {
 		return new Result(test);
 	}
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
-	public Result queryTest(String token, Integer pageNo,Integer pageSize,FyTest search) {
+	public Result queryTest(String token, Integer pageNo,Integer pageSize,String title,String isQuestionnaire,String mode,String status) {
 		if(!loginManager.verify(token)){
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize,search);
+		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize, title,isQuestionnaire, mode,status);
 		for(FyTest ft:page.getList()) {
 			ft.lite();
 			

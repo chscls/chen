@@ -15,6 +15,9 @@ import com.zhitail.app.dao.FyQuestionDao;
 import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
+import com.zhitail.app.entity.FyTest.Mode;
+import com.zhitail.app.entity.FyQuestion.Status;
+import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
@@ -29,21 +32,7 @@ public class FyTestMngImpl implements FyTestMng {
 	private FyTestDao testDao;
 	@Autowired
 	private FyQuestionMng questionMng;
-	public Pagination<FyTest> getPage(Long userId,Integer pageNo, Integer pageSize,
-			FyTest search) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTest bean where 1=1");
-
-		if (search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
-		}
-		finder.append(" and bean.userId=:userId");
-		finder.setParam("userId",userId);
-		finder.append(" order by bean.id desc");
-		return testDao.findPageByFinder(finder, pageNo, pageSize);
-	}
-
+	
 	public FyTest update(FyTest test) {
 		// TODO Auto-generated method stub
 		Updater u = new Updater(test);
@@ -166,5 +155,49 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.setParam("id", "%:" + id + ",%");
 		}
 		return testDao.findListByFinder(finder);
+	}
+
+	@Override
+	public Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize, String title, String isQuestionnaire,
+			String mode,String status) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTest bean where 1=1");
+
+		if (title != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + title + "%");
+		}
+		
+		if (mode != null) {
+			String[] t = mode.split(",");
+			List<Mode> tt = new ArrayList<Mode>();
+			for (String s : t) {
+				tt.add(Mode.valueOf(s));
+			}
+			finder.append(" and bean.mode in:modes");
+			finder.setParamList("modes", tt.toArray(new Mode[tt.size()]));
+		}
+		if (status != null) {
+			String[] t = status.split(",");
+			List<Status> tt = new ArrayList<Status>();
+			for (String s : t) {
+				tt.add(Status.valueOf(s));
+			}
+			finder.append(" and bean.status in:statuss");
+			finder.setParamList("statuss", tt.toArray(new Status[tt.size()]));
+		}
+		
+		if (isQuestionnaire != null) {
+			String[] t = isQuestionnaire.split(",");
+			List<Boolean> tt = new ArrayList<Boolean>();
+			for (String s : t) {
+				tt.add(Boolean.valueOf(s));
+			}
+			finder.append(" and bean.isQuestionnaire in:isQuestionnaires");
+			finder.setParamList("isQuestionnaires", tt.toArray(new Boolean[tt.size()]));
+		}
+
+		finder.append(" order by bean.id desc");
+		return testDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 }
