@@ -113,7 +113,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		finder.append(" and bean.userId=:userId");
 		finder.setParam("userId", userId);
-		finder.append("and bean.isRecycle=false order by bean.id desc");
+		finder.append(" and bean.isRecycle=false order by bean.id desc");
 		return questionDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
