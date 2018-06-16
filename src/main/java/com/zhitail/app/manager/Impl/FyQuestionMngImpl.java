@@ -70,7 +70,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	@Override
-	public Pagination<FyQuestion> getPage(Long[] alreadyIds, Integer pageNo, Integer pageSize, Long userId,
+	public Pagination<FyQuestion> getPage(String sorter,Long[] alreadyIds, Integer pageNo, Integer pageSize, Long userId,
 			String title, String type, String difficulty, String status,String tag) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
@@ -117,7 +117,14 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		finder.append(" and bean.userId=:userId");
 		finder.setParam("userId", userId);
-		finder.append(" and bean.isRecycle=false order by bean.id desc");
+		finder.append(" and bean.isRecycle=false");
+		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
+			finder.append("order by bean.createTime asc");
+		}else {
+			finder.append("order by bean.id desc");
+		}
+				
+		
 		return questionDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
