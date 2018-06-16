@@ -49,6 +49,7 @@ import com.zhitail.app.soa.LoginManager;
 
 import com.zhitail.app.websocket.QcodeWebSocket;
 import com.zhitail.app.websocket.WsMsg;
+import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.service.Result;
 
 @RequestMapping("/wx/FyUserSvc")
@@ -94,6 +95,7 @@ public class FyUserSvc {
 		
 		
 	}
+	
 	@RequestMapping(value = "/register",method=RequestMethod.POST)
 	public Result wxcode(FyUser user) {
 		   user.setPassword("123456");
@@ -109,6 +111,7 @@ public class FyUserSvc {
 		
 		
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/wxcode",method=RequestMethod.POST)
 	public Result wxcode(String code) {
 		

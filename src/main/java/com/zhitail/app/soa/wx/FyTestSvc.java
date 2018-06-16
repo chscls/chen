@@ -46,9 +46,6 @@ public class FyTestSvc {
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findTest(String token,String code) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		FyTest test= testMng.findByCode(code);
 		if(test==null) {
 			return Result.error("该试卷不存在");
@@ -76,11 +73,10 @@ public class FyTestSvc {
 		jo.put("total", count );
 		return new Result(jo);
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
 	public Result queryTest(String token, Integer start,Integer count,FyTest search) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
+	
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		if(search.getIsSale()==null) {
 			search.setUserId(u.getId());

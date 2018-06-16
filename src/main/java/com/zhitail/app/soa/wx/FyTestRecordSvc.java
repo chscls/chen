@@ -69,6 +69,7 @@ public class FyTestRecordSvc {
 		writer.close();
 		return htmlStr;
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/printRecord/{uuid}.pdf",method=RequestMethod.GET)
 	public void ok(HttpServletResponse response,@PathVariable(name="uuid")  String uuid) {
 		
@@ -92,7 +93,7 @@ public class FyTestRecordSvc {
 		
 		
 	}
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/submit",method=RequestMethod.POST)
 	public Result submit(String token,Long id,String answers) {
 		
@@ -104,13 +105,9 @@ public class FyTestRecordSvc {
 		
 		
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryTestRecord",method=RequestMethod.GET)
 	public Result queryTestRecord(String token,Integer start,Integer count,FyTestRecord search) {
-		
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		search.setUserId(u.getId());
 		List<FyTestRecord> list = testRecordMng.getList(start,count,search);
@@ -123,13 +120,9 @@ public class FyTestRecordSvc {
 		
 		
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/addTestRecord",method=RequestMethod.GET)
 	public Result addTestRecord(String token,String code,Long recordId) {
-		
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),code,recordId);
 		
