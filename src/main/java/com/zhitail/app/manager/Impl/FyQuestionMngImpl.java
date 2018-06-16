@@ -80,8 +80,8 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			finder.setParam("title", "%" + title + "%");
 		}
 		if (StringUtils.isNotBlank(tag)) {
-			finder.append(" and bean.tag like:tag");
-			finder.setParam("tag", "%" + tag + "%");
+			finder.append(" and bean.tagsJson like:tag");
+			finder.setParam("tag", "%\"" + tag + "\"%");
 		}
 		if (StringUtils.isNotBlank(type)) {
 			String[] t = type.split(",");

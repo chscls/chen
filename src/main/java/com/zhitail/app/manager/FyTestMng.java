@@ -29,10 +29,11 @@ public interface FyTestMng {
 	public List<FyTest> findByQuestionId(Long id);
 
 
-	 public Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize, String title, String isQuestionnaire,
-			String mode, String status);
-
 
 	public void recycle(Long[] ids);
+
+
+	public  Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize, String code, String title,
+			String isQuestionnaire, String mode, String status);
 
 }
