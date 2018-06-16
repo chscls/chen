@@ -60,7 +60,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	private Long getCount(Long userId) {
 		
 		
-		Finder finder = Finder.create(" from FyQuestion bean where userId=:userId");
+		Finder finder = Finder.create(" from FyQuestion bean where bean.userId=:userId");
 		finder.setParam("userId", userId);
 		
 		Integer x = questionDao.countQueryResult(finder);
