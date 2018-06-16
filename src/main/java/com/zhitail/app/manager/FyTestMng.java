@@ -41,4 +41,7 @@ public interface FyTestMng {
 	public Pagination<FyTest> getRecyclePage(Long userId, Integer pageNo, Integer pageSize, String title, String code,
 			String sorter);
 
+
+	public void recovery(Long[] ids);
+
 }

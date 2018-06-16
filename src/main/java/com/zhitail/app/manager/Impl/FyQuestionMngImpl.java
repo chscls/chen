@@ -144,10 +144,13 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
+			
 			q=this.findById(id);
+			if(q!=null) {
 			q.setRecycleTime(new Date());
 			q.setIsRecycle(true);
 			this.update(q);
+			}
 		}
 	}
 
@@ -179,4 +182,18 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 				
 				return questionDao.findPageByFinder(finder, pageNo, pageSize);
 			}
+
+	@Override
+	public void recovery(Long[] ids) {
+		// TODO Auto-generated method stub
+		FyQuestion q;
+		for (Long id : ids) {
+			q=this.findById(id);
+			if(q!=null) {
+			q.setRecycleTime(null);
+			q.setIsRecycle(false);
+			this.update(q);
+			}
+		}
+	}
 }

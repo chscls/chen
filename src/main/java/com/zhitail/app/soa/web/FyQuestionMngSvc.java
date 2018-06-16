@@ -110,4 +110,10 @@ public class FyQuestionMngSvc {
 		questionMng.recycle(ids);
 		return new Result(true);
 	}
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/recoveryQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result recoveryQuestion(String token, Long[] ids) {
+		questionMng.recovery(ids);
+		return new Result(true);
+	}
 }

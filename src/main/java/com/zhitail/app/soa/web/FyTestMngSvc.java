@@ -124,4 +124,10 @@ public class FyTestMngSvc {
 		testMng.recycle(ids);
 		return new Result(true);
 	}
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/recoveryTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result recoveryTest(String token, Long[] ids) {
+		testMng.recovery(ids);
+		return new Result(true);
+	}
 }

@@ -218,9 +218,11 @@ public class FyTestMngImpl implements FyTestMng {
 		FyTest test;
 		for (Long id : ids) {
 			test=this.findById(id);
+			if(test!=null) {
 			test.setRecycleTime(new Date());
 			test.setIsRecycle(true);
 			this.update(test);
+			}
 		}
 	}
 
@@ -249,4 +251,18 @@ public class FyTestMngImpl implements FyTestMng {
 				
 				return testDao.findPageByFinder(finder, pageNo, pageSize);
 			}
+
+	@Override
+	public void recovery(Long[] ids) {
+		// TODO Auto-generated method stub
+		FyTest test;
+		for (Long id : ids) {
+			test=this.findById(id);
+			if(test!=null) {
+			test.setRecycleTime(null);
+			test.setIsRecycle(false);
+			this.update(test);
+			}
+		}
+	}
 }
