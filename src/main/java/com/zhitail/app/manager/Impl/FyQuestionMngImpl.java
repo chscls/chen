@@ -121,7 +121,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
 			finder.append("order by bean.createTime asc");
 		}else {
-			finder.append("order by bean.id desc");
+			finder.append("order by bean.createTime desc");
 		}
 				
 		
