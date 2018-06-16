@@ -33,13 +33,10 @@ public class FyQuestionMngSvc {
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findQuestion",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		FyQuestion question = questionMng.findById(id);
-		
 		return new Result(question);
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryQuestion",method=RequestMethod.POST)
 	public Result queryQuestion(String token,Long[] alreadyIds, Integer pageNo,Integer pageSize,String type,String difficulty,String status,String title) {
 		if(!loginManager.verify(token)){
@@ -47,9 +44,9 @@ public class FyQuestionMngSvc {
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyQuestion> page = questionMng.getPage(alreadyIds,pageNo,pageSize,u.getId(),title,type,difficulty,status);
-		
 		return new Result(page);
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/updateOptions", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addQuestion( String token,Long id,String options,Boolean isQuestionnaire) {
 		if(!loginManager.verify(token)){
@@ -60,12 +57,11 @@ public class FyQuestionMngSvc {
 		q.setJson(options);
 		q.setStatus(Status.complete);
 		questionMng.update(q);
-	
 		return new Result(q);
 	
 	}
 	
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/addQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addQuestion( String token,FyQuestion question,String[] tags) {
 		if(!loginManager.verify(token)){
@@ -92,18 +88,10 @@ public class FyQuestionMngSvc {
 	}
 	
 	
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/removeQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeQuestion(String token, Long[] ids) {
-
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		questionMng.delete(ids);
-
 		return new Result(true);
-	
-
 	}
 }

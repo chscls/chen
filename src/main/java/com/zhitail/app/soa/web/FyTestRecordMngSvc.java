@@ -28,6 +28,7 @@ import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
+
 @RequestMapping("/services/FyTestRecordMngSvc")
 @RestController
 public class FyTestRecordMngSvc {
@@ -39,107 +40,96 @@ public class FyTestRecordMngSvc {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-	@TokenAuth(value="token")
-	@RequestMapping(value = "/findTestRecord",method=RequestMethod.GET)
-	public Result findQuestion(String token,Long id) {
-		
-		FyTestRecord testRecord= testRecordMng.findById(id);
-		
+
+	@TokenAuth(value = "token")
+	@RequestMapping(value = "/findTestRecord", method = RequestMethod.GET)
+	public Result findQuestion(String token, Long id) {
+		FyTestRecord testRecord = testRecordMng.findById(id);
+
 		return new Result(testRecord);
 	}
-	@RequestMapping(value = "/queryTestRecordDetail",method=RequestMethod.GET)
-	public Result queryTestRecordDetail(String token,Integer pageNo,Integer pageSize,FyTestRecord search) {
-		
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
-		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo,pageSize,search);
+
+	@TokenAuth(value = "token")
+	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
+	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search) {
+		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search);
 		List<Long> userIds = new ArrayList<Long>(page.getList().size());
-		for(FyTestRecord r:page.getList()){
+		for (FyTestRecord r : page.getList()) {
 			userIds.add(r.getUserId());
 		}
-	List<FyUser> list = 	userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
-	Map<Long,FyUser> map = new HashMap<Long,FyUser>();
-	for(FyUser t:list){
-		map.put(t.getId(), t);
-	}
-	for(FyTestRecord  s:page.getList()){
-		FyUser lite = map.get(s.getUserId());
-		lite.setPassword(null);
-		lite.setIsDel(null);
-		lite.setOpenid(null);
-		s.setUser(lite );
-	}
-		return new Result(page);
-		
-		
-		
-	}
-	@RequestMapping(value = "/queryTestRecord",method=RequestMethod.GET)
-	public Result queryTestRecord(String token, Integer pageNo,Integer pageSize,FyTestRecord search) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
+		List<FyUser> list = userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
+		Map<Long, FyUser> map = new HashMap<Long, FyUser>();
+		for (FyUser t : list) {
+			map.put(t.getId(), t);
 		}
-		Pagination<FyTestRecordStatistics> page2 =new Pagination<FyTestRecordStatistics>();
-		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		for (FyTestRecord s : page.getList()) {
+			FyUser lite = map.get(s.getUserId());
+			lite.setPassword(null);
+			lite.setIsDel(null);
+			lite.setOpenid(null);
+			s.setUser(lite);
+		}
+		return new Result(page);
+
+	}
+
+	@TokenAuth(value = "token")
+	@RequestMapping(value = "/queryTestRecord", method = RequestMethod.GET)
+	public Result queryTestRecord(String token, Integer pageNo, Integer pageSize, FyTestRecord search) {
+		Pagination<FyTestRecordStatistics> page2 = new Pagination<FyTestRecordStatistics>();
+		FyUser u = userMng.findByUserName(loginManager.getUser(token));
 		search.setUserId(u.getId());
-		Pagination<String> page = testRecordMng.getPage(pageNo,pageSize,search);
-		if(page==null){
+		Pagination<String> page = testRecordMng.getPage(pageNo, pageSize, search);
+		if (page == null) {
 			page2.setList(new ArrayList());
 			page2.setPageNo(pageNo);
 			page2.setPageSize(pageSize);
 			page2.setTotalCount(0);
 			return new Result(page2);
 		}
-		
-	List<FyTestRecordStatistics> list2=	testRecordMng.groupByCodes(page.getList().toArray(new String[page.getList().size()]));
-	
-	List<FyTest> list =	testMng.findByCodes(page.getList().toArray(new String[page.getList().size()]));
-	Map<String,FyTest> map = new HashMap<String,FyTest>();
-	for(FyTest t:list){
-		map.put(t.getCode(), t);
-	}
-	for(FyTestRecordStatistics  s:list2){
-		FyTest lite = map.get(s.getCode());
-		lite.setQuestions(null);
-		
-		s.setTest(lite );
-	}
-	
-	page2.setList(list2);
-	page2.setPageNo(page.getPageNo());
-	page2.setPageSize(page.getPageSize());
-	page2.setTotalCount(page.getTotalCount());
-	
+
+		List<FyTestRecordStatistics> list2 = testRecordMng
+				.groupByCodes(page.getList().toArray(new String[page.getList().size()]));
+
+		List<FyTest> list = testMng.findByCodes(page.getList().toArray(new String[page.getList().size()]));
+		Map<String, FyTest> map = new HashMap<String, FyTest>();
+		for (FyTest t : list) {
+			map.put(t.getCode(), t);
+		}
+		for (FyTestRecordStatistics s : list2) {
+			FyTest lite = map.get(s.getCode());
+			lite.setQuestions(null);
+
+			s.setTest(lite);
+		}
+
+		page2.setList(list2);
+		page2.setPageNo(page.getPageNo());
+		page2.setPageSize(page.getPageSize());
+		page2.setTotalCount(page.getTotalCount());
+
 		return new Result(page2);
 	}
-	
+
+	@TokenAuth(value = "token")
 	@RequestMapping(value = "/addTestRecord", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addTest( String token,FyTestRecord test) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
-	
-			test= testRecordMng.update(test);
-		
+	public Result addTest(String token, FyTestRecord test) {
+
+		test = testRecordMng.update(test);
+
 		return new Result(test);
-	
+
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/removeTestRecord", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeTest(String token, Long[] ids) {
 
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
+		if (!loginManager.verify(token)) {
+			return new Result(HttpStatus.UNAUTHORIZED);
 		}
 		testRecordMng.delete(ids);
 
 		return new Result(true);
-	
 
 	}
 }

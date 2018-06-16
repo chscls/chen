@@ -29,6 +29,7 @@ import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 
@@ -41,22 +42,16 @@ public class FySensitiveMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FySensitiveMng sensitiveMng;
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/querySensitive",method=RequestMethod.GET)
 	public Result querySensitive(String token, Integer pageNo,Integer pageSize,FySensitive search) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		Pagination<FySensitive> page = sensitiveMng.getPage(pageNo,pageSize,search);
-		
 		return new Result(page);
 	}
 	
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/addSensitive", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addSensitive( String token,FySensitive sensitive) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		if(sensitive.getId()==null){
 		
 			sensitive = sensitiveMng.save(sensitive);
@@ -68,18 +63,10 @@ public class FySensitiveMngSvc {
 	}
 	
 	
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/removeSensitive", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeSensitive(String token, Long[] ids) {
-
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		sensitiveMng.delete(ids);
-
 		return new Result(true);
-	
-
 	}
 }

@@ -61,30 +61,26 @@ public class FyTestMngSvc {
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {
-		
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
 		FyTest test= testMng.findById(id);
 		testMng.fullQuestions(test);
 		return new Result(test);
 	}
-	@RequestMapping(value = "/queryTest",method=RequestMethod.GET)
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/queryTest",method=RequestMethod.POST)
 	public Result queryTest(String token, Integer pageNo,Integer pageSize,String title,String isQuestionnaire,String mode,String status) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize, title,isQuestionnaire, mode,status);
 		for(FyTest ft:page.getList()) {
-			ft.lite();
-			
+			ft.lite();		
 		}
 		return new Result(page);
 	}
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/addTest", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addTest( String token,FyTest test) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
+	public Result addTest( String token,FyTest test) {	
 		if(test.getId()==null){
 			test.setCreateTime(new Date());
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
@@ -97,31 +93,19 @@ public class FyTestMngSvc {
 		}
 		testMng.fullQuestions(test);
 		return new Result(test);
-	
 	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/updateTestQuestions", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result updateTestQuestions(String token,Long id, Long[] qids) {
-		
 		FyTest t  = testMng.updateTestQuestions(id,qids);
 		testMng.fullQuestions(t);
-		return new Result(t);
-
-		
-		
+		return new Result(t);	
 	}
 	
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/removeTest", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeTest(String token, Long[] ids) {
-
-		
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
 		testMng.delete(ids);
-
 		return new Result(true);
-	
-
 	}
 }

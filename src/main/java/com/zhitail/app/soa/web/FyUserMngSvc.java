@@ -26,6 +26,7 @@ import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 
@@ -38,6 +39,7 @@ public class FyUserMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyUserMng userMng;
+	
 	@RequestMapping(value = "/account",method=RequestMethod.POST)
 	public Result account(String userName,String password) {
 	FyUser u = 	userMng.findByUserName(userName);
@@ -80,7 +82,7 @@ public class FyUserMngSvc {
 	JSONObject jo= JSONObject.parseObject("{\"list\":[{\"name\":\"平凉市\",\"value\":53,\"type\":1},{\"name\":\"唐山市\",\"value\":4,\"type\":1},{\"name\":\"天津市\",\"value\":93,\"type\":1},{\"name\":\"巢湖市\",\"value\":58,\"type\":2},{\"name\":\"龙岩市\",\"value\":90,\"type\":0},{\"name\":\"娄底市\",\"value\":74,\"type\":0},{\"name\":\"果洛藏族自治州\",\"value\":40,\"type\":0},{\"name\":\"固原市\",\"value\":65,\"type\":2},{\"name\":\"赣州市\",\"value\":80,\"type\":0},{\"name\":\"吴忠市\",\"value\":18,\"type\":0},{\"name\":\"林芝地区\",\"value\":94,\"type\":1},{\"name\":\"株洲市\",\"value\":83,\"type\":1},{\"name\":\"石嘴山市\",\"value\":100,\"type\":2},{\"name\":\"山南地区\",\"value\":17,\"type\":1},{\"name\":\"玉林市\",\"value\":94,\"type\":2},{\"name\":\"铜川市\",\"value\":45,\"type\":0},{\"name\":\"北京市\",\"value\":84,\"type\":1},{\"name\":\"上海市\",\"value\":96,\"type\":1},{\"name\":\"汉中市\",\"value\":6,\"type\":1},{\"name\":\"莱芜市\",\"value\":66,\"type\":0},{\"name\":\"高雄市\",\"value\":42,\"type\":1},{\"name\":\"上海市\",\"value\":45,\"type\":1},{\"name\":\"金昌市\",\"value\":8,\"type\":1},{\"name\":\"海北藏族自治州\",\"value\":74,\"type\":2},{\"name\":\"西宁市\",\"value\":39,\"type\":2},{\"name\":\"南通市\",\"value\":51,\"type\":2},{\"name\":\"河源市\",\"value\":46,\"type\":1},{\"name\":\"白城市\",\"value\":9,\"type\":1},{\"name\":\"香港岛\",\"value\":18,\"type\":1},{\"name\":\"七台河市\",\"value\":95,\"type\":1},{\"name\":\"上饶市\",\"value\":96,\"type\":2},{\"name\":\"阳江市\",\"value\":53,\"type\":0},{\"name\":\"新界\",\"value\":49,\"type\":1},{\"name\":\"海口市\",\"value\":30,\"type\":0},{\"name\":\"河源市\",\"value\":17,\"type\":1},{\"name\":\"泰州市\",\"value\":46,\"type\":0},{\"name\":\"崇左市\",\"value\":58,\"type\":1},{\"name\":\"安顺市\",\"value\":51,\"type\":1},{\"name\":\"六盘水市\",\"value\":8,\"type\":2},{\"name\":\"庆阳市\",\"value\":48,\"type\":0},{\"name\":\"乌兰察布市\",\"value\":8,\"type\":1},{\"name\":\"澳门半岛\",\"value\":88,\"type\":0},{\"name\":\"承德市\",\"value\":67,\"type\":0},{\"name\":\"白银市\",\"value\":88,\"type\":0},{\"name\":\"基隆市\",\"value\":75,\"type\":1},{\"name\":\"重庆市\",\"value\":14,\"type\":1},{\"name\":\"昆明市\",\"value\":95,\"type\":2},{\"name\":\"遵义市\",\"value\":85,\"type\":0},{\"name\":\"丽江市\",\"value\":79,\"type\":0},{\"name\":\"哈密地区\",\"value\":56,\"type\":1},{\"name\":\"张家界市\",\"value\":8,\"type\":0},{\"name\":\"本溪市\",\"value\":43,\"type\":0},{\"name\":\"上海市\",\"value\":70,\"type\":1},{\"name\":\"黄冈市\",\"value\":3,\"type\":1},{\"name\":\"鸡西市\",\"value\":64,\"type\":0},{\"name\":\"九龙\",\"value\":10,\"type\":2},{\"name\":\"上海市\",\"value\":8,\"type\":1},{\"name\":\"鹤岗市\",\"value\":87,\"type\":0},{\"name\":\"巴中市\",\"value\":73,\"type\":1},{\"name\":\"黄石市\",\"value\":12,\"type\":1},{\"name\":\"商洛市\",\"value\":95,\"type\":0},{\"name\":\"石嘴山市\",\"value\":27,\"type\":1},{\"name\":\"澳门半岛\",\"value\":34,\"type\":0},{\"name\":\"重庆市\",\"value\":11,\"type\":1},{\"name\":\"伊春市\",\"value\":14,\"type\":1},{\"name\":\"金昌市\",\"value\":41,\"type\":2},{\"name\":\"三明市\",\"value\":59,\"type\":1},{\"name\":\"伊犁哈萨克自治州\",\"value\":93,\"type\":2},{\"name\":\"厦门市\",\"value\":93,\"type\":1},{\"name\":\"泰安市\",\"value\":13,\"type\":1},{\"name\":\"潮州市\",\"value\":34,\"type\":2},{\"name\":\"鞍山市\",\"value\":8,\"type\":0},{\"name\":\"屏东县\",\"value\":86,\"type\":0},{\"name\":\"防城港市\",\"value\":37,\"type\":1},{\"name\":\"常州市\",\"value\":71,\"type\":2},{\"name\":\"天津市\",\"value\":45,\"type\":2},{\"name\":\"三门峡市\",\"value\":30,\"type\":1},{\"name\":\"乌兰察布市\",\"value\":85,\"type\":1},{\"name\":\"焦作市\",\"value\":6,\"type\":1},{\"name\":\"固原市\",\"value\":20,\"type\":1},{\"name\":\"六盘水市\",\"value\":88,\"type\":1},{\"name\":\"三亚市\",\"value\":53,\"type\":0},{\"name\":\"上海市\",\"value\":35,\"type\":2},{\"name\":\"许昌市\",\"value\":47,\"type\":1},{\"name\":\"营口市\",\"value\":2,\"type\":1},{\"name\":\"澳门半岛\",\"value\":43,\"type\":1},{\"name\":\"台州市\",\"value\":60,\"type\":0},{\"name\":\"赣州市\",\"value\":94,\"type\":1},{\"name\":\"包头市\",\"value\":45,\"type\":0},{\"name\":\"襄阳市\",\"value\":68,\"type\":2},{\"name\":\"邯郸市\",\"value\":60,\"type\":1},{\"name\":\"北京市\",\"value\":67,\"type\":1},{\"name\":\"池州市\",\"value\":18,\"type\":1},{\"name\":\"黑河市\",\"value\":68,\"type\":1},{\"name\":\"基隆市\",\"value\":86,\"type\":1},{\"name\":\"巴中市\",\"value\":6,\"type\":1},{\"name\":\"海外\",\"value\":86,\"type\":1},{\"name\":\"丹东市\",\"value\":49,\"type\":1},{\"name\":\"苏州市\",\"value\":58,\"type\":2},{\"name\":\"安庆市\",\"value\":36,\"type\":1}]}");
 	return new  ResponseEntity<JSONObject>(jo,HttpStatus.OK);
 	}
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/currentUser",method=RequestMethod.GET)
 	public ResponseEntity<AntUser> currentUser(String token) {
 		if(!loginManager.verify(token)){
@@ -96,12 +98,10 @@ public class FyUserMngSvc {
 		return new  ResponseEntity<AntUser>(au,HttpStatus.OK);
 	}
 	
-	
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryUser",method=RequestMethod.GET)
 	public Result queryUser(String token,FyUser.Type type, Integer pageNo,Integer pageSize,FyUser search) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
+
 		Pagination<FyUser> page = userMng.getPage(type,pageNo,pageSize,search);
 		
 		return new  Result(page);
@@ -114,11 +114,10 @@ public class FyUserMngSvc {
 	 * @param groupId  分组id
 	 * @return FyUser
 	 */
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/addUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addUser( String token,FyUser user,FyUser.Type type) {
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
+	
 		if(user.getId()==null){
 		
 		user = userMng.save(user);
@@ -135,13 +134,9 @@ public class FyUserMngSvc {
 	 * @param ids
 	 * @return Boolean
 	 */
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/removeUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeClazz(String token, Long[] ids) {
-
-		if(!loginManager.verify(token)){
-			return  new Result(HttpStatus.UNAUTHORIZED);
-		}
-
 		userMng.delete(ids);
 
 	
