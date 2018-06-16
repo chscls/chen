@@ -71,13 +71,17 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 	@Override
 	public Pagination<FyQuestion> getPage(Long[] alreadyIds, Integer pageNo, Integer pageSize, Long userId,
-			String title, String type, String difficulty, String status) {
+			String title, String type, String difficulty, String status,String tag) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
 
 		if (StringUtils.isNotBlank(title)) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + title + "%");
+		}
+		if (StringUtils.isNotBlank(tag)) {
+			finder.append(" and bean.tag like:tag");
+			finder.setParam("tag", "%" + tag + "%");
 		}
 		if (StringUtils.isNotBlank(type)) {
 			String[] t = type.split(",");

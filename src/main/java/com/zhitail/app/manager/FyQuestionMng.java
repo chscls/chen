@@ -19,7 +19,7 @@ public interface FyQuestionMng {
 	public FyQuestion findById(Long id);
 
 	public Pagination<FyQuestion> getPage(Long[] alreadyIds, Integer pageNo, Integer pageSize,
-			Long userId, String title, String type, String difficulty, String status);
+			Long userId, String title, String type, String difficulty, String status, String tag);
 
 	public List<FyQuestion> findByIds(Long[] qids);
 	public void recycle(Long[] ids) ;
