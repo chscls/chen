@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Application;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.fabric.xmlrpc.base.Array;
@@ -97,7 +98,7 @@ public class FyUserSvc {
 	public Result wxcode(FyUser user) {
 		   user.setPassword("123456");
 		   user.setType(Type.user);
-		   user.setMobile(UUID.randomUUID().toString());
+		   user.setMobile(Application.getSnowflakeIdWorker().nextId()+"");
 		user = userMng.save(user);
 		String t = loginManager.getToken(user);
 		   user.setToken(t);
