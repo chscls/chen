@@ -16,7 +16,7 @@ import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTest.Mode;
-import com.zhitail.app.entity.FyQuestion.Status;
+import com.zhitail.app.entity.FyTest.Status;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
