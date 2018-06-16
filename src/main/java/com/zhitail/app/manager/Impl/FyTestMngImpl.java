@@ -85,7 +85,7 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.setParamList("codes", codes );
 		}
 
-		finder.append(" order by bean.id desc");
+		finder.append("and bean.isRecycle=false order by bean.id desc");
 		return testDao.findListByFinder(finder);
 	}
 	public void fullQuestions(FyTest test) {
@@ -136,7 +136,7 @@ public class FyTestMngImpl implements FyTestMng {
 		finder.setFirstResult(start);
 		finder.setMaxResults(count);
 		
-		finder.append(" order by bean.id desc");
+		finder.append("and bean.isRecycle=false order by bean.id desc");
 		return testDao.findListByFinder(finder);
 	}
 
@@ -198,7 +198,7 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.setParamList("isQuestionnaires", tt.toArray(new Boolean[tt.size()]));
 		}
 
-		finder.append(" order by bean.id desc");
+		finder.append("and bean.isRecycle=false order by bean.id desc");
 		return testDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 

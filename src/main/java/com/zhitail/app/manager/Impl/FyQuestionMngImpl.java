@@ -113,14 +113,14 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		finder.append(" and bean.userId=:userId");
 		finder.setParam("userId", userId);
-		finder.append(" order by bean.id desc");
+		finder.append("and bean.isRecycle=false order by bean.id desc");
 		return questionDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
 	@Override
 	public List<FyQuestion> findByIds(Long[] qids) {
 		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyQuestion bean where bean.id in:qids");
+		Finder finder = Finder.create(" from FyQuestion bean where bean.id in:qids and bean.isRecycle=false");
 
 		finder.setParamList("qids", qids);
 
