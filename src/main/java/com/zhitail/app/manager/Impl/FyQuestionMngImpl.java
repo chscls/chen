@@ -1,6 +1,7 @@
 package com.zhitail.app.manager.Impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -144,9 +145,38 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		FyQuestion q;
 		for (Long id : ids) {
 			q=this.findById(id);
+			q.setRecycleTime(new Date());
 			q.setIsRecycle(true);
 			this.update(q);
 		}
 	}
 
+	@Override
+	public Pagination<FyQuestion> getRecyclePage(String sorter, Integer pageNo, Integer pageSize, Long userId, String title,
+			String tag) {
+		// TODO Auto-generated method stub
+				Finder finder = Finder.create(" from FyQuestion bean where 1=1");
+
+				if (StringUtils.isNotBlank(title)) {
+					finder.append(" and bean.title like:title");
+					finder.setParam("title", "%" + title + "%");
+				}
+				if (StringUtils.isNotBlank(tag)) {
+					finder.append(" and bean.tagsJson like:tag");
+					finder.setParam("tag", "%\"" + tag + "\"%");
+				}
+				
+
+				finder.append(" and bean.userId=:userId");
+				finder.setParam("userId", userId);
+				finder.append(" and bean.isRecycle=true");
+				if(StringUtils.isNotBlank(sorter)&&sorter.equals("recycleTime_ascend")){
+					finder.append(" order by bean.recycleTime asc");
+				}else {
+					finder.append(" order by bean.recycleTime desc");
+				}
+						
+				
+				return questionDao.findPageByFinder(finder, pageNo, pageSize);
+			}
 }

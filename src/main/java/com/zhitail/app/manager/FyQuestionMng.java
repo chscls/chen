@@ -24,4 +24,7 @@ public interface FyQuestionMng {
 	public List<FyQuestion> findByIds(Long[] qids);
 	public void recycle(Long[] ids) ;
 
+	public Pagination<FyQuestion> getRecyclePage(String sorter, Integer pageNo, Integer pageSize, Long userId, String title,
+			String tag);
+
 }

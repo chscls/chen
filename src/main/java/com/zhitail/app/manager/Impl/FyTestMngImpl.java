@@ -1,6 +1,7 @@
 package com.zhitail.app.manager.Impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,6 +218,7 @@ public class FyTestMngImpl implements FyTestMng {
 		FyTest test;
 		for (Long id : ids) {
 			test=this.findById(id);
+			test.setRecycleTime(new Date());
 			test.setIsRecycle(true);
 			this.update(test);
 		}

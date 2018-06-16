@@ -47,6 +47,16 @@ public class FyQuestionMngSvc {
 		return new Result(page);
 	}
 	@TokenAuth(value="token")
+	@RequestMapping(value = "/queryQuestionRe",method=RequestMethod.POST)
+	public Result queryQuestionRe(String token,String sorter,Integer pageNo,Integer pageSize,String title,String tag) {
+		if(!loginManager.verify(token)){
+			return  new Result(HttpStatus.UNAUTHORIZED);
+		}
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		Pagination<FyQuestion> page = questionMng.getRecyclePage(sorter,pageNo,pageSize,u.getId(),title,tag);
+		return new Result(page);
+	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/updateOptions", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addQuestion( String token,Long id,String options,Boolean isQuestionnaire) {
 		if(!loginManager.verify(token)){
