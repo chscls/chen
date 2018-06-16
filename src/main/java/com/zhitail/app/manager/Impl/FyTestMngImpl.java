@@ -92,7 +92,7 @@ public class FyTestMngImpl implements FyTestMng {
 		return testDao.findListByFinder(finder);
 	}
 	public void fullQuestions(FyTest test) {
-
+		FyQuestion temp;
 		List<QuestionConfig> ids = test.getQuestionConfigs();
 		if (ids.size() > 0) {
 			Long[] qids = new Long[ids.size()];
@@ -105,9 +105,11 @@ public class FyTestMngImpl implements FyTestMng {
 				map.put(q.getId(), q);
 			}
 			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
-			for (Long id : qids) {
-				if (map.containsKey(id)) {
-					fqs.add(map.get(id));
+			for (QuestionConfig config : ids) {
+				if (map.containsKey(config.getId())) {
+					temp= map.get(config.getId());
+					temp.setScore(config.getScore());
+					fqs.add(temp);
 				}
 			}
 			test.setQuestions(fqs);

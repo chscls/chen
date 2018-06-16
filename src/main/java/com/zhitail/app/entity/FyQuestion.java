@@ -33,6 +33,7 @@ public class FyQuestion {
 	@Lob
 	private String title;
 	private Integer difficulty=0;
+	@Transient
 	private Double score;
 	@Transient
 	private Double goal;
