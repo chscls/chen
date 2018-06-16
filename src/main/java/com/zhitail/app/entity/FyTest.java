@@ -54,6 +54,14 @@ public class FyTest {
 		this.isQuestionnaire = isQuestionnaire;
 	}
 	private Mode mode;
+	@Transient
+	private Double score;
+	public Double getScore() {
+		return score;
+	}
+	public void setScore(Double score) {
+		this.score = score;
+	}
 	private Status status=Status.create;
 	
 	private Integer limitSecond;
@@ -160,6 +168,11 @@ public class FyTest {
 	}
 	public void lite() {
 		this.setCount(this.getQuestionConfigs().size());
+		double s=0.0;
+		for(QuestionConfig qc:this.getQuestionConfigs()) {
+			s+=qc.getScore()!=null?qc.getScore():0.0;
+		}
+		this.setScore(s);
 		this.setJson(null);
 		this.setQuestions(null);
 		

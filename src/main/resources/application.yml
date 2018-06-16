@@ -19,11 +19,16 @@ spring:
     jpa:
       repositories:
         enabled: true
-  datasource:
-    password: chenerping
+#datasource:  
+    #driver-class-name: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://qdm176766154.my3w.com:3306/qdm176766154_db?characterEncoding=UTF-8
+    #username: qdm176766154
+    #password: chenerping
+  datasource:  
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://qdm176766154.my3w.com:3306/qdm176766154_db?characterEncoding=UTF-8
-    username: qdm176766154
+    url: jdbc:mysql://localhost:3306/chen?characterEncoding=UTF-8
+    username: root
+    password: 123456
   jpa:
     show-sql: false
     open-in-view: true 

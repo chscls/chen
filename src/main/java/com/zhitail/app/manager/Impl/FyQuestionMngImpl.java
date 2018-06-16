@@ -35,13 +35,14 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		for (Long id : ids) {
 			List<FyTest> ft = testMng.findByQuestionId(id);
-			QuestionConfig qc = new QuestionConfig(id);
+			QuestionConfig qc = new QuestionConfig(id,null);
 			for (FyTest f : ft) {
-				f.refreshCode();
+				
 				List<QuestionConfig> qids = f.getQuestionConfigs();
 				qids.remove(qc);
 				
 				f.setJson(JSONArray.toJSONString(qids));
+				f.refreshCode();
 				testMng.update(f);
 
 			}

@@ -3,8 +3,13 @@ package com.zhitail.app.entity.middle;
 public class QuestionConfig {
 	private Long id;
 	private Double score;
-	public QuestionConfig(Long id) {
+	public QuestionConfig() {
+		
+		// TODO Auto-generated constructor stub
+	}
+	public QuestionConfig(Long id, Double score) {
 		this.id=id;
+		this.score=score;
 		// TODO Auto-generated constructor stub
 	}
 	public Long getId() {

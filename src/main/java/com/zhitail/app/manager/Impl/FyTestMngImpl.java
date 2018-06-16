@@ -72,8 +72,13 @@ public class FyTestMngImpl implements FyTestMng {
 	public FyTest updateTestQuestions(Long id, Long[] qids) {
 		FyTest  t= testDao.findOne(id);
 		// TODO Auto-generated method stub
-		String json =JSONArray.toJSONString(qids);
-		t.setJson(json.substring(1, json.length()-1)+",");
+		
+		List<QuestionConfig> list = new ArrayList<QuestionConfig>();
+		for(Long qid:qids) {
+		QuestionConfig qc = new QuestionConfig(qid,1.0);
+		list.add(qc);
+		}
+		t.setJson(JSONArray.toJSONString(list));
 		t.refreshCode();
 		return update(t);
 	}
@@ -156,7 +161,7 @@ public class FyTestMngImpl implements FyTestMng {
 
 		if (id != null) {
 			finder.append(" and bean.json like:id");
-			finder.setParam("id", "%" + id + ",%");
+			finder.setParam("id", "%:" + id + ",%");
 		}
 		return testDao.findListByFinder(finder);
 	}
