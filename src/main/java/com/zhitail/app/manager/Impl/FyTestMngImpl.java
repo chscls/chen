@@ -201,4 +201,15 @@ public class FyTestMngImpl implements FyTestMng {
 		finder.append(" order by bean.id desc");
 		return testDao.findPageByFinder(finder, pageNo, pageSize);
 	}
+
+	@Override
+	public void recycle(Long[] ids) {
+		// TODO Auto-generated method stub
+		FyTest test;
+		for (Long id : ids) {
+			test=this.findById(id);
+			test.setIsRecycle(true);
+			this.update(test);
+		}
+	}
 }

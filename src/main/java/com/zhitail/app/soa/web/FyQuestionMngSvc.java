@@ -94,4 +94,10 @@ public class FyQuestionMngSvc {
 		questionMng.delete(ids);
 		return new Result(true);
 	}
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/recycleQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result recycleQuestion(String token, Long[] ids) {
+		questionMng.recycle(ids);
+		return new Result(true);
+	}
 }

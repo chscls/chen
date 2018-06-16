@@ -108,4 +108,10 @@ public class FyTestMngSvc {
 		testMng.delete(ids);
 		return new Result(true);
 	}
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/recycleTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result recycleTest(String token, Long[] ids) {
+		testMng.recycle(ids);
+		return new Result(true);
+	}
 }

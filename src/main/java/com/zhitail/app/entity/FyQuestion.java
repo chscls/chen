@@ -37,6 +37,13 @@ public class FyQuestion {
 	private Double score;
 	@Transient
 	private Double goal;
+	private Boolean isRecycle=false;
+	public Boolean getIsRecycle() {
+		return isRecycle;
+	}
+	public void setIsRecycle(Boolean isRecycle) {
+		this.isRecycle = isRecycle;
+	}
 	private Boolean isGrade =  false;
 	public Boolean getIsGrade() {
 		return isGrade;

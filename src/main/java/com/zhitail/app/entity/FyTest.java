@@ -54,6 +54,13 @@ public class FyTest {
 		this.isQuestionnaire = isQuestionnaire;
 	}
 	private Mode mode;
+	private Boolean isRecycle=false;
+	public Boolean getIsRecycle() {
+		return isRecycle;
+	}
+	public void setIsRecycle(Boolean isRecycle) {
+		this.isRecycle = isRecycle;
+	}
 	@Transient
 	private Double score;
 	public Double getScore() {

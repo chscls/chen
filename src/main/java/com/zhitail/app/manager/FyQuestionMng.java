@@ -22,5 +22,6 @@ public interface FyQuestionMng {
 			Long userId, String title, String type, String difficulty, String status);
 
 	public List<FyQuestion> findByIds(Long[] qids);
+	public void recycle(Long[] ids) ;
 
 }

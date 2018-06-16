@@ -32,4 +32,7 @@ public interface FyTestMng {
 	 public Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize, String title, String isQuestionnaire,
 			String mode, String status);
 
+
+	public void recycle(Long[] ids);
+
 }

@@ -126,5 +126,16 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		return questionDao.findListByFinder(finder);
 	}
+	
+	@Override
+	public void recycle(Long[] ids) {
+		// TODO Auto-generated method stub
+		FyQuestion q;
+		for (Long id : ids) {
+			q=this.findById(id);
+			q.setIsRecycle(true);
+			this.update(q);
+		}
+	}
 
 }
