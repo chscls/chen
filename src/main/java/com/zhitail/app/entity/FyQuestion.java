@@ -45,6 +45,13 @@ public class FyQuestion {
 		this.isRecycle = isRecycle;
 	}
 	private Boolean isGrade =  false;
+	private Date recycleTime;
+	public Date getRecycleTime() {
+		return recycleTime;
+	}
+	public void setRecycleTime(Date recycleTime) {
+		this.recycleTime = recycleTime;
+	}
 	public Boolean getIsGrade() {
 		return isGrade;
 	}

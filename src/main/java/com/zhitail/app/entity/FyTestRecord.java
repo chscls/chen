@@ -78,6 +78,8 @@ public class FyTestRecord {
 	
 	private String title;
 	private Date createTime;
+	
+
 	private Long userId;
 	private Long teaId;
 	@Column(unique=true,length=18)

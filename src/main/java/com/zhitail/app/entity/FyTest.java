@@ -61,6 +61,13 @@ public class FyTest {
 	public void setIsRecycle(Boolean isRecycle) {
 		this.isRecycle = isRecycle;
 	}
+	private Date recycleTime;
+	public Date getRecycleTime() {
+		return recycleTime;
+	}
+	public void setRecycleTime(Date recycleTime) {
+		this.recycleTime = recycleTime;
+	}
 	@Transient
 	private Double score;
 	public Double getScore() {
