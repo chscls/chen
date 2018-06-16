@@ -83,13 +83,7 @@ public class FyQuestionMngSvc {
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
 			question.setUserId(u.getId());
 			question.setJson((new JSONArray()).toJSONString());
-			/*if(question.getIsRich()&&question.getTitle().contains("<img")){
-				question.setStatus(Status.check);
-			}else{
-				question.setStatus(Status.complete);
-			}*/
-			
-			question = questionMng.save(question);
+			question = questionMng.save(question,u);
 		}else{
 			question= questionMng.update(question);
 		}
@@ -101,7 +95,8 @@ public class FyQuestionMngSvc {
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/removeQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result removeQuestion(String token, Long[] ids) {
-		questionMng.delete(ids);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		questionMng.delete(ids,u);
 		return new Result(true);
 	}
 	@TokenAuth(value="token")

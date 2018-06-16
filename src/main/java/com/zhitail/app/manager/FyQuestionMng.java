@@ -4,17 +4,18 @@ import java.util.List;
 
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FySensitive;
+import com.zhitail.app.entity.FyUser;
 import com.zhitail.frame.util.page.Pagination;
 
 public interface FyQuestionMng {
 
 
 
-	public void delete(Long[] ids);
+	public void delete(Long[] ids,FyUser user);
 
 	public FyQuestion update(FyQuestion question);
 
-	public FyQuestion save(FyQuestion question);
+	public FyQuestion save(FyQuestion question,FyUser user);
 
 	public FyQuestion findById(Long id);
 

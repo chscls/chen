@@ -17,9 +17,11 @@ import com.zhitail.app.entity.FyQuestion.Status;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyTest;
+import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
+import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
 import com.zhitail.frame.util.page.Pagination;
@@ -31,10 +33,11 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	private FyQuestionDao questionDao;
 	@Autowired
 	private FyTestMng testMng;
-
-	public void delete(Long[] ids) {
+	@Autowired
+	private FyUserMng userMng;
+	public void delete(Long[] ids,FyUser user) {
 		// TODO Auto-generated method stub
-
+		
 		for (Long id : ids) {
 			List<FyTest> ft = testMng.findByQuestionId(id);
 			QuestionConfig qc = new QuestionConfig(id,null);
@@ -50,7 +53,21 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			}
 			questionDao.delete(id);
 		}
-
+		
+		user.setQuestionCount(getCount(user.getId()));
+		userMng.update(user);
+	}
+	private Long getCount(Long userId) {
+		
+		
+		Finder finder = Finder.create(" from FyQuestion bean where userId=:userId");
+		finder.setParam("userId", userId);
+		
+		Integer x = questionDao.countQueryResult(finder);
+		
+		return x.longValue();
+		
+		
 	}
 
 	public FyQuestion update(FyQuestion question) {
@@ -59,9 +76,13 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		return questionDao.updateByUpdater(u);
 	}
 
-	public FyQuestion save(FyQuestion question) {
+	public FyQuestion save(FyQuestion question,FyUser user) {
 		// TODO Auto-generated method stub
-		return questionDao.save(question);
+		
+		question =  questionDao.save(question);
+		user.setQuestionCount(getCount(user.getId()));
+		userMng.update(user);
+		return question;
 	}
 
 	@Override
