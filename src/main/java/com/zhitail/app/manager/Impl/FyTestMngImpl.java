@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -163,12 +164,12 @@ public class FyTestMngImpl implements FyTestMng {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTest bean where 1=1");
 
-		if (title != null) {
+		if (StringUtils.isNotBlank(title)) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + title + "%");
 		}
 		
-		if (mode != null) {
+		if (StringUtils.isNotBlank(mode)) {
 			String[] t = mode.split(",");
 			List<Mode> tt = new ArrayList<Mode>();
 			for (String s : t) {
@@ -177,7 +178,7 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.append(" and bean.mode in:modes");
 			finder.setParamList("modes", tt.toArray(new Mode[tt.size()]));
 		}
-		if (status != null) {
+		if (StringUtils.isNotBlank(status)) {
 			String[] t = status.split(",");
 			List<Status> tt = new ArrayList<Status>();
 			for (String s : t) {
@@ -187,7 +188,7 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.setParamList("statuss", tt.toArray(new Status[tt.size()]));
 		}
 		
-		if (isQuestionnaire != null) {
+		if (StringUtils.isNotBlank(isQuestionnaire)) {
 			String[] t = isQuestionnaire.split(",");
 			List<Boolean> tt = new ArrayList<Boolean>();
 			for (String s : t) {

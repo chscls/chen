@@ -3,6 +3,7 @@ package com.zhitail.app.manager.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,11 +75,11 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
 
-		if (title != null) {
+		if (StringUtils.isNotBlank(title)) {
 			finder.append(" and bean.title like:title");
 			finder.setParam("title", "%" + title + "%");
 		}
-		if (type != null) {
+		if (StringUtils.isNotBlank(type)) {
 			String[] t = type.split(",");
 			List<Type> tt = new ArrayList<Type>();
 			for (String s : t) {
@@ -87,7 +88,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			finder.append(" and bean.type in:types");
 			finder.setParamList("types", tt.toArray(new Type[tt.size()]));
 		}
-		if (status != null) {
+		if (StringUtils.isNotBlank(status)) {
 			String[] t = status.split(",");
 			List<Status> tt = new ArrayList<Status>();
 			for (String s : t) {
@@ -96,7 +97,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			finder.append(" and bean.status in:statuss");
 			finder.setParamList("statuss", tt.toArray(new Status[tt.size()]));
 		}
-		if (difficulty != null) {
+		if (StringUtils.isNotBlank(difficulty)) {
 			String[] t = difficulty.split(",");
 			List<Integer> tt = new ArrayList<Integer>();
 			for (String s : t) {
