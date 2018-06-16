@@ -159,7 +159,7 @@ public class FyTestMngImpl implements FyTestMng {
 	}
 
 	@Override
-	public Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize,String code, String title, String isQuestionnaire,
+	public Pagination<FyTest> getPage(Long userId, Integer pageNo, Integer pageSize,String code, String title, String isQuestionnaire,
 			String mode,String status,String sorter) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTest bean where 1=1");
@@ -200,7 +200,8 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.append(" and bean.isQuestionnaire in:isQuestionnaires");
 			finder.setParamList("isQuestionnaires", tt.toArray(new Boolean[tt.size()]));
 		}
-
+		finder.append(" and bean.userId=:userId");
+		finder.setParam("userId", userId);
 		finder.append("and bean.isRecycle=false ");
 		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
 			finder.append(" order by bean.createTime asc");
@@ -220,4 +221,30 @@ public class FyTestMngImpl implements FyTestMng {
 			this.update(test);
 		}
 	}
+
+	@Override
+	public Pagination<FyTest> getRecyclePage(Long userId, Integer pageNo, Integer pageSize,String title,String code,String sorter) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+				Finder finder = Finder.create(" from FyTest bean where 1=1");
+				if (StringUtils.isNotBlank(title)) {
+					finder.append(" and bean.title like:title");
+					finder.setParam("title", "%" + title + "%");
+				}
+				if (StringUtils.isNotBlank(code)) {
+					finder.append(" and bean.code like:code");
+					finder.setParam("code", "%" + code + "%");
+				}
+				finder.append(" and bean.userId=:userId");
+				finder.setParam("userId", userId);
+				finder.append("and bean.isRecycle=true ");
+				if(StringUtils.isNotBlank(sorter)&&sorter.equals("recycleTime_ascend")){
+					finder.append(" order by bean.recycleTime asc");
+				}else {
+					finder.append(" order by bean.recycleTime desc");
+				}
+				
+				
+				return testDao.findPageByFinder(finder, pageNo, pageSize);
+			}
 }

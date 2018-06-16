@@ -79,6 +79,16 @@ public class FyTestMngSvc {
 		return new Result(page);
 	}
 	@TokenAuth(value="token")
+	@RequestMapping(value = "/queryTestRe",method=RequestMethod.POST)
+	public Result queryTestRe(String token, Integer pageNo,Integer pageSize,String code,String title,String sorter) {
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		Pagination<FyTest> page = testMng.getRecyclePage(u.getId(),pageNo,pageSize,title,code,sorter);
+		for(FyTest ft:page.getList()) {
+			ft.lite();		
+		}
+		return new Result(page);
+	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/addTest", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result addTest( String token,FyTest test) {	
 		if(test.getId()==null){

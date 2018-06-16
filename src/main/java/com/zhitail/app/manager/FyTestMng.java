@@ -33,7 +33,12 @@ public interface FyTestMng {
 	public void recycle(Long[] ids);
 
 
-	public  Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize, String code, String title,
+	public  Pagination<FyTest> getPage(Long userId, Integer pageNo, Integer pageSize, String code, String title,
 			String isQuestionnaire, String mode, String status,String sorter);
+
+
+
+	public Pagination<FyTest> getRecyclePage(Long userId, Integer pageNo, Integer pageSize, String title, String code,
+			String sorter);
 
 }
