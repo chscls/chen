@@ -34,6 +34,6 @@ public interface FyTestMng {
 
 
 	public  Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize, String code, String title,
-			String isQuestionnaire, String mode, String status);
+			String isQuestionnaire, String mode, String status,String sorter);
 
 }

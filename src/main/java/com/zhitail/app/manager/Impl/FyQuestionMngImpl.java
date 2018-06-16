@@ -119,9 +119,9 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		finder.setParam("userId", userId);
 		finder.append(" and bean.isRecycle=false");
 		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
-			finder.append("order by bean.createTime asc");
+			finder.append(" order by bean.createTime asc");
 		}else {
-			finder.append("order by bean.createTime desc");
+			finder.append(" order by bean.createTime desc");
 		}
 				
 		

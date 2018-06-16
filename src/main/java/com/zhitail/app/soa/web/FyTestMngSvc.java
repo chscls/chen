@@ -70,9 +70,9 @@ public class FyTestMngSvc {
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryTest",method=RequestMethod.POST)
-	public Result queryTest(String token, Integer pageNo,Integer pageSize,String code,String title,String isQuestionnaire,String mode,String status) {
+	public Result queryTest(String token, Integer pageNo,Integer pageSize,String code,String title,String isQuestionnaire,String mode,String status,String sorter) {
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize,code, title,isQuestionnaire, mode,status);
+		Pagination<FyTest> page = testMng.getPage(u.getId(),pageNo,pageSize,code, title,isQuestionnaire, mode,status,sorter);
 		for(FyTest ft:page.getList()) {
 			ft.lite();		
 		}

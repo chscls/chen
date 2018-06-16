@@ -160,7 +160,7 @@ public class FyTestMngImpl implements FyTestMng {
 
 	@Override
 	public Pagination<FyTest> getPage(Long id, Integer pageNo, Integer pageSize,String code, String title, String isQuestionnaire,
-			String mode,String status) {
+			String mode,String status,String sorter) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTest bean where 1=1");
 
@@ -201,7 +201,12 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.setParamList("isQuestionnaires", tt.toArray(new Boolean[tt.size()]));
 		}
 
-		finder.append("and bean.isRecycle=false order by bean.id desc");
+		finder.append("and bean.isRecycle=false ");
+		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
+			finder.append(" order by bean.createTime asc");
+		}else {
+			finder.append(" order by bean.createTime desc");
+		}
 		return testDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
