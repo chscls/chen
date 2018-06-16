@@ -75,8 +75,10 @@ public class FyTestMngImpl implements FyTestMng {
 		
 		List<QuestionConfig> list = new ArrayList<QuestionConfig>();
 		for(Long qid:qids) {
+			if(qid!=null) {
 		QuestionConfig qc = new QuestionConfig(qid,1.0);
 		list.add(qc);
+			}
 		}
 		t.setJson(JSONArray.toJSONString(list));
 		t.refreshCode();
