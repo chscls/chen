@@ -202,7 +202,7 @@ public class FyTestMngImpl implements FyTestMng {
 		}
 		finder.append(" and bean.userId=:userId");
 		finder.setParam("userId", userId);
-		finder.append("and bean.isRecycle=false ");
+		finder.append(" and bean.isRecycle=false ");
 		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
 			finder.append(" order by bean.createTime asc");
 		}else {
@@ -237,7 +237,7 @@ public class FyTestMngImpl implements FyTestMng {
 				}
 				finder.append(" and bean.userId=:userId");
 				finder.setParam("userId", userId);
-				finder.append("and bean.isRecycle=true ");
+				finder.append(" and bean.isRecycle=true ");
 				if(StringUtils.isNotBlank(sorter)&&sorter.equals("recycleTime_ascend")){
 					finder.append(" order by bean.recycleTime asc");
 				}else {
