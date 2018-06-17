@@ -14,7 +14,7 @@ public class ScheduledService {
 	private FyTestMng testMng;
 	@Autowired
 	private FyQuestionMng questionMng;
-    @Scheduled(cron = "0 55 10 * * ?")
+    @Scheduled(cron = "0 0 3 * * ?")
     public void clearQuestion(){
     	testMng.clear();
     	questionMng.clear();
