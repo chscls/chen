@@ -102,13 +102,15 @@ public class FyQuestionMngSvc {
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/recycleQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result recycleQuestion(String token, Long[] ids) {
-		questionMng.recycle(ids);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		questionMng.recycle(ids,u);
 		return new Result(true);
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/recoveryQuestion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result recoveryQuestion(String token, Long[] ids) {
-		questionMng.recovery(ids);
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		questionMng.recovery(ids,u);
 		return new Result(true);
 	}
 }

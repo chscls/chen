@@ -165,7 +165,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	@Override
-	public void recycle(Long[] ids) {
+	public void recycle(Long[] ids,FyUser user) {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
@@ -177,6 +177,8 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 				this.update(q);
 			}
 		}
+		user.setRecycleCount(getCount(user.getId(),true));
+		userMng.update(user);
 	}
 
 	@Override
@@ -207,7 +209,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	@Override
-	public void recovery(Long[] ids) {
+	public void recovery(Long[] ids,FyUser user) {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
@@ -215,9 +217,12 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			if (q != null) {
 				q.setRecycleTime(null);
 				q.setIsRecycle(false);
+				
 				this.update(q);
 			}
 		}
+		user.setRecycleCount(getCount(user.getId(),true));
+		userMng.update(user);
 	}
 
 	@Override

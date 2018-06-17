@@ -23,12 +23,12 @@ public interface FyQuestionMng {
 			Long userId, String title, String type, String difficulty, String status, String tag);
 
 	public List<FyQuestion> findByIds(Long[] qids);
-	public void recycle(Long[] ids) ;
+	public void recycle(Long[] ids, FyUser user) ;
 
 	public Pagination<FyQuestion> getRecyclePage(String sorter, Integer pageNo, Integer pageSize, Long userId, String title,
 			String tag);
 
-	public void recovery(Long[] ids);
+	public void recovery(Long[] ids, FyUser user);
 
 	public void clear();
 
