@@ -34,6 +34,9 @@ public class FyTest {
 	public enum Status{
 		create,process,complete
 	}
+	public enum SaleStatus{
+		create,apply,refuse,sale
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -54,7 +57,14 @@ public class FyTest {
 		this.isQuestionnaire = isQuestionnaire;
 	}
 	private Mode mode;
+	public SaleStatus getSaleStatus() {
+		return saleStatus;
+	}
+	public void setSaleStatus(SaleStatus saleStatus) {
+		this.saleStatus = saleStatus;
+	}
 	private Boolean isRecycle=false;
+	private SaleStatus saleStatus=SaleStatus.create;
 	public Boolean getIsRecycle() {
 		return isRecycle;
 	}
