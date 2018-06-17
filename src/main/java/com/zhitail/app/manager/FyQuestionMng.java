@@ -32,4 +32,6 @@ public interface FyQuestionMng {
 
 	public void clear();
 
+	public Long getCount(Long userId, Boolean isRecycle);
+
 }

@@ -79,8 +79,13 @@ public class FyQuestionMngSvc {
 		}
 		question.setTagsJson(tags!=null?JSONArray.toJSONString(tags):null );
 		if(question.getId()==null){
-			question.setCreateTime(new Date());
 			FyUser u=userMng.findByUserName(loginManager.getUser(token));
+			Long count = questionMng.getCount(u.getId(), null);
+			if(count>=u.getQuestionCapacity()) {
+				return Result.error("超过额度,请清理你的题目以释放额度或者购买额度");
+			}
+			question.setCreateTime(new Date());
+			
 			question.setUserId(u.getId());
 			question.setJson((new JSONArray()).toJSONString());
 			question = questionMng.save(question,u);

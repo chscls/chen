@@ -60,8 +60,8 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		user.setRecycleCount(getCount(user.getId(),true));
 		userMng.update(user);
 	}
-
-	private Long getCount(Long userId,Boolean isRecycle) {
+	@Override
+	public Long getCount(Long userId,Boolean isRecycle) {
 
 		Finder finder = Finder.create(" from FyQuestion bean where bean.userId=:userId");
 		finder.setParam("userId", userId);
