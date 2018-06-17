@@ -47,4 +47,10 @@ public interface FyTestMng {
 
 	public void clear();
 
+
+	public void upShopTest(Long[] ids);
+
+
+	public void downShopTest(Long[] ids);
+
 }

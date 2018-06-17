@@ -18,6 +18,7 @@ import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTest.Mode;
+import com.zhitail.app.entity.FyTest.SaleStatus;
 import com.zhitail.app.entity.FyTest.Status;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.middle.QuestionConfig;
@@ -130,10 +131,7 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.append(" and bean.userId=:userId");
 			finder.setParam("userId",search.getUserId() );
 		}
-		if (search.getIsSale()!= null) {
-			finder.append(" and bean.isSale=:isSale");
-			finder.setParam("isSale",search.getIsSale() );
-		}
+		
 		finder.setFirstResult(start);
 		finder.setMaxResults(count);
 		
@@ -278,5 +276,31 @@ public class FyTestMngImpl implements FyTestMng {
 			List<Object> list = 	testDao.findObjectListByFinder(finder);
 			Long[] x = list.toArray(new Long[list.size()]);
 			this.delete(x);
+	}
+
+	@Override
+	public void upShopTest(Long[] ids) {
+		FyTest test;
+		for (Long id : ids) {
+			test=this.findById(id);
+			if(test!=null) {
+			test.setSaleStatus(SaleStatus.apply);
+			this.update(test);
+			}
+		}
+		
+	}
+
+	@Override
+	public void downShopTest(Long[] ids) {
+		FyTest test;
+		for (Long id : ids) {
+			test=this.findById(id);
+			if(test!=null) {
+				test.setSaleStatus(SaleStatus.create);
+			this.update(test);
+			}
+		}
+		
 	}
 }

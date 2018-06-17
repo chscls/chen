@@ -130,4 +130,16 @@ public class FyTestMngSvc {
 		testMng.recovery(ids);
 		return new Result(true);
 	}
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/upShopTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result upShopTest(String token, Long[] ids) {
+		testMng.upShopTest(ids);
+		return new Result(true);
+	}
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/downShopTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result downShopTest(String token, Long[] ids) {
+		testMng.downShopTest(ids);
+		return new Result(true);
+	}
 }

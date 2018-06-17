@@ -78,9 +78,7 @@ public class FyTestSvc {
 	public Result queryTest(String token, Integer start,Integer count,FyTest search) {
 	
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		if(search.getIsSale()==null) {
-			search.setUserId(u.getId());
-		}
+		
 		
 		List<FyTest> list = testMng.getList(start,count,search);
 		for(FyTest t:	list) {
