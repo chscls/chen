@@ -5,6 +5,20 @@ public class AntUser {
 	private String avatar;
 	private String userid;
 	private Integer notifyCount;
+	private Long questionCount;
+	private Long questionCapacity;
+	public Long getQuestionCount() {
+		return questionCount;
+	}
+	public void setQuestionCount(Long questionCount) {
+		this.questionCount = questionCount;
+	}
+	public Long getQuestionCapacity() {
+		return questionCapacity;
+	}
+	public void setQuestionCapacity(Long questionCapacity) {
+		this.questionCapacity = questionCapacity;
+	}
 	public String getName() {
 		return name;
 	}

@@ -95,6 +95,8 @@ public class FyUserMngSvc {
 		au.setName(u.getRealname());
 		au.setNotifyCount(12);
 		au.setUserid(u.getId().toString());
+		au.setQuestionCapacity(u.getQuestionCapacity());
+		au.setQuestionCount(u.getQuestionCount());
 		return new  ResponseEntity<AntUser>(au,HttpStatus.OK);
 	}
 	
