@@ -97,6 +97,7 @@ public class FyUserMngSvc {
 		au.setUserid(u.getId().toString());
 		au.setQuestionCapacity(u.getQuestionCapacity());
 		au.setQuestionCount(u.getQuestionCount());
+		au.setRecycleCount(u.getRecycleCount());
 		return new  ResponseEntity<AntUser>(au,HttpStatus.OK);
 	}
 	

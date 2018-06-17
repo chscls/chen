@@ -56,15 +56,19 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			questionDao.delete(id);
 		}
 
-		user.setQuestionCount(getCount(user.getId()));
+		user.setQuestionCount(getCount(user.getId(),null));
+		user.setRecycleCount(getCount(user.getId(),true));
 		userMng.update(user);
 	}
 
-	private Long getCount(Long userId) {
+	private Long getCount(Long userId,Boolean isRecycle) {
 
 		Finder finder = Finder.create(" from FyQuestion bean where bean.userId=:userId");
 		finder.setParam("userId", userId);
-
+		if(isRecycle!=null) {
+		finder.append(" and bean.isRecycle=:isRecycle");
+		finder.setParam("isRecycle", isRecycle);
+		}
 		Integer x = questionDao.countQueryResult(finder);
 
 		return x.longValue();
@@ -81,7 +85,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		// TODO Auto-generated method stub
 
 		question = questionDao.save(question);
-		user.setQuestionCount(getCount(user.getId()));
+		user.setQuestionCount(getCount(user.getId(),null));
 		userMng.update(user);
 		return question;
 	}

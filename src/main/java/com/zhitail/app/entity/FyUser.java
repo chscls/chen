@@ -71,6 +71,15 @@ public class FyUser {
 	}
 
 	private Long questionCount=0L;
+	private Long recycleCount=0L;
+	public Long getRecycleCount() {
+		return recycleCount;
+	}
+
+	public void setRecycleCount(Long recycleCount) {
+		this.recycleCount = recycleCount;
+	}
+
 	private Date createTime;
 	public Date getCreateTime() {
 		return createTime;

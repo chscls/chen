@@ -7,6 +7,13 @@ public class AntUser {
 	private Integer notifyCount;
 	private Long questionCount;
 	private Long questionCapacity;
+	private Long recycleCount;
+	public Long getRecycleCount() {
+		return recycleCount;
+	}
+	public void setRecycleCount(Long recycleCount) {
+		this.recycleCount = recycleCount;
+	}
 	public Long getQuestionCount() {
 		return questionCount;
 	}
