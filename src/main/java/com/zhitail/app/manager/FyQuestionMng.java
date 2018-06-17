@@ -30,4 +30,6 @@ public interface FyQuestionMng {
 
 	public void recovery(Long[] ids);
 
+	public void clear();
+
 }

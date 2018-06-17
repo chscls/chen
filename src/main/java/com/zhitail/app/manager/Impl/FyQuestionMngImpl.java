@@ -19,6 +19,7 @@ import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.QuestionConfig;
+import com.zhitail.app.entity.middle.QuestionUser;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyUserMng;
@@ -35,17 +36,18 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-	public void delete(Long[] ids,FyUser user) {
+
+	public void delete(Long[] ids, FyUser user) {
 		// TODO Auto-generated method stub
-		
+
 		for (Long id : ids) {
 			List<FyTest> ft = testMng.findByQuestionId(id);
-			QuestionConfig qc = new QuestionConfig(id,null);
+			QuestionConfig qc = new QuestionConfig(id, null);
 			for (FyTest f : ft) {
-				
+
 				List<QuestionConfig> qids = f.getQuestionConfigs();
 				qids.remove(qc);
-				
+
 				f.setJson(JSONArray.toJSONString(qids));
 				f.refreshCode();
 				testMng.update(f);
@@ -53,21 +55,20 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			}
 			questionDao.delete(id);
 		}
-		
+
 		user.setQuestionCount(getCount(user.getId()));
 		userMng.update(user);
 	}
+
 	private Long getCount(Long userId) {
-		
-		
+
 		Finder finder = Finder.create(" from FyQuestion bean where bean.userId=:userId");
 		finder.setParam("userId", userId);
-		
+
 		Integer x = questionDao.countQueryResult(finder);
-		
+
 		return x.longValue();
-		
-		
+
 	}
 
 	public FyQuestion update(FyQuestion question) {
@@ -76,10 +77,10 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		return questionDao.updateByUpdater(u);
 	}
 
-	public FyQuestion save(FyQuestion question,FyUser user) {
+	public FyQuestion save(FyQuestion question, FyUser user) {
 		// TODO Auto-generated method stub
-		
-		question =  questionDao.save(question);
+
+		question = questionDao.save(question);
 		user.setQuestionCount(getCount(user.getId()));
 		userMng.update(user);
 		return question;
@@ -92,8 +93,8 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	@Override
-	public Pagination<FyQuestion> getPage(String sorter,Long[] alreadyIds, Integer pageNo, Integer pageSize, Long userId,
-			String title, String type, String difficulty, String status,String tag) {
+	public Pagination<FyQuestion> getPage(String sorter, Long[] alreadyIds, Integer pageNo, Integer pageSize,
+			Long userId, String title, String type, String difficulty, String status, String tag) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
 
@@ -140,13 +141,12 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		finder.append(" and bean.userId=:userId");
 		finder.setParam("userId", userId);
 		finder.append(" and bean.isRecycle=false");
-		if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
+		if (StringUtils.isNotBlank(sorter) && sorter.equals("createTime_ascend")) {
 			finder.append(" order by bean.createTime asc");
-		}else {
+		} else {
 			finder.append(" order by bean.createTime desc");
 		}
-				
-		
+
 		return questionDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
@@ -159,62 +159,105 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		return questionDao.findListByFinder(finder);
 	}
-	
+
 	@Override
 	public void recycle(Long[] ids) {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
-			
-			q=this.findById(id);
-			if(q!=null) {
-			q.setRecycleTime(new Date());
-			q.setIsRecycle(true);
-			this.update(q);
+
+			q = this.findById(id);
+			if (q != null) {
+				q.setRecycleTime(new Date());
+				q.setIsRecycle(true);
+				this.update(q);
 			}
 		}
 	}
 
 	@Override
-	public Pagination<FyQuestion> getRecyclePage(String sorter, Integer pageNo, Integer pageSize, Long userId, String title,
-			String tag) {
+	public Pagination<FyQuestion> getRecyclePage(String sorter, Integer pageNo, Integer pageSize, Long userId,
+			String title, String tag) {
 		// TODO Auto-generated method stub
-				Finder finder = Finder.create(" from FyQuestion bean where 1=1");
+		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
 
-				if (StringUtils.isNotBlank(title)) {
-					finder.append(" and bean.title like:title");
-					finder.setParam("title", "%" + title + "%");
-				}
-				if (StringUtils.isNotBlank(tag)) {
-					finder.append(" and bean.tagsJson like:tag");
-					finder.setParam("tag", "%\"" + tag + "\"%");
-				}
-				
+		if (StringUtils.isNotBlank(title)) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + title + "%");
+		}
+		if (StringUtils.isNotBlank(tag)) {
+			finder.append(" and bean.tagsJson like:tag");
+			finder.setParam("tag", "%\"" + tag + "\"%");
+		}
 
-				finder.append(" and bean.userId=:userId");
-				finder.setParam("userId", userId);
-				finder.append(" and bean.isRecycle=true");
-				if(StringUtils.isNotBlank(sorter)&&sorter.equals("recycleTime_ascend")){
-					finder.append(" order by bean.recycleTime asc");
-				}else {
-					finder.append(" order by bean.recycleTime desc");
-				}
-						
-				
-				return questionDao.findPageByFinder(finder, pageNo, pageSize);
-			}
+		finder.append(" and bean.userId=:userId");
+		finder.setParam("userId", userId);
+		finder.append(" and bean.isRecycle=true");
+		if (StringUtils.isNotBlank(sorter) && sorter.equals("recycleTime_ascend")) {
+			finder.append(" order by bean.recycleTime asc");
+		} else {
+			finder.append(" order by bean.recycleTime desc");
+		}
+
+		return questionDao.findPageByFinder(finder, pageNo, pageSize);
+	}
 
 	@Override
 	public void recovery(Long[] ids) {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
-			q=this.findById(id);
-			if(q!=null) {
-			q.setRecycleTime(null);
-			q.setIsRecycle(false);
-			this.update(q);
+			q = this.findById(id);
+			if (q != null) {
+				q.setRecycleTime(null);
+				q.setIsRecycle(false);
+				this.update(q);
 			}
 		}
 	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(
+				"select new com.zhitail.app.entity.middle.QuestionUser(bean.id,bean.userId) from FyQuestion bean where 1=1");
+
+		finder.append(" and bean.recycleTime <:overTime");
+		Date now = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 15);
+		finder.setParam("overTime", now);
+		finder.append(" and bean.isRecycle=true");
+		List<Object> list = questionDao.findObjectListByFinder(finder);
+
+		this.delete(list);
+	}
+
+	private void delete(List<Object> x) {
+		// TODO Auto-generated method stub
+		Long uid = 0L;
+		List<Long> list = new ArrayList<Long>();
+		QuestionUser qu;
+		for (int i = 0;i< x.size();i++) {
+			qu = (QuestionUser) x.get(i);
+
+			if (qu.getUid() != uid) {
+				if (uid == 0L) {
+					uid = qu.getUid();
+				} else {
+					FyUser user = userMng.findById(uid);
+					list.add(qu.getQid());
+					this.delete(list.toArray(new Long[list.size()]), user);
+					uid = qu.getUid();
+					list.clear();
+					continue;
+				}
+			}
+
+			list.add(qu.getQid());
+			if(i==x.size()-1) {
+				FyUser user = userMng.findById(uid);
+				this.delete(list.toArray(new Long[list.size()]), user);
+			}
+		}
+	}
+
 }

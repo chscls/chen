@@ -42,6 +42,7 @@ import com.zhitail.test.SnowflakeIdWorker;
 @ServletComponentScan
 //@EnableEurekaClient
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
+@EnableScheduling
 public class Application {
 	@Autowired
 	private Environment env;

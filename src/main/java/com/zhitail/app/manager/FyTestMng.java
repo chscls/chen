@@ -44,4 +44,7 @@ public interface FyTestMng {
 
 	public void recovery(Long[] ids);
 
+
+	public void clear();
+
 }

@@ -265,4 +265,18 @@ public class FyTestMngImpl implements FyTestMng {
 			}
 		}
 	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create("select bean.id from FyTest bean where 1=1");
+		
+			finder.append(" and bean.recycleTime <:overTime");
+			Date now = new Date(new Date().getTime()-1000*60*60*24*15);
+			finder.setParam("overTime",now);
+			finder.append(" and bean.isRecycle=true");
+			List<Object> list = 	testDao.findObjectListByFinder(finder);
+			Long[] x = list.toArray(new Long[list.size()]);
+			this.delete(x);
+	}
 }
