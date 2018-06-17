@@ -283,7 +283,7 @@ public class FyTestMngImpl implements FyTestMng {
 		FyTest test;
 		for (Long id : ids) {
 			test=this.findById(id);
-			if(test!=null) {
+			if(test!=null&&(test.getSaleStatus()==SaleStatus.create||test.getSaleStatus()==SaleStatus.refuse)) {
 			test.setSaleStatus(SaleStatus.apply);
 			this.update(test);
 			}
@@ -296,7 +296,7 @@ public class FyTestMngImpl implements FyTestMng {
 		FyTest test;
 		for (Long id : ids) {
 			test=this.findById(id);
-			if(test!=null) {
+			if(test!=null&&test.getSaleStatus()==SaleStatus.sale) {
 				test.setSaleStatus(SaleStatus.create);
 			this.update(test);
 			}
