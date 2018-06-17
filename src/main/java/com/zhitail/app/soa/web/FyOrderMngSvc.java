@@ -46,28 +46,28 @@ public class FyOrderMngSvc {
 	private FyOrderMng orderMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryOrder",method=RequestMethod.GET)
-	public Result querySensitive(String token, Integer pageNo,Integer pageSize,FyOrder search) {
-		Pagination<FyOrder> page = orderMng.getPage(pageNo,pageSize,search);
+	public Result queryOrder(String token, Integer pageNo,Integer pageSize,String code,String title,String sorter) {
+		Pagination<FyOrder> page = orderMng.getPage(pageNo,pageSize,  code,title,sorter);
 		return new Result(page);
 	}
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/addOrder", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addSensitive( String token,FyOrder sensitive) {
-		if(sensitive.getId()==null){
+	public Result addOrder( String token,FyOrder order) {
+		if(order.getId()==null){
 		
-			sensitive = orderMng.save(sensitive);
+			order = orderMng.save(order);
 		}else{
-			sensitive = orderMng.update(sensitive);
+			order = orderMng.update(order);
 		}
-		return new Result(sensitive);
+		return new Result(order);
 	
 	}
 	
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/removeOrder", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result removeSensitive(String token, Long[] ids) {
+	public Result removeOrder(String token, Long[] ids) {
 		orderMng.delete(ids);
 		return new Result(true);
 	}

@@ -3,6 +3,7 @@ package com.zhitail.app.manager.Impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +26,24 @@ public class FyOrderMngImpl implements FyOrderMng{
 	@Autowired
 	private FyOrderDao orderDao;
 	public Pagination<FyOrder> getPage( Integer pageNo,
-			Integer pageSize, FyOrder search) {
+			Integer pageSize, String code,String title,String sorter) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 				Finder finder = Finder.create(" from FyOrder bean where 1=1");
-			
-				finder.append(" and bean.isDel=false order by bean.id desc");
+				if (StringUtils.isNotBlank(title)) {
+					finder.append(" and bean.title like:title");
+					finder.setParam("title", "%" + title + "%");
+				}
+				if (StringUtils.isNotBlank(code)) {
+					finder.append(" and bean.code like:code");
+					finder.setParam("code", "%" + code + "%");
+				}
+				finder.append(" and bean.isDel=false ");
+				if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
+					finder.append(" order by bean.createTime asc");
+				}else {
+					finder.append(" order by bean.createTime desc");
+				}
 				return orderDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 	public FyOrder update(FyOrder user) {
