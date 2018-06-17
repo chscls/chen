@@ -14,10 +14,10 @@ public class ScheduledService {
 	private FyTestMng testMng;
 	@Autowired
 	private FyQuestionMng questionMng;
-    @Scheduled(cron = "0 12 10 * * ?")
+    @Scheduled(cron = "0 55 10 * * ?")
     public void clearQuestion(){
     	testMng.clear();
-    	//questionMng.clear();
+    	questionMng.clear();
         System.out.println(System.currentTimeMillis());
     }
   
