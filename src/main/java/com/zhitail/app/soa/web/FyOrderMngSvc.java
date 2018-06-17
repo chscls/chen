@@ -44,10 +44,14 @@ public class FyOrderMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyOrderMng orderMng;
+	@Autowired
+	private FyUserMng userMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryOrder",method=RequestMethod.GET)
 	public Result queryOrder(String token, Integer pageNo,Integer pageSize,String code,String title,String sorter) {
-		Pagination<FyOrder> page = orderMng.getPage(pageNo,pageSize,  code,title,sorter);
+		
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		Pagination<FyOrder> page = orderMng.getPage(u.getId(),pageNo,pageSize,  code,title,sorter);
 		return new Result(page);
 	}
 	

@@ -8,7 +8,7 @@ import com.zhitail.frame.util.page.Pagination;
 
 public interface FyOrderMng {
 
-	public Pagination<FyOrder> getPage( Integer pageNo, Integer pageSize,
+	public Pagination<FyOrder> getPage( Long userId, Integer pageNo, Integer pageSize,
 			 String code,String title, String sorter);
 
 	public FyOrder update(FyOrder user);

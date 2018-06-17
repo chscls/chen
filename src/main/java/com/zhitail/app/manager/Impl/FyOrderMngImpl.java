@@ -25,7 +25,7 @@ import com.zhitail.frame.util.page.Pagination;
 public class FyOrderMngImpl implements FyOrderMng{
 	@Autowired
 	private FyOrderDao orderDao;
-	public Pagination<FyOrder> getPage( Integer pageNo,
+	public Pagination<FyOrder> getPage(Long userId, Integer pageNo,
 			Integer pageSize, String code,String title,String sorter) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
@@ -39,6 +39,9 @@ public class FyOrderMngImpl implements FyOrderMng{
 					finder.setParam("code", "%" + code + "%");
 				}
 				finder.append(" and bean.isDel=false ");
+				finder.append(" and bean.userId=:userId ");
+				
+				finder.setParam("userId", userId);
 				if(StringUtils.isNotBlank(sorter)&&sorter.equals("createTime_ascend")){
 					finder.append(" order by bean.createTime asc");
 				}else {
