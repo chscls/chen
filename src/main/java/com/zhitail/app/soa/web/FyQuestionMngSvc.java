@@ -71,25 +71,24 @@ public class FyQuestionMngSvc {
 		if (!loginManager.verify(token)) {
 			return new Result(HttpStatus.UNAUTHORIZED);
 		}
-		FyQuestion q = questionMng.findById(id);
-		Boolean isChange = false;
-		if (q.getIsQuestionnaire() != isQuestionnaire) {
-			isChange = true;
-		}
-		if (!q.getJson().equals(options)) {
-			isChange = true;
-		}
-		if (q.getStatus() != Status.complete) {
-			isChange = true;
-		}
+		FyQuestion q = new FyQuestion();
+			q.setId(id);
+			q.setIsQuestionnaire(isQuestionnaire);
+	
+			q.setJson(options);
+		
+	
+			q.setStatus(Status.complete);
+		
 
-		q.setIsQuestionnaire(isQuestionnaire);
-		q.setJson(options);
-		q.setStatus(Status.complete);
+		
+	
+		
+		
+			q = questionMng.update(q, true);
+	
 
-		questionMng.update(q, isChange);
 		return new Result(q);
-
 	}
 
 	@TokenAuth(value = "token")
@@ -111,29 +110,7 @@ public class FyQuestionMngSvc {
 			question.setJson((new JSONArray()).toJSONString());
 			question = questionMng.save(question, u);
 		} else {
-			FyQuestion q = questionMng.findById(question.getId());
-			Boolean isChange = false;
-			if (!q.getTitle().equals(question.getTitle())) {
-				isChange = true;
-			}
-			q.setTitle(question.getTitle());
-			if (!isChange&&!q.getTagsJson().equals(question.getTagsJson())) {
-				isChange = true;
-			}
-			q.setTagsJson(question.getTagsJson());
-			if (!isChange&&q.getIsRich()!=question.getIsRich()) {
-				isChange = true;
-			}
-			q.setIsRich(question.getIsRich());
-			if (!isChange&&q.getDifficulty()!=question.getDifficulty()) {
-				isChange = true;
-			}
-			q.setDifficulty(question.getDifficulty());
-			if(isChange) {
-			question = questionMng.update(q,isChange);
-			}else {
-				return new Result(q);
-			}
+			question= questionMng.update(question,true);
 		}
 		return new Result(question);
 
