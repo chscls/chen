@@ -77,12 +77,12 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 	}
 
-	public FyQuestion update(FyQuestion question,FyQuestion org) {
+	public FyQuestion update(FyQuestion question,Boolean isChange) {
 		
 		// TODO Auto-generated method stub
 		Updater u = new Updater(question);
 		question = questionDao.updateByUpdater(u);
-		if(org!=null&&!question.equals(org)) {
+		if(isChange!=null&&isChange) {
 		List<FyTest> list = 	testMng.findByQuestionId(question.getId());
 		for(FyTest t:list) {
 			t.setCode(Application.getSnowflakeIdWorker().nextId()+"");

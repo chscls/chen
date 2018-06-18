@@ -13,7 +13,7 @@ public interface FyQuestionMng {
 
 	public void delete(Long[] ids,FyUser user);
 
-	public FyQuestion update(FyQuestion question, FyQuestion org);
+	public FyQuestion update(FyQuestion question, Boolean isChange);
 
 	public FyQuestion save(FyQuestion question,FyUser user);
 
