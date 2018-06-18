@@ -113,19 +113,27 @@ public class FyQuestionMngSvc {
 		} else {
 			FyQuestion q = questionMng.findById(question.getId());
 			Boolean isChange = false;
-			if (q.getTitle() != question.getTitle()) {
+			if (!q.getTitle().equals(question.getTitle())) {
 				isChange = true;
 			}
-			if (!q.getTagsJson().equals(question.getTagsJson())) {
+			q.setTitle(question.getTitle());
+			if (!isChange&&!q.getTagsJson().equals(question.getTagsJson())) {
 				isChange = true;
 			}
-			if (q.getIsRich()==question.getIsRich()) {
+			q.setTagsJson(question.getTagsJson());
+			if (!isChange&&q.getIsRich()!=question.getIsRich()) {
 				isChange = true;
 			}
-			if (q.getDifficulty()==question.getDifficulty()) {
+			q.setIsRich(question.getIsRich());
+			if (!isChange&&q.getDifficulty()!=question.getDifficulty()) {
 				isChange = true;
 			}
-			question = questionMng.update(question, isChange);
+			q.setDifficulty(question.getDifficulty());
+			if(isChange) {
+			question = questionMng.update(q,isChange);
+			}else {
+				return new Result(q);
+			}
 		}
 		return new Result(question);
 
