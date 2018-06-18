@@ -102,7 +102,7 @@ public class FyTestMngImpl implements FyTestMng {
 			finder.setParamList("codes", codes);
 		}
 
-		finder.append("and bean.isRecycle=false order by bean.id desc");
+		finder.append(" and bean.isRecycle=false order by bean.id desc");
 		return testDao.findListByFinder(finder);
 	}
 

@@ -60,14 +60,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder0.append(" and bean.code =:code");
 			finder0.setParam("code", search.getCode());
 		}
-		if (search.getTeaId() != null) {
-			finder0.append(" and bean.teaId =:teaId");
-			finder0.setParam("teaId", search.getTeaId());
-		}
-		if (search.getUserId() != null) {
-			finder0.append(" and bean.userId =:userId");
-			finder0.setParam("userId", search.getUserId());
-		}
+	
 
 		finder0.append(" and bean.orgId=:orgId ");
 		finder0.setParam("orgId",orgId);
@@ -76,8 +69,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		if (p.getList().size() > 0) {
 			// TODO Auto-generated method stub
 			Finder finder = Finder.create(" select bean.code from FyTestRecord bean where 1=1");
-			finder.append(" and bean.teaId=:teaId");
-			finder.setParam("teaId", search.getTeaId());
+			finder0.append(" and bean.orgId=:orgId ");
+			finder0.setParam("orgId",orgId);
 			if (search.getTitle() != null) {
 				finder.append(" and bean.title like:title");
 				finder.setParam("title", "%" + search.getTitle() + "%");
@@ -111,7 +104,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	public List<FyTestRecordStatistics> groupByCodes(String[] codes) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(
-				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.code,count(bean.orgId),max(bean.score),min(bean.score),avg(bean.score)) from FyTestRecord bean where 1=1");
+				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.code,count(bean.orgId),max(bean.score),min(bean.score),avg(bean.score)) from FyTestRecord bean where 1=1 ");
 
 		if (codes != null) {
 			finder.append(" and bean.code in:codes");
