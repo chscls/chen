@@ -77,14 +77,12 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 	}
 
-	public FyQuestion update(FyQuestion question) {
-		FyQuestion org = this.findById(question.getId());
-		FyQuestion temp = new FyQuestion();
-		BeanUtils.copyProperties(org, temp);
+	public FyQuestion update(FyQuestion question,FyQuestion org) {
+		
 		// TODO Auto-generated method stub
 		Updater u = new Updater(question);
 		question = questionDao.updateByUpdater(u);
-		if(!question.equals(temp)) {
+		if(org!=null&&!question.equals(org)) {
 		List<FyTest> list = 	testMng.findByQuestionId(question.getId());
 		for(FyTest t:list) {
 			t.setCode(Application.getSnowflakeIdWorker().nextId()+"");
@@ -189,7 +187,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			if (q != null) {
 				q.setRecycleTime(new Date());
 				q.setIsRecycle(true);
-				this.update(q);
+				this.update(q,null);
 			}
 		}
 		user.setRecycleCount(getCount(user.getId(),true));
@@ -233,7 +231,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 				q.setRecycleTime(null);
 				q.setIsRecycle(false);
 				
-				this.update(q);
+				this.update(q,null);
 			}
 		}
 		user.setRecycleCount(getCount(user.getId(),true));

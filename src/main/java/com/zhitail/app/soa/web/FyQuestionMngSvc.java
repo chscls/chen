@@ -2,6 +2,7 @@ package com.zhitail.app.soa.web;
 
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,10 +64,12 @@ public class FyQuestionMngSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyQuestion q=questionMng.findById(id);
+		FyQuestion org = new FyQuestion();
+		BeanUtils.copyProperties(q, org);
 		q.setIsQuestionnaire(isQuestionnaire);
 		q.setJson(options);
 		q.setStatus(Status.complete);
-		questionMng.update(q);
+		questionMng.update(q,org);
 		return new Result(q);
 	
 	}
@@ -90,7 +93,10 @@ public class FyQuestionMngSvc {
 			question.setJson((new JSONArray()).toJSONString());
 			question = questionMng.save(question,u);
 		}else{
-			question= questionMng.update(question);
+			FyQuestion q=questionMng.findById(question.getId());
+			FyQuestion org = new FyQuestion();
+			BeanUtils.copyProperties(q, org);
+			question= questionMng.update(question,org);
 		}
 		return new Result(question);
 	
