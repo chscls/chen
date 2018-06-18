@@ -31,7 +31,7 @@ import com.zhitail.app.entity.middle.FyQuestionItem;
 public class FyTestRecord {
 
 	public enum Status{
-		create,wait,complete
+		create,check,complete
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

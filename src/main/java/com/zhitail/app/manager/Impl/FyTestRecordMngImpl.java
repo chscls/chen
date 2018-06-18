@@ -142,6 +142,10 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder.append(" and bean.userId =:userId");
 			finder.setParam("userId", search.getUserId());
 		}
+		if (search != null && search.getStatus()!= null) {
+			finder.append(" and bean.status =:status");
+			finder.setParam("status", search.getStatus());
+		}
 		if(ids!=null) {
 			finder.append(" and bean.userId in:ids");
 			finder.setParamList("ids", ids);
@@ -167,6 +171,10 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		if (search != null && search.getTeaId() != null) {
 			finder.append(" and bean.teaId =:teaId");
 			finder.setParam("teaId", search.getTeaId());
+		}
+		if (search != null && search.getStatus()!= null) {
+			finder.append(" and bean.status =:status");
+			finder.setParam("status", search.getStatus());
 		}
 		if (search != null && search.getUserId() != null) {
 			finder.append(" and bean.userId =:userId");
