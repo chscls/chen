@@ -106,8 +106,8 @@ public class FyTestMngSvc {
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/updateTestQuestions", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result updateTestQuestions(String token,Long id, Long[] qids) {
-		FyTest t  = testMng.updateTestQuestions(id,qids);
+	public Result updateTestQuestions(String token,Long id, Long[] qids,Double score) {
+		FyTest t  = testMng.updateTestQuestions(id,qids,score);
 		testMng.fullQuestions(t);
 		return new Result(t);	
 	}

@@ -61,14 +61,16 @@ public class FyTestMngImpl implements FyTestMng {
 	}
 
 	@Override
-	public FyTest updateTestQuestions(Long id, Long[] qids) {
+	public FyTest updateTestQuestions(Long id, Long[] qids,Double score) {
 		FyTest  t= testDao.findOne(id);
 		// TODO Auto-generated method stub
-		
+		if(score==null) {
+			score=1.0;
+		}
 		List<QuestionConfig> list = new ArrayList<QuestionConfig>();
 		for(Long qid:qids) {
 			if(qid!=null) {
-		QuestionConfig qc = new QuestionConfig(qid,1.0);
+		QuestionConfig qc = new QuestionConfig(qid,score);
 		list.add(qc);
 			}
 		}

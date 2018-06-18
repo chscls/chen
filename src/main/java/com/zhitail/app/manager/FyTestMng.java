@@ -18,7 +18,7 @@ public interface FyTestMng {
 
 	public FyTest findById(Long id);
 
-	public FyTest  updateTestQuestions(Long id, Long[] qids);
+
 
 	public List<FyTest> findByCodes(String[] codes);
 
@@ -52,5 +52,8 @@ public interface FyTestMng {
 
 
 	public void downShopTest(Long[] ids);
+
+
+	FyTest updateTestQuestions(Long id, Long[] qids, Double score);
 
 }
