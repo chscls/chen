@@ -113,10 +113,12 @@ public class FyTestRecordMngSvc {
 			map.put(t.getCode(), t);
 		}
 		for (FyTestRecordStatistics s : list2) {
+			if(map.containsKey(s.getCode())) {
 			FyTest lite = map.get(s.getCode());
 			lite.setQuestions(null);
 
 			s.setTest(lite);
+			}
 		}
 
 		page2.setList(list2);
