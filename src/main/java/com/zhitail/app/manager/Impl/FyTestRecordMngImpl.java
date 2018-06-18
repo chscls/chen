@@ -375,4 +375,33 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		return testRecordDao.findByUuid(uuid);
 	}
 
+	@Override
+	public Pagination<FyTestRecord> getMyPage(Integer pageNo, Integer pageSize, FyTestRecord search) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
+
+		if (search.getTitle() != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + search.getTitle() + "%");
+		}
+		if (search.getCode() != null) {
+			finder.append(" and bean.code =:code");
+			finder.setParam("code", search.getCode());
+		}
+		if (search.getTeaId() != null) {
+			finder.append(" and bean.teaId =:teaId");
+			finder.setParam("teaId", search.getTeaId());
+		}
+		if (search.getUserId() != null) {
+			finder.append(" and bean.userId =:userId");
+			finder.setParam("userId", search.getUserId());
+		}
+		if (search.getOrgId() != null) {
+			finder.append(" and bean.orgId =:orgId");
+			finder.setParam("userId", search.getOrgId());
+		}
+		finder.append(" order by bean.id desc");
+		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
+	}
+
 }

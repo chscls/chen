@@ -37,4 +37,6 @@ public interface FyTestRecordMng {
 
 	public FyTestRecord findByUuid(String code);
 
+	public Pagination<FyTestRecord> getMyPage(Integer pageNo, Integer pageSize, FyTestRecord search);
+
 }

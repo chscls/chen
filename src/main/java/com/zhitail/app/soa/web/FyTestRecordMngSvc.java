@@ -74,6 +74,22 @@ public class FyTestRecordMngSvc {
 	}
 
 	@TokenAuth(value = "token")
+	@RequestMapping(value = "/queryMyTestRecord", method = RequestMethod.GET)
+	public Result queryMyTestRecord(String token, Integer pageNo, Integer pageSize, FyTestRecord search) {
+		
+		
+		FyUser u = userMng.findByUserName(loginManager.getUser(token));
+		search.setUserId(u.getId());
+		Pagination<FyTestRecord> page = testRecordMng.getMyPage(pageNo, pageSize, search);
+		for(FyTestRecord r:page.getList()) {
+			r.lite();
+		}
+		return new Result(page);
+	}
+	
+	
+	
+	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecord", method = RequestMethod.GET)
 	public Result queryTestRecord(String token, Integer pageNo, Integer pageSize, FyTestRecord search,Long orgId) {
 		Pagination<FyTestRecordStatistics> page2 = new Pagination<FyTestRecordStatistics>();
