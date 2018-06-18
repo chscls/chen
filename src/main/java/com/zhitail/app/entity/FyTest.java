@@ -50,6 +50,13 @@ public class FyTest {
 		this.count = count;
 	}
 	private Boolean isQuestionnaire=false;
+	private Boolean isNoOrder=false;
+	public Boolean getIsNoOrder() {
+		return isNoOrder;
+	}
+	public void setIsNoOrder(Boolean isNoOrder) {
+		this.isNoOrder = isNoOrder;
+	}
 	public Boolean getIsQuestionnaire() {
 		return isQuestionnaire;
 	}

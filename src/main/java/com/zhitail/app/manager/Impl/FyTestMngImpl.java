@@ -158,7 +158,7 @@ public class FyTestMngImpl implements FyTestMng {
 	}
 
 	@Override
-	public Pagination<FyTest> getPage(Long userId, Integer pageNo, Integer pageSize,String code, String title, String isQuestionnaire,
+	public Pagination<FyTest> getPage(Long userId, Integer pageNo, Integer pageSize,String code, String title, String isQuestionnaire,String isNoOrder,
 			String mode,String status,String sorter) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTest bean where 1=1");
@@ -198,6 +198,15 @@ public class FyTestMngImpl implements FyTestMng {
 			}
 			finder.append(" and bean.isQuestionnaire in:isQuestionnaires");
 			finder.setParamList("isQuestionnaires", tt.toArray(new Boolean[tt.size()]));
+		}
+		if (StringUtils.isNotBlank(isNoOrder)) {
+			String[] t = isNoOrder.split(",");
+			List<Boolean> tt = new ArrayList<Boolean>();
+			for (String s : t) {
+				tt.add(Boolean.valueOf(s));
+			}
+			finder.append(" and bean.isNoOrder in:isNoOrders");
+			finder.setParamList("isNoOrders", tt.toArray(new Boolean[tt.size()]));
 		}
 		finder.append(" and bean.userId=:userId");
 		finder.setParam("userId", userId);
