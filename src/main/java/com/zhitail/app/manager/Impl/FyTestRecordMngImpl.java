@@ -49,7 +49,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public Pagination<String> getPage(Integer pageNo, Integer pageSize, FyTestRecord search) {
+	public Pagination<String> getPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long orgId) {
 		Finder finder0 = Finder.create(" from FyTestRecord bean where 1=1");
 
 		if (search.getTitle() != null) {
@@ -69,8 +69,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder0.setParam("userId", search.getUserId());
 		}
 
-		// /finder0.append(" group by bean.orgId ");
-		// finder0.append(" order by bean.id desc");
+		finder0.append(" and bean.orgId=:orgId ");
+		finder0.setParam("orgId",orgId);
 
 		Pagination<FyTestRecord> p = testRecordDao.findPageByFinder(finder0, pageNo, pageSize);
 		if (p.getList().size() > 0) {

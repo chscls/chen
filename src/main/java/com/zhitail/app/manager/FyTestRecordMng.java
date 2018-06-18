@@ -12,7 +12,7 @@ public interface FyTestRecordMng {
 	public FyTestRecord findById(Long id);
 
 	public Pagination<String> getPage(Integer pageNo, Integer pageSize,
-			FyTestRecord search);
+			FyTestRecord search, Long orgId);
 
 	public FyTestRecord update(FyTestRecord testRecord);
 
