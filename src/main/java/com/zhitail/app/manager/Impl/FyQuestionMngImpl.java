@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Application;
 import com.alibaba.fastjson.JSONArray;
 import com.zhitail.app.dao.FyQuestionDao;
 import com.zhitail.app.dao.FySensitiveDao;
@@ -76,9 +78,22 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	public FyQuestion update(FyQuestion question) {
+		FyQuestion org = this.findById(question.getId());
+		FyQuestion temp = new FyQuestion();
+		BeanUtils.copyProperties(org, temp);
 		// TODO Auto-generated method stub
 		Updater u = new Updater(question);
-		return questionDao.updateByUpdater(u);
+		question = questionDao.updateByUpdater(u);
+		if(!question.equals(temp)) {
+		List<FyTest> list = 	testMng.findByQuestionId(question.getId());
+		for(FyTest t:list) {
+			t.setCode(Application.getSnowflakeIdWorker().nextId()+"");
+			testMng.update(t);
+		}
+			
+		}
+		
+		return question;
 	}
 
 	public FyQuestion save(FyQuestion question, FyUser user) {
