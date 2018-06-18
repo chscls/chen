@@ -131,19 +131,19 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
 		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code =:code");
+			finder.append(" and bean.code=:code");
 			finder.setParam("code", search.getCode());
 		}
 		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId =:teaId");
+			finder.append(" and bean.teaId=:teaId");
 			finder.setParam("teaId", search.getTeaId());
 		}
 		if (search != null && search.getUserId() != null) {
-			finder.append(" and bean.userId =:userId");
+			finder.append(" and bean.userId=:userId");
 			finder.setParam("userId", search.getUserId());
 		}
 		if (search != null && search.getStatus()!= null) {
-			finder.append(" and bean.status =:status");
+			finder.append(" and bean.status=:status");
 			finder.setParam("status", search.getStatus());
 		}
 		if(ids!=null) {
@@ -165,19 +165,19 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder.setParam("title", "%" + search.getTitle() + "%");
 		}
 		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code =:code");
+			finder.append(" and bean.code=:code");
 			finder.setParam("code", search.getCode());
 		}
 		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId =:teaId");
+			finder.append(" and bean.teaId=:teaId");
 			finder.setParam("teaId", search.getTeaId());
 		}
 		if (search != null && search.getStatus()!= null) {
-			finder.append(" and bean.status =:status");
+			finder.append(" and bean.status=:status");
 			finder.setParam("status", search.getStatus());
 		}
 		if (search != null && search.getUserId() != null) {
-			finder.append(" and bean.userId =:userId");
+			finder.append(" and bean.userId=:userId");
 			finder.setParam("userId", search.getUserId());
 		}
 		finder.setFirstResult(start);
