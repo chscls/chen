@@ -39,4 +39,6 @@ public interface FyTestRecordMng {
 
 	public Pagination<FyTestRecord> getMyPage(Integer pageNo, Integer pageSize, FyTestRecord search);
 
+	
+
 }

@@ -48,7 +48,16 @@ public class FyTestRecordMngSvc {
 
 		return new Result(testRecord);
 	}
-
+	@TokenAuth(value = "token")
+	@RequestMapping(value = "/queryTestRecordStatistics", method = RequestMethod.GET)
+	public Result queryTestRecordStatistics(String token, String code) {
+		String[] codes= new String[1];
+		codes[0] =code;
+	   List<FyTestRecordStatistics>  list =  testRecordMng.groupByCodes(codes);
+		
+		
+		return new Result(list.get(0));
+	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
 	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search) {

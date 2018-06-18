@@ -402,4 +402,6 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
+	
+
 }
