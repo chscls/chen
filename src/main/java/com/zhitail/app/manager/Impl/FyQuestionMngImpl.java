@@ -85,7 +85,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		if(isChange!=null&&isChange) {
 		List<FyTest> list = 	testMng.findByQuestionId(question.getId());
 		for(FyTest t:list) {
-			t.setCode(Application.getSnowflakeIdWorker().nextId()+"");
+			t.refreshCode();
 			testMng.update(t);
 		}
 			
