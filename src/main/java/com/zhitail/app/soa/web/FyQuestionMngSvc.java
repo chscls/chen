@@ -71,23 +71,12 @@ public class FyQuestionMngSvc {
 		if (!loginManager.verify(token)) {
 			return new Result(HttpStatus.UNAUTHORIZED);
 		}
-		FyQuestion q = new FyQuestion();
-			q.setId(id);
-			q.setIsQuestionnaire(isQuestionnaire);
-	
-			q.setJson(options);
-		
-	
-			q.setStatus(Status.complete);
-		
-
-		
-	
-		
-		
-			q = questionMng.update(q, true);
-	
-
+		FyQuestion q =  questionMng.findById(id);
+		q.setId(id);
+		q.setIsQuestionnaire(isQuestionnaire);
+		q.setJson(options);
+		q.setStatus(Status.complete);
+		q = questionMng.update(q, true);
 		return new Result(q);
 	}
 

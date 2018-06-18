@@ -56,6 +56,10 @@ public class Application {
 			workerId= Long.parseLong(args[1]);
 			yaml= args[2];
 		}
+		System.out.println(getSnowflakeIdWorker().nextId());
+		System.out.println(getSnowflakeIdWorker().nextId());
+		System.out.println(getSnowflakeIdWorker().nextId());
+		System.out.println(getSnowflakeIdWorker().nextId());
 	    new SpringApplicationBuilder(Application.class)
         .properties("spring.config.location=classpath:/"+yaml+".yml").run(args);
 			
@@ -63,12 +67,11 @@ public class Application {
 	}
 	
 	 public static SnowflakeIdWorker getSnowflakeIdWorker(){
-		 if(instance!=null) {
-			 return instance;
-		 }else {
-		 return new SnowflakeIdWorker(workerId,datacenterId);
-		 }
+		 if(instance==null) {
+			 instance= new SnowflakeIdWorker(workerId,datacenterId);
 		 
+		 }
+		 return instance;
 	 }
 	 
 	 @Bean  
