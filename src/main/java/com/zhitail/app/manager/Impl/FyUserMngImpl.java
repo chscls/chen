@@ -97,4 +97,19 @@ public class FyUserMngImpl implements FyUserMng{
 		// TODO Auto-generated method stub
 		return userDao.findByOpenId(openid);
 	}
+	@Override
+	public List<Object> findIdsByName(String userkey) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create("select bean.id from FyUser bean where 1=1");
+		
+		if(userkey!=null){
+			  finder.append(" and ( bean.realname like:userkey or bean.mobile like:userkey)");
+	            finder.setParam("userkey","%"+userkey+"%");
+		
+		
+		}
+		
+		finder.append(" and bean.isDel=false order by bean.id desc");
+		return userDao.findObjectListByFinder(finder);
+	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -60,8 +61,23 @@ public class FyTestRecordMngSvc {
 	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
-	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search) {
-		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search);
+	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search,String userkey) {
+		Long[] ids=null;
+		if(StringUtils.isNotBlank(userkey)) {
+		List<Object> objs = 	userMng.findIdsByName(userkey);
+		ids=objs.toArray(new Long[objs.size()]);
+		if(ids.length==0) {
+			Pagination<FyTestRecord> page  =new Pagination<FyTestRecord>();
+			page.setList(new ArrayList<FyTestRecord>());
+			page.setPageNo(pageNo);
+			page.setPageSize(pageSize);
+			page.setTotalCount(0);
+			return new Result(page);
+			
+		}
+		}
+		
+		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids);
 		List<Long> userIds = new ArrayList<Long>(page.getList().size());
 		for (FyTestRecord r : page.getList()) {
 			userIds.add(r.getUserId());

@@ -25,4 +25,6 @@ public interface FyUserMng {
 
 	public  FyUser findByOpenid(String openid);
 
+	public List<Object> findIdsByName(String userkey);
+
 }
