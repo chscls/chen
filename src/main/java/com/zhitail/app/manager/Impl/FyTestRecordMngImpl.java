@@ -104,7 +104,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	public List<FyTestRecordStatistics> groupByCodes(String[] codes) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(
-				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.updateTime,bean.orgId,bean.code,bean.title,count(bean.orgId),max(bean.goal),min(bean.goal),avg(bean.goal),bean.mode) from FyTestRecord bean where 1=1 ");
+				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.score,bean.updateTime,bean.orgId,bean.code,bean.title,count(bean.orgId),max(bean.goal),min(bean.goal),avg(bean.goal),bean.mode) from FyTestRecord bean where 1=1 ");
 
 		if (codes != null) {
 			finder.append(" and bean.code in:codes");

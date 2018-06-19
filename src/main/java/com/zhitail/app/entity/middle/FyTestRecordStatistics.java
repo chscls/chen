@@ -9,6 +9,13 @@ public class FyTestRecordStatistics {
 		private String code;
 		private String title;
 		private Long orgId;
+		private Double score;
+		public Double getScore() {
+			return score;
+		}
+		public void setScore(Double score) {
+			this.score = score;
+		}
 		private Date updateTime;
 		public Date getUpdateTime() {
 			return updateTime;
@@ -52,8 +59,9 @@ public class FyTestRecordStatistics {
 			this.count = count;
 		}
 		private FyTest test;
-		public FyTestRecordStatistics (Date updateTime,Long orgId,String code,String title,Long count,Double maxScore,Double minScore,Double avgScore,Mode mode){
+		public FyTestRecordStatistics (Double score,Date updateTime,Long orgId,String code,String title,Long count,Double maxScore,Double minScore,Double avgScore,Mode mode){
 			this.updateTime=updateTime;
+			this.score = score;
 			
 			this.orgId=orgId;
 			this.code=code;
