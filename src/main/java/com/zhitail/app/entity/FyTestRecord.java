@@ -85,7 +85,14 @@ public class FyTestRecord {
 	
 	private String title;
 	private Date createTime;
-	
+	private Date endTime;
+
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
 	private Long userId;
 	private Long teaId;
