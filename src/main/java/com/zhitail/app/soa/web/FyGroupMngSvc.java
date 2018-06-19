@@ -36,7 +36,7 @@ import com.zhitail.frame.util.service.Result;
 
 
 
-@RequestMapping("/services/FygroupMngSvc")
+@RequestMapping("/services/FyGroupMngSvc")
 @RestController
 public class FyGroupMngSvc {
 	@Autowired
