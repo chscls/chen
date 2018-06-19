@@ -93,7 +93,13 @@ public class FyTestRecord {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-
+	private Date updateTime;
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 	private Long userId;
 	private Long teaId;
 	@Column(unique=true,length=18)

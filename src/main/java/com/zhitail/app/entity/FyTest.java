@@ -117,6 +117,7 @@ public class FyTest {
 		this.description = description;
 	}
 	private Date createTime;
+	private Date updateTime;
 	private Long userId;
 	private Integer allowTime=1;
 	
@@ -207,5 +208,12 @@ public class FyTest {
 	public void refreshCode() {
 		// TODO Auto-generated method stub
 		this.code=Application.getSnowflakeIdWorker().nextId()+"";
+		this.updateTime=new Date();
+	}
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 }

@@ -1,5 +1,7 @@
 package com.zhitail.app.entity.middle;
 
+import java.util.Date;
+
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTest.Mode;
 
@@ -7,6 +9,13 @@ public class FyTestRecordStatistics {
 		private String code;
 		private String title;
 		private Long orgId;
+		private Date updateTime;
+		public Date getUpdateTime() {
+			return updateTime;
+		}
+		public void setUpdateTime(Date updateTime) {
+			this.updateTime = updateTime;
+		}
 		public Long getOrgId() {
 			return orgId;
 		}
@@ -43,7 +52,9 @@ public class FyTestRecordStatistics {
 			this.count = count;
 		}
 		private FyTest test;
-		public FyTestRecordStatistics (Long orgId,String code,String title,Long count,Double maxScore,Double minScore,Double avgScore,Mode mode){
+		public FyTestRecordStatistics (Date updateTime,Long orgId,String code,String title,Long count,Double maxScore,Double minScore,Double avgScore,Mode mode){
+			this.updateTime=updateTime;
+			
 			this.orgId=orgId;
 			this.code=code;
 			this.count=count;
