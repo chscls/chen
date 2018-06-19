@@ -78,6 +78,11 @@ public class FyTestRecordMngSvc {
 		}
 		
 		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids);
+		if(page.getList().size()==0) {
+			
+			return new Result(page);
+			
+		}
 		List<Long> userIds = new ArrayList<Long>(page.getList().size());
 		for (FyTestRecord r : page.getList()) {
 			userIds.add(r.getUserId());
