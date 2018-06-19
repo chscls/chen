@@ -102,6 +102,15 @@ public class FyTestRecord {
 	}
 	private Long userId;
 	private Long teaId;
+	private String sign;
+
+	public String getSign() {
+		return sign;
+	}
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
 	@Column(unique=true,length=18)
 	private String code;
 	public Long getTeaId() {

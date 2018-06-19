@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -247,7 +248,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public FyTestRecord submit(Long id, String answers) {
+	public FyTestRecord submit(Long id, String answers,String sign) {
 		// TODO Auto-generated method stub
 		FyTestRecord ftr = this.findById(id);
 		JSONArray ja = JSONArray.parseArray(answers);
@@ -274,6 +275,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		}
 
 		checkGoal(qs, ftr);
+		if(StringUtils.isNotBlank(sign));
+		ftr.setSign(sign);
 		return update(ftr);
 	}
 

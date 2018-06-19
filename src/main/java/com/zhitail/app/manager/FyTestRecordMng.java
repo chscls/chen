@@ -33,7 +33,7 @@ public interface FyTestRecordMng {
 
 	public FyTestRecord addTestRecord(Long userId, String code, Long recordId);
 
-	public FyTestRecord submit(Long id, String answers);
+	public FyTestRecord submit(Long id, String answers, String sign);
 
 	public FyTestRecord findByUuid(String code);
 

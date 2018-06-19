@@ -95,10 +95,10 @@ public class FyTestRecordSvc {
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/submit",method=RequestMethod.POST)
-	public Result submit(String token,Long id,String answers) {
+	public Result submit(String token,Long id,String answers,String sign) {
 		
 		
-		FyTestRecord r = testRecordMng.submit(id,answers);
+		FyTestRecord r = testRecordMng.submit(id,answers,sign);
 		
 		
 		return new Result(r );
