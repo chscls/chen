@@ -6,6 +6,13 @@ import com.zhitail.app.entity.FyTest.Mode;
 public class FyTestRecordStatistics {
 		private String code;
 		private String title;
+		private Long orgId;
+		public Long getOrgId() {
+			return orgId;
+		}
+		public void setOrgId(Long orgId) {
+			this.orgId = orgId;
+		}
 		private Mode mode;
 		public Mode getMode() {
 			return mode;
@@ -36,7 +43,8 @@ public class FyTestRecordStatistics {
 			this.count = count;
 		}
 		private FyTest test;
-		public FyTestRecordStatistics (String code,String title,Long count,Double maxScore,Double minScore,Double avgScore,Mode mode){
+		public FyTestRecordStatistics (Long orgId,String code,String title,Long count,Double maxScore,Double minScore,Double avgScore,Mode mode){
+			this.orgId=orgId;
 			this.code=code;
 			this.count=count;
 			this.maxScore=maxScore;
