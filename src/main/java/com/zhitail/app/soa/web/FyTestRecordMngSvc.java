@@ -61,45 +61,41 @@ public class FyTestRecordMngSvc {
 	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
-	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search,String userkey) {
+	public Result queryTestRecordDetail(String token, Integer start, Integer count, FyTestRecord search,String userkey) {
 		Long[] ids=null;
 		if(StringUtils.isNotBlank(userkey)) {
 		List<Object> objs = 	userMng.findIdsByName(userkey);
 		ids=objs.toArray(new Long[objs.size()]);
 		if(ids.length==0) {
-			Pagination<FyTestRecord> page  =new Pagination<FyTestRecord>();
-			page.setList(new ArrayList<FyTestRecord>());
-			page.setPageNo(pageNo);
-			page.setPageSize(pageSize);
-			page.setTotalCount(0);
-			return new Result(page);
+			
+			return new Result(new ArrayList<FyTestRecord>());
 			
 		}
 		}
 		
-		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids);
-		if(page.getList().size()==0) {
+		List<FyTestRecord> list = testRecordMng.getDetail(start, count, search,ids);
+		if(list.size()==0) {
 			
-			return new Result(page);
+			return new Result(list);
 			
 		}
-		List<Long> userIds = new ArrayList<Long>(page.getList().size());
-		for (FyTestRecord r : page.getList()) {
+		List<Long> userIds = new ArrayList<Long>(list.size());
+		for (FyTestRecord r : list) {
 			userIds.add(r.getUserId());
 		}
-		List<FyUser> list = userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
+		List<FyUser> users = userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
 		Map<Long, FyUser> map = new HashMap<Long, FyUser>();
-		for (FyUser t : list) {
+		for (FyUser t : users) {
 			map.put(t.getId(), t);
 		}
-		for (FyTestRecord s : page.getList()) {
+		for (FyTestRecord s : list) {
 			FyUser lite = map.get(s.getUserId());
 			lite.setPassword(null);
 			lite.setIsDel(null);
 			lite.setOpenid(null);
 			s.setUser(lite);
 		}
-		return new Result(page);
+		return new Result(list);
 
 	}
 

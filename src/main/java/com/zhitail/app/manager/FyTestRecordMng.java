@@ -20,8 +20,6 @@ public interface FyTestRecordMng {
 
 	
 
-	public Pagination<FyTestRecord> getDetailPage(Integer pageNo,
-			Integer pageSize, FyTestRecord search, Long[] ids);
 
 	public List<FyTestRecord> getList(Integer start, Integer count, FyTestRecord search);
 
@@ -38,6 +36,8 @@ public interface FyTestRecordMng {
 	public FyTestRecord findByUuid(String code);
 
 	public Pagination<FyTestRecord> getMyPage(Integer pageNo, Integer pageSize, FyTestRecord search);
+
+	public List<FyTestRecord> getDetail(Integer start, Integer count, FyTestRecord search, Long[] ids);
 
 	
 

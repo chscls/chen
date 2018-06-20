@@ -122,40 +122,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 
 	}
 
-	@Override
-	public Pagination<FyTestRecord> getDetailPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long[] ids) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
-
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
-		}
-		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code=:code");
-			finder.setParam("code", search.getCode());
-		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId=:teaId");
-			finder.setParam("teaId", search.getTeaId());
-		}
-		if (search != null && search.getUserId() != null) {
-			finder.append(" and bean.userId=:userId");
-			finder.setParam("userId", search.getUserId());
-		}
-		if (search != null && search.getStatus()!= null) {
-			finder.append(" and bean.status=:status");
-			finder.setParam("status", search.getStatus());
-		}
-		if(ids!=null) {
-			finder.append(" and bean.userId in:ids");
-			finder.setParamList("ids", ids);
-		}
-		finder.append(" order by bean.id desc");
-
-		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
-	}
-
+	
 	@Override
 	public List<FyTestRecord> getList(Integer start, Integer count, FyTestRecord search) {
 		// TODO Auto-generated method stub
@@ -418,6 +385,42 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		}
 		finder.append(" order by bean.id desc");
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
+	}
+
+	@Override
+	public List<FyTestRecord> getDetail(Integer start, Integer count, FyTestRecord search, Long[] ids) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
+
+		if (search != null && search.getTitle() != null) {
+			finder.append(" and bean.title like:title");
+			finder.setParam("title", "%" + search.getTitle() + "%");
+		}
+		if (search != null && search.getCode() != null) {
+			finder.append(" and bean.code=:code");
+			finder.setParam("code", search.getCode());
+		}
+		if (search != null && search.getTeaId() != null) {
+			finder.append(" and bean.teaId=:teaId");
+			finder.setParam("teaId", search.getTeaId());
+		}
+		if (search != null && search.getUserId() != null) {
+			finder.append(" and bean.userId=:userId");
+			finder.setParam("userId", search.getUserId());
+		}
+		if (search != null && search.getStatus()!= null) {
+			finder.append(" and bean.status=:status");
+			finder.setParam("status", search.getStatus());
+		}
+		if(ids!=null) {
+			finder.append(" and bean.userId in:ids");
+			finder.setParamList("ids", ids);
+		}
+		finder.setFirstResult(start);
+		finder.setMaxResults(count);
+		finder.append(" order by bean.id desc");
+
+		return testRecordDao.findListByFinder(finder);
 	}
 
 	
