@@ -97,6 +97,9 @@ public class FyTestRecordMngSvc {
 		for (FyUser t : list) {
 			map.put(t.getId(), t);
 		}
+		for (FyFriend t : list2) {
+			map2.put(t.getFriendId(), t);
+		}
 		for (FyTestRecord s : page.getList()) {
 			FyUser lite = map.get(s.getUserId());
 			lite.setPassword(null);
