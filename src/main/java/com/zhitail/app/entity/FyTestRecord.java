@@ -30,6 +30,12 @@ import com.zhitail.app.entity.middle.FyQuestionItem;
 @Table(name = "fy_test_record")
 public class FyTestRecord {
 
+	public Boolean getIsAuth() {
+		return isAuth;
+	}
+	public void setIsAuth(Boolean isAuth) {
+		this.isAuth = isAuth;
+	}
 	public enum Status{
 		create,check,complete
 	}

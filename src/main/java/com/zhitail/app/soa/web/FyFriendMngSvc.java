@@ -42,14 +42,27 @@ public class FyFriendMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyFriendMng friendMng;
-	
+	@Autowired
+	private FyUserMng userMng;
 	@TokenAuth(value="token")
-	@RequestMapping(value = "/confirmSign",method=RequestMethod.GET)
-	public Result confirmSign(String token,Long userId,String realname) {
+	@RequestMapping(value = "/confirmSign",method=RequestMethod.POST)
+	public Result confirmSign(String token,Long recordId,Long userId,String realname) {
+		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		
+		FyFriend ff = 	friendMng.check( u.getId(),userId);
+		if(ff!=null) {
+			ff.setRealname(realname);
+			ff=friendMng.update(ff);
+		}else {
+			ff=new FyFriend();
+			ff.setRealname(realname);
+			ff.setUserId(u.getId());
+			ff.setFriendId(userId);
+			ff=friendMng.save(ff);
+		}
+	
 		
-		
-		return new Result(realname);
+		return new Result(ff);
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryFriend",method=RequestMethod.GET)

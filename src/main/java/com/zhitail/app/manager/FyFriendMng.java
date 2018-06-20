@@ -8,10 +8,12 @@ public interface FyFriendMng {
 	public Pagination<FyFriend> getPage(Integer pageNo, Integer pageSize,
 			FyFriend search);
 
-	public FyFriend save(FyFriend sensitive);
+	public FyFriend save(FyFriend friend);
 
-	public FyFriend update(FyFriend sensitive);
+	public FyFriend update(FyFriend friend);
 
 	public void delete(Long[] ids);
+
+	public FyFriend check(Long userId, Long friendId);
 
 }

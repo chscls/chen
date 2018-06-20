@@ -50,4 +50,10 @@ public class  FyFriendMngImpl implements FyFriendMng{
 		
 	}
 
+	@Override
+	public FyFriend check(Long userId, Long friendId) {
+		// TODO Auto-generated method stub
+		return friendDao.check(userId, friendId);
+	}
+
 }
