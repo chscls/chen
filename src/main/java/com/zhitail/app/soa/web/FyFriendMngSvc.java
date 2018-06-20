@@ -42,6 +42,15 @@ public class FyFriendMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyFriendMng friendMng;
+	
+	@TokenAuth(value="token")
+	@RequestMapping(value = "/confirmSign",method=RequestMethod.GET)
+	public Result confirmSign(String token,Long userId,String realname) {
+		
+		
+		
+		return new Result(realname);
+	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryFriend",method=RequestMethod.GET)
 	public Result queryFriend(String token, Integer pageNo,Integer pageSize,FyFriend search) {
