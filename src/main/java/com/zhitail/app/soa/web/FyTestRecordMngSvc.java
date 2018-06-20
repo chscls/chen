@@ -61,7 +61,7 @@ public class FyTestRecordMngSvc {
 	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
-	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search,String userkey) {
+	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search,String userkey,String sort) {
 		Long[] ids=null;
 		if(StringUtils.isNotBlank(userkey)) {
 		List<Object> objs = 	userMng.findIdsByName(userkey);
@@ -77,7 +77,7 @@ public class FyTestRecordMngSvc {
 		}
 		}
 		
-		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids);
+		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids,sort);
 		if(page.getList().size()==0) {
 			
 			return new Result(page);

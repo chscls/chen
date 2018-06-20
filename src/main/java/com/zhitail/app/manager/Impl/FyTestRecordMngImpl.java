@@ -123,7 +123,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public Pagination<FyTestRecord> getDetailPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long[] ids) {
+	public Pagination<FyTestRecord> getDetailPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long[] ids,String sort) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
@@ -151,7 +151,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder.append(" and bean.userId in:ids");
 			finder.setParamList("ids", ids);
 		}
-		finder.append(" order by bean.id desc");
+		finder.append(" order by bean.goal "+sort);
 
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
 	}
