@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FySensitive;
@@ -63,12 +64,17 @@ public class FyTestRecordMngSvc {
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
 	public Result queryTestRecordDetail(String token, Integer start, Integer count, FyTestRecord search,String userkey) {
 		Long[] ids=null;
+		JSONObject jo =new JSONObject();
+		jo.put("start", start);
+		jo.put("count", count);
 		if(StringUtils.isNotBlank(userkey)) {
 		List<Object> objs = 	userMng.findIdsByName(userkey);
 		ids=objs.toArray(new Long[objs.size()]);
 		if(ids.length==0) {
 			
-			return new Result(new ArrayList<FyTestRecord>());
+			
+			jo.put("list", new ArrayList<FyTestRecord>());
+			return new Result(jo);
 			
 		}
 		}
@@ -76,7 +82,9 @@ public class FyTestRecordMngSvc {
 		List<FyTestRecord> list = testRecordMng.getDetail(start, count, search,ids);
 		if(list.size()==0) {
 			
-			return new Result(list);
+			
+			jo.put("list", new ArrayList<FyTestRecord>());
+			return new Result(jo);
 			
 		}
 		List<Long> userIds = new ArrayList<Long>(list.size());
@@ -95,7 +103,9 @@ public class FyTestRecordMngSvc {
 			lite.setOpenid(null);
 			s.setUser(lite);
 		}
-		return new Result(list);
+	
+		jo.put("list", list);
+		return new Result(jo);
 
 	}
 
