@@ -103,7 +103,7 @@ public class FyTestRecord {
 	private Long userId;
 	private Long teaId;
 	private String sign;
-
+	private Boolean isAuth=false;
 	public String getSign() {
 		return sign;
 	}
