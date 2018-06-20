@@ -30,12 +30,6 @@ import com.zhitail.app.entity.middle.FyQuestionItem;
 @Table(name = "fy_test_record")
 public class FyTestRecord {
 
-	public Boolean getIsAuth() {
-		return isAuth;
-	}
-	public void setIsAuth(Boolean isAuth) {
-		this.isAuth = isAuth;
-	}
 	public enum Status{
 		create,check,complete
 	}
@@ -109,7 +103,7 @@ public class FyTestRecord {
 	private Long userId;
 	private Long teaId;
 	private String sign;
-	private Boolean isAuth=false;
+	
 	public String getSign() {
 		return sign;
 	}
@@ -132,6 +126,14 @@ public class FyTestRecord {
 	@Transient
 	
 	private FyUser user;
+	@Transient
+	private String realname;
+	public String getRealname() {
+		return realname;
+	}
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
 	public FyUser getUser() {
 		return user;
 	}

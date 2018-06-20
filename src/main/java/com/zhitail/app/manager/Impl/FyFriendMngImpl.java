@@ -1,5 +1,7 @@
 package com.zhitail.app.manager.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +56,23 @@ public class  FyFriendMngImpl implements FyFriendMng{
 	public FyFriend check(Long userId, Long friendId) {
 		// TODO Auto-generated method stub
 		return friendDao.check(userId, friendId);
+	}
+
+	@Override
+	public List<FyFriend> findByIds(Long userId, Long[] fids) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyFriend bean where 1=1");
+		if(userId!=null){
+			  finder.append(" and bean.userId =:userId");
+	            finder.setParam("userId",userId);
+		}
+		if(fids!=null){
+			  finder.append(" and bean.friendId in:fids");
+	            finder.setParamList("fids",fids);
+		}
+		
+		
+		return friendDao.findListByFinder(finder);
 	}
 
 }

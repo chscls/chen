@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhitail.app.entity.FyFriend;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FySensitive;
@@ -22,6 +23,7 @@ import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
+import com.zhitail.app.manager.FyFriendMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyTestRecordMng;
 import com.zhitail.app.manager.FyUserMng;
@@ -41,7 +43,8 @@ public class FyTestRecordMngSvc {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-
+	@Autowired
+	private FyFriendMng friendMng;
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/findTestRecord", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
@@ -62,6 +65,7 @@ public class FyTestRecordMngSvc {
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
 	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search,String userkey,String sort) {
+		FyUser u = userMng.findByUserName(loginManager.getUser(token));
 		Long[] ids=null;
 		if(StringUtils.isNotBlank(userkey)) {
 		List<Object> objs = 	userMng.findIdsByName(userkey);
@@ -79,15 +83,16 @@ public class FyTestRecordMngSvc {
 		
 		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids,sort);
 		if(page.getList().size()==0) {
-			
 			return new Result(page);
-			
 		}
 		List<Long> userIds = new ArrayList<Long>(page.getList().size());
 		for (FyTestRecord r : page.getList()) {
 			userIds.add(r.getUserId());
 		}
-		List<FyUser> list = userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
+		Long[] uids= userIds.toArray(new Long[userIds.size()]);
+		List<FyUser> list = userMng.findByIds(uids);
+		List<FyFriend> list2 = friendMng.findByIds(u.getId(),uids);
+		Map<Long, FyFriend> map2 = new HashMap<Long, FyFriend>();
 		Map<Long, FyUser> map = new HashMap<Long, FyUser>();
 		for (FyUser t : list) {
 			map.put(t.getId(), t);
@@ -98,6 +103,9 @@ public class FyTestRecordMngSvc {
 			lite.setIsDel(null);
 			lite.setOpenid(null);
 			s.setUser(lite);
+			if(map2.containsKey(s.getUserId())) {
+				s.setRealname(map2.get(s.getUserId()).getRealname());
+			}
 		}
 		return new Result(page);
 
