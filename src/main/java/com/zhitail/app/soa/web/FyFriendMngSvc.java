@@ -1,8 +1,9 @@
 package com.zhitail.app.soa.web;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FyFriend;
+import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyFriendMng;
@@ -68,7 +70,32 @@ public class FyFriendMngSvc {
 	@RequestMapping(value = "/queryFriend",method=RequestMethod.GET)
 	public Result queryFriend(String token, Integer pageNo,Integer pageSize,FyFriend search) {
 		Pagination<FyFriend> page = friendMng.getPage(pageNo,pageSize,search);
+		if(page.getList().size()==0) {
+			return new Result(page);
+		}
+		List<Long> userIds = new ArrayList<Long>(page.getList().size());
+		for (FyFriend r : page.getList()) {
+			userIds.add(r.getUserId());
+		}
+		Long[] uids= userIds.toArray(new Long[userIds.size()]);
+		List<FyUser> list = userMng.findByIds(uids);
+		
+		
+		Map<Long, FyUser> map = new HashMap<Long, FyUser>();
+		for (FyUser t : list) {
+			map.put(t.getId(), t);
+		}
+		
+		for (FyFriend s : page.getList()) {
+			FyUser lite = map.get(s.getUserId());
+			lite.setPassword(null);
+			lite.setIsDel(null);
+			lite.setOpenid(null);
+			s.setUser(lite);
+		
+		}
 		return new Result(page);
+		
 	}
 	
 	@TokenAuth(value="token")

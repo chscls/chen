@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "fy_friend",uniqueConstraints = {
@@ -56,4 +57,13 @@ public class FyFriend {
 	@JoinColumn(name = "group_id")
 
 	private FyGroup group;
+@Transient
+	
+	private FyUser user;
+public FyUser getUser() {
+	return user;
+}
+public void setUser(FyUser user) {
+	this.user = user;
+}
 }
