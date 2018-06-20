@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FySensitive;
@@ -62,50 +61,45 @@ public class FyTestRecordMngSvc {
 	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
-	public Result queryTestRecordDetail(String token, Integer start, Integer count, FyTestRecord search,String userkey) {
+	public Result queryTestRecordDetail(String token, Integer pageNo, Integer pageSize, FyTestRecord search,String userkey) {
 		Long[] ids=null;
-		JSONObject jo =new JSONObject();
-		jo.put("start", start);
-		jo.put("count", count);
 		if(StringUtils.isNotBlank(userkey)) {
 		List<Object> objs = 	userMng.findIdsByName(userkey);
 		ids=objs.toArray(new Long[objs.size()]);
 		if(ids.length==0) {
-			
-			
-			jo.put("list", new ArrayList<FyTestRecord>());
-			return new Result(jo);
+			Pagination<FyTestRecord> page  =new Pagination<FyTestRecord>();
+			page.setList(new ArrayList<FyTestRecord>());
+			page.setPageNo(pageNo);
+			page.setPageSize(pageSize);
+			page.setTotalCount(0);
+			return new Result(page);
 			
 		}
 		}
 		
-		List<FyTestRecord> list = testRecordMng.getDetail(start, count, search,ids);
-		if(list.size()==0) {
+		Pagination<FyTestRecord> page = testRecordMng.getDetailPage(pageNo, pageSize, search,ids);
+		if(page.getList().size()==0) {
 			
-			
-			jo.put("list", new ArrayList<FyTestRecord>());
-			return new Result(jo);
+			return new Result(page);
 			
 		}
-		List<Long> userIds = new ArrayList<Long>(list.size());
-		for (FyTestRecord r : list) {
+		List<Long> userIds = new ArrayList<Long>(page.getList().size());
+		for (FyTestRecord r : page.getList()) {
 			userIds.add(r.getUserId());
 		}
-		List<FyUser> users = userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
+		List<FyUser> list = userMng.findByIds(userIds.toArray(new Long[userIds.size()]));
 		Map<Long, FyUser> map = new HashMap<Long, FyUser>();
-		for (FyUser t : users) {
+		for (FyUser t : list) {
 			map.put(t.getId(), t);
 		}
-		for (FyTestRecord s : list) {
+		for (FyTestRecord s : page.getList()) {
 			FyUser lite = map.get(s.getUserId());
 			lite.setPassword(null);
 			lite.setIsDel(null);
 			lite.setOpenid(null);
 			s.setUser(lite);
 		}
-	
-		jo.put("list", list);
-		return new Result(jo);
+		return new Result(page);
 
 	}
 
