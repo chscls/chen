@@ -50,4 +50,10 @@ public class  FyGroupMngImpl implements FyGroupMng{
 		
 	}
 
+	@Override
+	public FyGroup findById(Long groupId) {
+		// TODO Auto-generated method stub
+		return groupDao.findOne(groupId);
+	}
+
 }

@@ -20,4 +20,6 @@ public interface FyFriendMng {
 
 	public List<FyFriend> findByIds(Long userId, Long[] fids);
 
+	public void changeGroup(Long[] ids, Long groupId);
+
 }

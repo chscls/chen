@@ -14,4 +14,6 @@ public interface FyGroupMng {
 
 	public void delete(Long[] ids);
 
+	public FyGroup findById(Long groupId);
+
 }

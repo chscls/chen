@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zhitail.app.dao.FyFriendDao;
 import com.zhitail.app.dao.FyUserDao;
 import com.zhitail.app.entity.FyFriend;
+import com.zhitail.app.entity.FyGroup;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyFriendMng;
+import com.zhitail.app.manager.FyGroupMng;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
 import com.zhitail.frame.util.page.Pagination;
@@ -20,6 +22,9 @@ import com.zhitail.frame.util.page.Pagination;
 public class  FyFriendMngImpl implements FyFriendMng{
 	@Autowired
 	private FyFriendDao friendDao;
+	
+	@Autowired
+	private FyGroupMng groupMng;
 	public Pagination<FyFriend> getPage(Integer pageNo, Integer pageSize,
 			FyFriend search) {
 		// TODO Auto-generated method stub
@@ -73,6 +78,20 @@ public class  FyFriendMngImpl implements FyFriendMng{
 		
 		
 		return friendDao.findListByFinder(finder);
+	}
+
+	@Override
+	public void changeGroup(Long[] ids, Long groupId) {
+		FyGroup group=groupMng.findById(groupId);
+		// TODO Auto-generated method stub
+		FyFriend friend;
+		for(Long id:ids){
+			friend=friendDao.findOne(id);
+			friend.setGroup(group);
+			this.update(friend);
+			
+		}
+		
 	}
 
 }

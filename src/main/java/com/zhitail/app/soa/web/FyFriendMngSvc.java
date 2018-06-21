@@ -48,6 +48,15 @@ public class FyFriendMngSvc {
 	@Autowired
 	private FyUserMng userMng;
 	@TokenAuth(value="token")
+	@RequestMapping(value = "/changeGroup",method=RequestMethod.POST)
+	public Result changeGroup(String token,Long[] ids,Long groupId) {
+		
+		friendMng.changeGroup(ids, groupId);
+		
+		return new Result(true);
+		
+	}
+	@TokenAuth(value="token")
 	@RequestMapping(value = "/confirmSign",method=RequestMethod.POST)
 	public Result confirmSign(String token,Long recordId,Long userId,String realname) {
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
