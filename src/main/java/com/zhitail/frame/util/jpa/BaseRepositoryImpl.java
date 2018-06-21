@@ -1,5 +1,6 @@
 package com.zhitail.frame.util.jpa;
 
+import java.io.Console;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -128,7 +129,14 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 		}
 		return ((Number) query.iterate().next()).intValue();
 	}
-
+	public int countQueryResultNew(Finder finder) {
+		Query query = getSession().createQuery(finder.getRowCountHqlNew());
+		finder.setParamsToQuery(query);
+		if (finder.isCacheable()) {
+			query.setCacheable(true);
+		}
+		return ((Number) query.iterate().next()).intValue();
+	}
 	public Double getAvgQueryResult(String sql) {
 		Query query =getSession().createQuery(sql);
 		return query.uniqueResult()==null?0:(Double)query.uniqueResult();
@@ -241,8 +249,11 @@ public Pagination<String> findCodesByFinder(Finder finder, int pageNo, int pageS
 
 @Override
 public Pagination<Object> findObjectPageByFinder(Finder finder, Integer pageNo, Integer pageSize) {
-	// TODO Auto-generated method stub
-	int totalCount = countQueryResult(finder);
+	
+
+	int totalCount = countQueryResultNew(finder);
+	
+
 	Pagination<Object> p = new Pagination<Object>(pageNo, pageSize, totalCount);
 	if (totalCount < 1) {
 		p.setList(new ArrayList<Object>());

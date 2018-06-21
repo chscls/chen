@@ -388,6 +388,22 @@ public class Finder {
 	public static final String HQL_FETCH = "fetch";
 	public static final String ORDER_BY = "order ";
 	public static final String GROUP_BY = "group";
+	public String getRowCountHqlNew() {
+		String indexKey =ORDER_BY;
+		// TODO Auto-generated method stub
+		String hql = hqlBuilder.toString();
+
+		int fromIndex = hql.toLowerCase().indexOf(FROM);
+	
+		hql = hql.substring(fromIndex);
+		String rowCountHql = hql.replace(HQL_FETCH, "");
+
+		int index = rowCountHql.indexOf(indexKey);
+		if (index > 0) {
+			rowCountHql = rowCountHql.substring(0, index);
+		}
+		return "select count(*) "+rowCountHql;
+	}
 
 	/*public static void main(String[] args) {
 		Finder find = Finder

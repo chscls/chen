@@ -106,7 +106,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		}
 		finder.append(" group by bean.version.code ");
 		finder.append(" order by bean.id desc");
-		testRecordDao.findPageByFinder(finder, pageNo, pageSize);
+		//testRecordDao.findPageByFinder(finder, pageNo, pageSize);
 		Pagination<Object> page= 	testRecordDao.findObjectPageByFinder(finder, pageNo, pageSize);
 		Pagination<FyTestRecordStatistics> page2  =new Pagination<FyTestRecordStatistics>(pageNo, pageSize,page.getTotalCount());
 		
