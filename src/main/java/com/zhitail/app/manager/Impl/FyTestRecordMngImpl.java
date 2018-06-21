@@ -43,8 +43,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	private FyTestRecordDao testRecordDao;
 	@Autowired
 	private FyTestMng testMng;
-	@Autowired
-	private FyQuestionMng questionMng;
+	
 	@Autowired
 	private FyTestVersionMng versionMng;
 	@Override
@@ -109,13 +108,13 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	public List<FyTestRecordStatistics> groupByCodes(String[] codes) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(
-				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.score,bean.updateTime,bean.orgId,bean.code,bean.title,count(bean.orgId),max(bean.goal),min(bean.goal),avg(bean.goal),bean.mode) from FyTestRecord bean where 1=1 ");
+				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.version.score,bean.version.updateTime,bean.version.orgId,bean.version.code,bean.version.title,count(bean.id),max(bean.goal),min(bean.goal),avg(bean.goal),bean.version.mode) from FyTestRecord bean where 1=1 ");
 
 		if (codes != null) {
-			finder.append(" and bean.code in:codes");
+			finder.append(" and bean.version.code in:codes");
 			finder.setParamList("codes", codes);
 		}
-		finder.append(" group by bean.code ");
+		finder.append(" group by bean.version.code ");
 		finder.append(" order by bean.id desc");
 		List<Object> list = testRecordDao.findObjectListByFinder(finder);
 		List<FyTestRecordStatistics> xx = new ArrayList<FyTestRecordStatistics>();
