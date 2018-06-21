@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.dao.FyTestRecordDao;
+import com.zhitail.app.dao.FyTestVersionDao;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
@@ -42,6 +43,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	@Autowired
 	private FyTestRecordDao testRecordDao;
 	@Autowired
+	private FyTestVersionDao testVersionDao;
+	@Autowired
 	private FyTestMng testMng;
 	
 	@Autowired
@@ -52,42 +55,26 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		return testRecordDao.findOne(id);
 	}
 
-	/*@Override
-	public Pagination<String> getPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long orgId) {
-		Finder finder0 = Finder.create(" from FyTestRecord bean where 1=1");
+	@Override
+	public Pagination<String> getPage(Integer pageNo, Integer pageSize, FyTestVersion search) {
 
-		if (search.getTitle() != null) {
-			finder0.append(" and bean.title like:title");
-			finder0.setParam("title", "%" + search.getTitle() + "%");
-		}
-		if (search.getCode() != null) {
-			finder0.append(" and bean.code =:code");
-			finder0.setParam("code", search.getCode());
-		}
-	
-
-		finder0.append(" and bean.orgId=:orgId ");
-		finder0.setParam("orgId",orgId);
-
-		Pagination<FyTestRecord> p = testRecordDao.findPageByFinder(finder0, pageNo, pageSize);
-		if (p.getList().size() > 0) {
-			// TODO Auto-generated method stub
-			Finder finder = Finder.create(" select bean.code from FyTestRecord bean where 1=1");
-			finder0.append(" and bean.orgId=:orgId ");
-			finder0.setParam("orgId",orgId);
+			Finder finder = Finder.create(" select bean.code from  FyTestVersion bean where 1=1");
+			finder.append(" and bean.orgId=:orgId ");
+			finder.setParam("orgId",search.getOrgId());
+			if (search.getCode() != null) {
+				finder.append(" and bean.code =:code");
+				finder.setParam("code", search.getCode());
+			}
 			if (search.getTitle() != null) {
 				finder.append(" and bean.title like:title");
 				finder.setParam("title", "%" + search.getTitle() + "%");
 			}
 
-			finder.append(" group by bean.code ");
 			finder.append(" order by bean.id desc");
 
-			return testRecordDao.findCodesByFinder(finder, pageNo, pageSize);
-		} else {
-			return null;
-		}
-	}*/
+			return testVersionDao.findCodesByFinder(finder, pageNo, pageSize);
+		
+	}
 
 	@Override
 	public FyTestRecord update(FyTestRecord testRecord) {
@@ -105,23 +92,30 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public List<FyTestRecordStatistics> groupByCodes(String[] codes) {
+	public Pagination<FyTestRecordStatistics> groupByCodes(FyTestVersion version,Integer pageNo,Integer pageSize) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(
 				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.version.score,bean.version.updateTime,bean.version.orgId,bean.version.code,bean.version.title,count(bean.id),max(bean.goal),min(bean.goal),avg(bean.goal),bean.version.mode) from FyTestRecord bean where 1=1 ");
-
-		if (codes != null) {
-			finder.append(" and bean.version.code in:codes");
-			finder.setParamList("codes", codes);
+		if (version.getCode() != null) {
+			finder.append(" and bean.version.code =:code");
+			finder.setParam("code", version.getCode());
+		}
+		if (version.getOrgId() != null) {
+			finder.append(" and bean.version.orgId =:orgId");
+			finder.setParam("orgId", version.getOrgId());
 		}
 		finder.append(" group by bean.version.code ");
 		finder.append(" order by bean.id desc");
-		List<Object> list = testRecordDao.findObjectListByFinder(finder);
+		testRecordDao.findPageByFinder(finder, pageNo, pageSize);
+		Pagination<Object> page= 	testRecordDao.findObjectPageByFinder(finder, pageNo, pageSize);
+		Pagination<FyTestRecordStatistics> page2  =new Pagination<FyTestRecordStatistics>(pageNo, pageSize,page.getTotalCount());
+		
 		List<FyTestRecordStatistics> xx = new ArrayList<FyTestRecordStatistics>();
-		for (Object s : list) {
+		for (Object s : page.getList()) {
 			xx.add((FyTestRecordStatistics) s);
 		}
-		return xx;
+		page2.setList(xx);
+		return page2;
 
 	}
 

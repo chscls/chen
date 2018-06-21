@@ -56,12 +56,15 @@ public class FyTestRecordMngSvc {
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordStatistics", method = RequestMethod.GET)
 	public Result queryTestRecordStatistics(String token, String code) {
-		String[] codes= new String[1];
-		codes[0] =code;
-	   List<FyTestRecordStatistics>  list =  testRecordMng.groupByCodes(codes);
 		
+		FyTestVersion fr = new FyTestVersion();
+		fr.setCode(code);
+	   Pagination<FyTestRecordStatistics>  page =  testRecordMng.groupByCodes(fr,1,10);
+	
 		
-		return new Result(list.get(0));
+		return new Result(page.getList().get(0));
+	  
+	   
 	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordDetail", method = RequestMethod.GET)
@@ -131,45 +134,13 @@ public class FyTestRecordMngSvc {
 	
 	
 	
-/*	@TokenAuth(value = "token")
+	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecord", method = RequestMethod.GET)
 	public Result queryTestRecord(String token, Integer pageNo, Integer pageSize, FyTestVersion search) {
-		Pagination<FyTestRecordStatistics> page2 = new Pagination<FyTestRecordStatistics>();
-		FyUser u = userMng.findByUserName(loginManager.getUser(token));
-		search.setUserId(u.getId());
-		Pagination<String> page = testRecordMng.getPage(pageNo, pageSize, search, orgId);
-		if (page == null) {
-			page2.setList(new ArrayList());
-			page2.setPageNo(pageNo);
-			page2.setPageSize(pageSize);
-			page2.setTotalCount(0);
-			return new Result(page2);
-		}
-
-		List<FyTestRecordStatistics> list2 = testRecordMng
-				.groupByCodes(page.getList().toArray(new String[page.getList().size()]));
-
-		List<FyTest> list = testMng.findByCodes(page.getList().toArray(new String[page.getList().size()]));
-		Map<String, FyTest> map = new HashMap<String, FyTest>();
-		for (FyTest t : list) {
-			map.put(t.getCode(), t);
-		}
-		for (FyTestRecordStatistics s : list2) {
-			if(map.containsKey(s.getCode())) {
-			FyTest lite = map.get(s.getCode());
-			lite.setQuestions(null);
-
-			s.setTest(lite);
-			}
-		}
-
-		page2.setList(list2);
-		page2.setPageNo(page.getPageNo());
-		page2.setPageSize(page.getPageSize());
-		page2.setTotalCount(page.getTotalCount());
-
-		return new Result(page2);
-	}*/
+		Pagination<FyTestRecordStatistics> page = testRecordMng
+				.groupByCodes(search,pageNo,pageSize);
+		return new Result(page);
+	}
 
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/addTestRecord", produces = MediaType.APPLICATION_JSON_VALUE)
