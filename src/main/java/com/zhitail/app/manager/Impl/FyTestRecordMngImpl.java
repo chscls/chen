@@ -227,7 +227,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			vr.setJson(JSONArray.toJSONString(t.getQuestions()));
 			vr = versionMng.save(vr);
 		}
-		tr.setTestVersion(vr);
+		tr.setVersion(vr);
 		tr.setCreateTime(new Date());
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
@@ -268,14 +268,14 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		ftr.setSign(sign);
 		}
 		List<FyAnswer> ans = JSONArray.parseArray(answers, FyAnswer.class);
-		List<FyQuestion> qs = ftr.getTestVersion().getQuestions();
+		List<FyQuestion> qs = ftr.getVersion().getQuestions();
 		if(ans.size()!=qs.size()) {
 			return null;
 		}
 		
 		FyQuestion q;
 		FyAnswer a;
-		if(!ftr.getTestVersion().getIsQuestionnaire()) {
+		if(!ftr.getVersion().getIsQuestionnaire()) {
 			for (int i = 0; i < qs.size(); i++) {
 			q = qs.get(i);
 			

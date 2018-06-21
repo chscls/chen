@@ -47,13 +47,14 @@ public class FyTestRecord {
 	private String uuid;
 	@ManyToOne
 	@JoinColumn(name = "version_id")
-	private FyTestVersion testVersion;
-	public FyTestVersion getTestVersion() {
-		return testVersion;
+	private FyTestVersion version;
+	public FyTestVersion getVersion() {
+		return version;
 	}
-	public void setTestVersion(FyTestVersion testVersion) {
-		this.testVersion = testVersion;
+	public void setVersion(FyTestVersion version) {
+		this.version = version;
 	}
+	
 	public Double getGoal() {
 		return goal;
 	}
