@@ -14,7 +14,7 @@ import com.zhitail.frame.util.jpa.BaseRepository;
 public interface FyTestVersionDao extends BaseRepository<FyTestVersion,Long> {
 	@Query("select d from FyTestVersion d where d.code =:code") 
 	
-	FyTestVersion findByCode(String code);
+	FyTestVersion findByCode(@Param(value = "code")String code);
 
 	
 

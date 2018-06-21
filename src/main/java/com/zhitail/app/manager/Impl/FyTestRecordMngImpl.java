@@ -163,7 +163,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			finder.setParam("title", "%" + version.getTitle() + "%");
 		}
 		if (version != null && version.getCode() != null) {
-			finder.append(" and bean.code=:code");
+			finder.append(" and bean.version.code=:code");
 			finder.setParam("code", version.getCode());
 		}
 		if (version != null && version.getTeaId() != null) {
@@ -199,7 +199,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		FyTestVersion vr = versionMng.findByCode(code);
 		FyTestRecord tr = new FyTestRecord();
 		if(vr==null) {
-		
+			vr=new FyTestVersion();
 			List<QuestionConfig> qcs = t.getQuestionConfigs();
 			double score=0.0;
 			for(QuestionConfig qc:qcs) {
