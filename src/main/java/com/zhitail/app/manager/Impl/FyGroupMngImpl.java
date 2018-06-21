@@ -24,8 +24,8 @@ public class  FyGroupMngImpl implements FyGroupMng{
 		Finder finder = Finder.create(" from FyGroup bean where 1=1");
 	
 		if(search.getName()!=null){
-			  finder.append(" and bean.word like:word");
-	            finder.setParam("word","%"+search.getName()+"%");
+			  finder.append(" and bean.name like:name");
+	            finder.setParam("name","%"+search.getName()+"%");
 		}
 		
 		finder.append(" order by bean.id desc");

@@ -43,6 +43,9 @@ public class FyGroupMngSvc {
 	private LoginManager loginManager;
 	@Autowired
 	private FyGroupMng groupMng;
+	
+	@Autowired
+	private FyUserMng  userMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryGroup",method=RequestMethod.GET)
 	public Result queryGroup(String token, Integer pageNo,Integer pageSize,FyGroup search) {
@@ -52,14 +55,16 @@ public class FyGroupMngSvc {
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/addGroup", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addGroup( String token,FyGroup Group) {
-		if(Group.getId()==null){
-		
-			Group = groupMng.save(Group);
+	public Result addGroup( String token,FyGroup group) {
+		if(group.getId()==null){
+			FyUser u=userMng.findByUserName(loginManager.getUser(token));
+			group.setUserId(u.getId());
+			group = groupMng.save(group);
 		}else{
-			Group = groupMng.update(Group);
+			
+			group = groupMng.update(group);
 		}
-		return new Result(Group);
+		return new Result(group);
 	
 	}
 	
