@@ -91,6 +91,24 @@ public class FyTestRecordStatistics {
 			
 			// TODO Auto-generated constructor stub
 		}
+		public FyTestRecordStatistics(FyTest fr) {
+			this.updateTime=fr.getUpdateTime();
+			double s=0.0;
+			for(QuestionConfig qc:fr.getQuestionConfigs()) {
+				s+=qc.getScore()!=null?qc.getScore():0.0;
+			}
+			this.score = s;
+			
+			this.orgId=fr.getId();
+			this.code=fr.getCode();
+			this.count=0L;
+			this.maxScore=0.0;
+			this.minScore=0.0;
+			this.avgScore =0.0;
+			this.title=fr.getTitle();
+			this.mode=fr.getMode();
+			// TODO Auto-generated constructor stub
+		}
 		public Double getMinScore() {
 			return minScore;
 		}

@@ -65,7 +65,12 @@ public class FyTestRecordMngSvc {
 		if(page.getList().size()>0) {
 		return new Result(page.getList().get(0));
 		}else {
-		return new Result(new FyTestRecordStatistics (fr));
+			FyTest ft = 	testMng.findByCode(code);
+			if(ft!=null) {
+				return new Result(new FyTestRecordStatistics (ft));
+			}else {
+				return new Result(new FyTestRecordStatistics (fr));		
+			}
 		}
 	  
 	   
