@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -50,7 +51,15 @@ public class FyTestRecord {
 	private Double goal;
 	@Column(unique=true,length=18)
 	private String uuid;
-	
+	@ManyToOne
+	@JoinColumn(name = "version_id")
+	private FyTestVersion testVersion;
+	public FyTestVersion getTestVersion() {
+		return testVersion;
+	}
+	public void setTestVersion(FyTestVersion testVersion) {
+		this.testVersion = testVersion;
+	}
 	public Double getGoal() {
 		return goal;
 	}
