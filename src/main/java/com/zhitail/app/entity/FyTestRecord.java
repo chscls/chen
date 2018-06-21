@@ -196,14 +196,14 @@ public class FyTestRecord {
 					continue;
 				}
 				q = qs.get(i);
-				
+				List<FyQuestionItem> items=q.getItems();
 				if (q.getType() == Type.single || q.getType() == Type.judge||q.getType() == Type.mutiply) {
 					
 					if(a.getIndexs()==null||a.getIndexs().length==0) {
 						continue;
 					}
 					for(int j=0;j<a.getIndexs().length;j++) {
-						q.getItems().get(a.getIndexs()[j]).setIsAnswer(true);
+						items.get(a.getIndexs()[j]).setIsAnswer(true);
 					}
 					
 				} else {
@@ -211,9 +211,10 @@ public class FyTestRecord {
 						continue;
 					}
 					for(int j=0;j<a.getAnswers().length;j++) {
-						q.getItems().get(j).setAnswer(a.getAnswers()[j]);
+						items.get(j).setAnswer(a.getAnswers()[j]);
 					}
 				}
+				q.setJson(JSONArray.toJSONString(items));
 			}
 			this.questions = qs;
 
