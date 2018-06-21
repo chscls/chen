@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTest.Mode;
+import com.zhitail.app.entity.FyTestVersion;
 
 public class FyTestRecordStatistics {
 		private String code;
@@ -71,6 +72,24 @@ public class FyTestRecordStatistics {
 			this.avgScore =avgScore;
 			this.title=title;
 			this.mode=mode;
+		}
+		public FyTestRecordStatistics() {
+			// TODO Auto-generated constructor stub
+		}
+		public FyTestRecordStatistics(FyTestVersion fr) {
+			this.updateTime=fr.getUpdateTime();
+			this.score = fr.getScore();
+			
+			this.orgId=fr.getOrgId();
+			this.code=fr.getCode();
+			this.count=0L;
+			this.maxScore=0.0;
+			this.minScore=0.0;
+			this.avgScore =0.0;
+			this.title=fr.getTitle();
+			this.mode=fr.getMode();
+			
+			// TODO Auto-generated constructor stub
 		}
 		public Double getMinScore() {
 			return minScore;

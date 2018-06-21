@@ -135,7 +135,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 		if (finder.isCacheable()) {
 			query.setCacheable(true);
 		}
+		if( query.iterate().hasNext()) {
 		return ((Number) query.iterate().next()).intValue();
+		}else {
+			return 0;
+		}
 	}
 	public Double getAvgQueryResult(String sql) {
 		Query query =getSession().createQuery(sql);

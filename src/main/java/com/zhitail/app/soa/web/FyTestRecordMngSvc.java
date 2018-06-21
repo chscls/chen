@@ -22,6 +22,7 @@ import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyTestVersion;
 import com.zhitail.app.entity.FyUser;
+import com.zhitail.app.entity.FyTest.Mode;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyFriendMng;
@@ -61,8 +62,11 @@ public class FyTestRecordMngSvc {
 		fr.setCode(code);
 	   Pagination<FyTestRecordStatistics>  page =  testRecordMng.groupByCodes(fr,1,10);
 	
-		
+		if(page.getList().size()>0) {
 		return new Result(page.getList().get(0));
+		}else {
+		return new Result(new FyTestRecordStatistics (fr));
+		}
 	  
 	   
 	}
