@@ -99,12 +99,13 @@ public class FyTestRecord {
 	
 	private FyUser user;
 	@Transient
-	private String realname;
-	public String getRealname() {
-		return realname;
+	private FyFriend friend;
+
+	public FyFriend getFriend() {
+		return friend;
 	}
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setFriend(FyFriend friend) {
+		this.friend = friend;
 	}
 	public FyUser getUser() {
 		return user;

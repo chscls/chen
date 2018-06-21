@@ -111,7 +111,7 @@ public class FyTestRecordMngSvc {
 			lite.setOpenid(null);
 			s.setUser(lite);
 			if(map2.containsKey(s.getUserId())) {
-				s.setRealname(map2.get(s.getUserId()).getRealname());
+				s.setFriend(map2.get(s.getUserId()));
 			}
 		}
 		return new Result(page);
