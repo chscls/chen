@@ -187,20 +187,35 @@ public class FyTestRecord {
 			this.questions = this.version.getQuestions();
 		}else {
 			List<FyQuestion> qs = this.version.getQuestions();
+			List<FyAnswer> ans = this.getAnswers();
 			FyQuestion q;
+			FyAnswer a;
 			for (int i = 0; i < qs.size(); i++) {
+				a=ans.get(i);
+				if(a==null) {
+					continue;
+				}
 				q = qs.get(i);
-
-				if (q.getType() == Type.single || q.getType() == Type.judge) {
+				
+				if (q.getType() == Type.single || q.getType() == Type.judge||q.getType() == Type.mutiply) {
 					
-				} else if (q.getType() == Type.mutiply) {
-					
-				} else if (q.getType() == Type.fill) {
+					if(a.getIndex()==null||a.getIndex().length==0) {
+						continue;
+					}
+					for(int j=0;j<a.getIndex().length;j++) {
+						q.getItems().get(a.getIndex()[j]).setIsAnswer(true);
+					}
 					
 				} else {
-					
+					if(a.getAnswers()==null||a.getAnswers().length==0) {
+						continue;
+					}
+					for(int j=0;j<a.getAnswers().length;j++) {
+						q.getItems().get(j).setAnswer(a.getAnswers()[j]);
+					}
 				}
 			}
+			this.questions = qs;
 
 		}
 		// TODO Auto-generated method stub
