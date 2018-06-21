@@ -24,6 +24,7 @@ import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyTestRecord.Status;
 import com.zhitail.app.entity.FyTestVersion;
+import com.zhitail.app.entity.middle.FyAnswer;
 import com.zhitail.app.entity.middle.FyQuestionItem;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.entity.middle.QuestionConfig;
@@ -264,39 +265,51 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	public FyTestRecord submit(Long id, String answers,String sign) {
 		// TODO Auto-generated method stub
 		FyTestRecord ftr = this.findById(id);
-		JSONArray ja = JSONArray.parseArray(answers);
-		List<FyQuestion> qs = ftr.getQuestions();
-		FyQuestion q;
-		for (int i = 0; i < qs.size(); i++) {
-			q = qs.get(i);
-
-			if (q.getType() == Type.single || q.getType() == Type.judge) {
-				Integer a = ja.getInteger(i);
-				checkRadio(q, a);
-			} else if (q.getType() == Type.mutiply) {
-				JSONArray temp = ja.getJSONArray(i);
-				Integer[] a = temp.toArray(new Integer[temp.size()]);
-				checkCheckBox(q, a);
-			} else if (q.getType() == Type.fill) {
-				JSONArray temp = ja.getJSONArray(i);
-				String[] a = temp.toArray(new String[temp.size()]);
-				checkFill(q, a);
-			} else {
-				String a = ja.getString(i);
-				checkAsk(q, a);
-			}
-		}
-
-		checkGoal(qs, ftr);
-		if(StringUtils.isNotBlank(sign));
+		if(StringUtils.isNotBlank(sign)) {
 		ftr.setSign(sign);
+		}
+		List<FyAnswer> ans = JSONArray.parseArray(answers, FyAnswer.class);
+		List<FyQuestion> qs = ftr.getTestVersion().getQuestions();
+		if(ans.size()!=qs.size()) {
+			return null;
+		}
+		
+		FyQuestion q;
+		FyAnswer a;
+		if(!ftr.getTestVersion().getIsQuestionnaire()) {
+			for (int i = 0; i < qs.size(); i++) {
+			q = qs.get(i);
+			
+				a = ans.get(i);
+				if (q.getType() == Type.single || q.getType() == Type.judge) {
+				
+				checkRadio(q, a);
+			    } else if (q.getType() == Type.mutiply) {
+			
+				checkCheckBox(q, a);
+			   } else if (q.getType() == Type.fill) {
+				
+				checkFill(q, a);
+			   } else {
+				
+				checkAsk(q, a);
+			   }
+			}
+			checkGoal(ans, ftr);
+		}else {
+			ftr.setStatus(Status.complete);
+			ftr.setEndTime(new Date());
+			ftr.setJson(JSONObject.toJSONString(ans));
+		}
+		
+	
 		return update(ftr);
 	}
 
-	private void checkGoal(List<FyQuestion> qs, FyTestRecord ftr) {
+	private void checkGoal(List<FyAnswer> ans, FyTestRecord ftr) {
 		Boolean isAllGrade = true;
 		Double allGoal = 0.0;
-		for (FyQuestion q : qs) {
+		for (FyAnswer q : ans) {
 			if (!q.getIsGrade()) {
 				if (isAllGrade) {
 					isAllGrade = false;
@@ -317,85 +330,49 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			ftr.setStatus(Status.check);
 		}
 
-		ftr.setJson(JSONObject.toJSONString(qs));
+		ftr.setJson(JSONObject.toJSONString(ans));
 		// TODO Auto-generated method stub
 
 	}
 
-	private void checkAsk(FyQuestion q, String a) {
+	private void checkAsk(FyQuestion q, FyAnswer a) {
 		// TODO Auto-generated method stub
-		List<FyQuestionItem> is = q.getItems();
-		is.get(0).setAnswer(a);
-		q.setJson(JSONObject.toJSONString(is));
-
+		return;
 	}
 
-	private void checkFill(FyQuestion q, String[] a) {
+	private void checkFill(FyQuestion q, FyAnswer a) {
 		// TODO Auto-generated method stub
 		List<FyQuestionItem> is = q.getItems();
-		Double avg = 0.0;
-		if (!q.getIsQuestionnaire()) {
-			avg = q.getScore() != 0 ? q.getScore() / is.size() : 0;
-		}
-
+		Double avg = q.getScore() != 0 ? q.getScore() / is.size() : 0;	
+		a.setGoal(0.0);
 		for (int i = 0; i < is.size(); i++) {
-			is.get(i).setAnswer(a[i]);
-			if (!q.getIsQuestionnaire()) {
-				if (a[i].equals(is.get(i).getContent())) {
-					q.setGoal(avg + (q.getGoal() != null ? q.getGoal() : 0.0));
-				}
+			if (a.getAnswers()[i].equals(is.get(i).getContent())) {
+				a.setGoal(avg + (a.getGoal() != null ? a.getGoal() : 0.0));
 			}
-
 		}
-		q.setJson(JSONObject.toJSONString(is));
-		if (!q.getIsQuestionnaire()) {
-			q.setGoal(0.0);
-			q.setIsGrade(true);
-		}
-
+		a.setIsGrade(true);
 	}
 
-	private void checkRadio(FyQuestion q, Integer a) {
-		List<FyQuestionItem> is = q.getItems();
-		int o = 0;
-		for (int i = 0; i < is.size(); i++) {
-			if (i == a) {
-				is.get(i).setIsAnswer(true);
-			} else {
-				is.get(i).setIsAnswer(false);
-			}
-			if (!q.getIsQuestionnaire() && is.get(i).getIsSolution()) {
-				o = i;
-			}
-
-		}
-		q.setJson(JSONObject.toJSONString(is));
-		if (!q.getIsQuestionnaire()) {
-			q.setGoal(a == o ? q.getScore() : 0.0);
-			q.setIsGrade(true);
-		}
+	private void checkRadio(FyQuestion q, FyAnswer a) {
+			a.setGoal(q.getItems().get(a.getIndex()[0]).getIsAnswer()?q.getScore() : 0.0);
+			a.setIsGrade(true);	
 	}
 
-	private void checkCheckBox(FyQuestion q, Integer[] as) {
+	private void checkCheckBox(FyQuestion q, FyAnswer as) {
 		List<FyQuestionItem> is = q.getItems();
+		Integer[] indexs = as.getIndex();
 		List<Integer> x = new ArrayList<Integer>();
-		Arrays.sort(as);
+		Arrays.sort(indexs);
 		for (int i = 0; i < is.size(); i++) {
-			if (ArrayUtils.contains(as, i)) {
-				is.get(i).setIsAnswer(true);
-			} else {
-				is.get(i).setIsAnswer(false);
-			}
 			if (is.get(i).getIsSolution()) {
 				x.add(i);
 			}
-
 		}
-		q.setJson(JSONObject.toJSONString(is));
-		if (!q.getIsQuestionnaire()) {
-			q.setGoal(x.toArray(new Integer[x.size()]).equals(as) ? q.getGoal() : 0.0);
-			q.setIsGrade(true);
-		}
+	
+		
+		q.setGoal(x.toArray(new Integer[x.size()]).equals(indexs) ? q.getGoal() : 0.0);
+		q.setIsGrade(true);
+		
 	}
 
 	@Override
