@@ -101,7 +101,7 @@ public class FyTestRecordSvc {
 		
 		FyTestRecord r = testRecordMng.submit(id,answers,sign);
 		
-		
+		r.full();
 		return new Result(r );
 		
 		
@@ -127,7 +127,7 @@ public class FyTestRecordSvc {
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),code,recordId);
 		
-	
+		r.full();
 		return new Result(r );
 		
 		

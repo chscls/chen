@@ -2,7 +2,7 @@ package com.zhitail.app.entity.middle;
 
 public class FyAnswer {
 	private Double goal;
-	private Boolean isGrade;
+	private Boolean isGrade=false;
 	private Integer[] index;
 	private String[] answers;
 	public Double getGoal() {

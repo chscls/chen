@@ -24,6 +24,7 @@ import org.hibernate.annotations.IndexColumn;
 import com.Application;
 import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyTest.Mode;
 import com.zhitail.app.entity.middle.FyAnswer;
 import com.zhitail.app.entity.middle.FyQuestionItem;
@@ -114,12 +115,20 @@ public class FyTestRecord {
 		this.user = user;
 	}
 	@Transient
-	public List<FyAnswer> getQuestions() {
+	public List<FyAnswer> getAnswers() {
 		if(json!=null){
 			return JSONArray.parseArray(this.json,FyAnswer.class);
 			}else{
 				return new ArrayList<FyAnswer>(0);
 			}
+	}
+	@Transient
+	public List<FyQuestion> questions;
+	public List<FyQuestion> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(List<FyQuestion> questions) {
+		this.questions = questions;
 	}
 	public String getJson() {
 		return json;
@@ -172,6 +181,30 @@ public class FyTestRecord {
 	}
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+	public void full() {
+		if(this.getAnswers().size()==0) {
+			this.questions = this.version.getQuestions();
+		}else {
+			List<FyQuestion> qs = this.version.getQuestions();
+			FyQuestion q;
+			for (int i = 0; i < qs.size(); i++) {
+				q = qs.get(i);
+
+				if (q.getType() == Type.single || q.getType() == Type.judge) {
+					
+				} else if (q.getType() == Type.mutiply) {
+					
+				} else if (q.getType() == Type.fill) {
+					
+				} else {
+					
+				}
+			}
+
+		}
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

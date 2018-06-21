@@ -225,6 +225,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		tr.setCreateTime(new Date());
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
+	    tr.setJson(JSONArray.toJSONString(new FyAnswer[vr.getQuestions().size()]) );
 		tr.reFreshUuid();
 		return testRecordDao.save(tr);
 	}
