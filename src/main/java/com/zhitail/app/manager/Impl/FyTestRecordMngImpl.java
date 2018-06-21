@@ -23,12 +23,14 @@ import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyTestRecord.Status;
+import com.zhitail.app.entity.FyTestVersion;
 import com.zhitail.app.entity.middle.FyQuestionItem;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
+import com.zhitail.app.manager.FyTestVersionMng;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
 import com.zhitail.frame.util.page.Pagination;
@@ -42,14 +44,15 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	private FyTestMng testMng;
 	@Autowired
 	private FyQuestionMng questionMng;
-
+	@Autowired
+	private FyTestVersionMng versionMng;
 	@Override
 	public FyTestRecord findById(Long id) {
 		// TODO Auto-generated method stub
 		return testRecordDao.findOne(id);
 	}
 
-	@Override
+	/*@Override
 	public Pagination<String> getPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long orgId) {
 		Finder finder0 = Finder.create(" from FyTestRecord bean where 1=1");
 
@@ -84,7 +87,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		} else {
 			return null;
 		}
-	}
+	}*/
 
 	@Override
 	public FyTestRecord update(FyTestRecord testRecord) {
@@ -123,21 +126,21 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public Pagination<FyTestRecord> getDetailPage(Integer pageNo, Integer pageSize, FyTestRecord search,Long[] ids,String sort) {
+	public Pagination<FyTestRecord> getDetailPage(Integer pageNo, Integer pageSize, FyTestRecord search,FyTestVersion version,Long[] ids,String sort) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
+		if (version != null && version.getTitle() != null) {
+			finder.append(" and bean.version.title like:title");
+			finder.setParam("title", "%" + version.getTitle() + "%");
 		}
-		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code=:code");
-			finder.setParam("code", search.getCode());
+		if (version != null && version.getCode() != null) {
+			finder.append(" and bean.version.code=:code");
+			finder.setParam("code", version.getCode());
 		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId=:teaId");
-			finder.setParam("teaId", search.getTeaId());
+		if (version != null && version.getTeaId() != null) {
+			finder.append(" and bean.version.teaId=:teaId");
+			finder.setParam("teaId", version.getTeaId());
 		}
 		if (search != null && search.getUserId() != null) {
 			finder.append(" and bean.userId=:userId");
@@ -157,21 +160,21 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public List<FyTestRecord> getList(Integer start, Integer count, FyTestRecord search) {
+	public List<FyTestRecord> getList(Integer start, Integer count,FyTestVersion version, FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
+		if (version!= null && version.getTitle() != null) {
+			finder.append(" and bean.version.title like:title");
+			finder.setParam("title", "%" + version.getTitle() + "%");
 		}
-		if (search != null && search.getCode() != null) {
+		if (version != null && version.getCode() != null) {
 			finder.append(" and bean.code=:code");
-			finder.setParam("code", search.getCode());
+			finder.setParam("code", version.getCode());
 		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId=:teaId");
-			finder.setParam("teaId", search.getTeaId());
+		if (version != null && version.getTeaId() != null) {
+			finder.append(" and bean.version.teaId=:teaId");
+			finder.setParam("teaId", version.getTeaId());
 		}
 		if (search != null && search.getStatus()!= null) {
 			finder.append(" and bean.status=:status");
@@ -198,46 +201,56 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 
 		// TODO Auto-generated method stub
 		FyTest t = testMng.findByCode(code);
-		List<QuestionConfig> qcs = t.getQuestionConfigs();
-		double score=0.0;
-		for(QuestionConfig qc:qcs) {
-			score+=qc.getScore();
-		}
+		
+		FyTestVersion vr = versionMng.findByCode(code);
 		FyTestRecord tr = new FyTestRecord();
-		tr.setCode(t.getCode());
+		if(vr==null) {
+		
+			List<QuestionConfig> qcs = t.getQuestionConfigs();
+			double score=0.0;
+			for(QuestionConfig qc:qcs) {
+				score+=qc.getScore();
+			}
+			
+			vr.setCode(t.getCode());
+			
+			vr.setIsQuestionnaire(t.getIsQuestionnaire());
+			vr.setLimitSecond(t.getLimitSecond());
+			vr.setTitle(t.getTitle());
+			vr.setTeaId(t.getUserId());
+			vr.setMode(t.getMode());
+			
+			vr.setOrgId(t.getId());
+			vr.setScore(score);
+			vr.setUpdateTime(t.getUpdateTime());
+			testMng.fullQuestions(t);
+			vr.setJson(JSONArray.toJSONString(t.getQuestions()));
+			vr = versionMng.save(vr);
+		}
+		tr.setTestVersion(vr);
 		tr.setCreateTime(new Date());
-		tr.setIsQuestionnaire(t.getIsQuestionnaire());
-		tr.setLimitSecond(t.getLimitSecond());
-		tr.setTitle(t.getTitle());
-		tr.setTeaId(t.getUserId());
-		tr.setMode(t.getMode());
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
 		tr.reFreshUuid();
-		tr.setOrgId(t.getId());
-		tr.setScore(score);
-		tr.setUpdateTime(t.getUpdateTime());
-		testMng.fullQuestions(t);
-		tr.setJson(JSONArray.toJSONString(t.getQuestions()));
 		return testRecordDao.save(tr);
 	}
 
 	@Override
-	public Integer getTotal(FyTestRecord search) {
+	public Integer getTotal(FyTestVersion vr,FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
+		if (vr != null && vr.getTitle() != null) {
+			finder.append(" and bean.version.title like:title");
+			finder.setParam("title", "%" + vr.getTitle() + "%");
 		}
-		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code =:code");
-			finder.setParam("code", search.getCode());
+		if (vr != null && vr.getCode() != null) {
+			finder.append(" and bean.version.code =:code");
+			finder.setParam("code", vr.getCode());
 		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId =:teaId");
-			finder.setParam("teaId", search.getTeaId());
+		if (vr != null && vr.getTeaId() != null) {
+			finder.append(" and bean.version.teaId =:teaId");
+			finder.setParam("teaId", vr.getTeaId());
 		}
 		if (search != null && search.getUserId() != null) {
 			finder.append(" and bean.userId =:userId");
@@ -392,29 +405,29 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	@Override
-	public Pagination<FyTestRecord> getMyPage(Integer pageNo, Integer pageSize, FyTestRecord search) {
+	public Pagination<FyTestRecord> getMyPage(Integer pageNo, Integer pageSize,FyTestVersion vr,FyTestRecord search) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
 
-		if (search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
+		if (vr != null && vr.getTitle() != null) {
+			finder.append(" and bean.version.title like:title");
+			finder.setParam("title", "%" + vr.getTitle() + "%");
 		}
-		if (search.getCode() != null) {
-			finder.append(" and bean.code =:code");
-			finder.setParam("code", search.getCode());
+		if (vr != null && vr.getCode() != null) {
+			finder.append(" and bean.version.code =:code");
+			finder.setParam("code", vr.getCode());
 		}
-		if (search.getTeaId() != null) {
-			finder.append(" and bean.teaId =:teaId");
-			finder.setParam("teaId", search.getTeaId());
+		if (vr != null && vr.getTeaId() != null) {
+			finder.append(" and bean.version.teaId =:teaId");
+			finder.setParam("teaId", vr.getTeaId());
 		}
 		if (search.getUserId() != null) {
 			finder.append(" and bean.userId =:userId");
 			finder.setParam("userId", search.getUserId());
 		}
-		if (search.getOrgId() != null) {
-			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("userId", search.getOrgId());
+		if (vr.getOrgId() != null) {
+			finder.append(" and bean.version.orgId =:orgId");
+			finder.setParam("userId", vr.getOrgId());
 		}
 		finder.append(" order by bean.id desc");
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);

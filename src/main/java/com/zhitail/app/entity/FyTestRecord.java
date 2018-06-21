@@ -25,6 +25,7 @@ import com.Application;
 import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.FyTest.Mode;
+import com.zhitail.app.entity.middle.FyAnswer;
 import com.zhitail.app.entity.middle.FyQuestionItem;
 
 @Entity
@@ -38,16 +39,9 @@ public class FyTestRecord {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Long orgId;
-	public Long getOrgId() {
-		return orgId;
-	}
-	public void setOrgId(Long orgId) {
-		this.orgId = orgId;
-	}
-
-	private Mode mode;
-	private Double score;
+	
+	
+	
 	private Double goal;
 	@Column(unique=true,length=18)
 	private String uuid;
@@ -68,31 +62,12 @@ public class FyTestRecord {
 	}
 
 	private Status status;
-	public Double getScore() {
-		return score;
-	}
-	public void setScore(Double score) {
-		this.score = score;
-	}
-
-	private Boolean isQuestionnaire;
 	
-	public Boolean getIsQuestionnaire() {
-		return isQuestionnaire;
-	}
-	public void setIsQuestionnaire(Boolean isQuestionnaire) {
-		this.isQuestionnaire = isQuestionnaire;
-	}
 
-	private Integer limitSecond;
-	public Integer getLimitSecond() {
-		return limitSecond;
-	}
-	public void setLimitSecond(Integer limitSecond) {
-		this.limitSecond = limitSecond;
-	}
+
 	
-	private String title;
+	
+	
 	private Date createTime;
 	private Date endTime;
 
@@ -102,15 +77,9 @@ public class FyTestRecord {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	private Date updateTime;
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+	
 	private Long userId;
-	private Long teaId;
+	
 	private String sign;
 	
 	public String getSign() {
@@ -120,14 +89,7 @@ public class FyTestRecord {
 		this.sign = sign;
 	}
 
-	@Column(unique=true,length=18)
-	private String code;
-	public Long getTeaId() {
-		return teaId;
-	}
-	public void setTeaId(Long teaId) {
-		this.teaId = teaId;
-	}
+	
 
 	@JsonIgnore
 	@Lob
@@ -150,11 +112,11 @@ public class FyTestRecord {
 		this.user = user;
 	}
 	@Transient
-	public List<FyQuestion> getQuestions() {
+	public List<FyAnswer> getQuestions() {
 		if(json!=null){
-			return JSONArray.parseArray(this.json,FyQuestion.class);
+			return JSONArray.parseArray(this.json,FyAnswer.class);
 			}else{
-				return new ArrayList<FyQuestion>(0);
+				return new ArrayList<FyAnswer>(0);
 			}
 	}
 	public String getJson() {
@@ -178,18 +140,8 @@ public class FyTestRecord {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Mode getMode() {
-		return mode;
-	}
-	public void setMode(Mode mode) {
-		this.mode = mode;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	
+	
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -219,10 +171,5 @@ public class FyTestRecord {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
+	
 }

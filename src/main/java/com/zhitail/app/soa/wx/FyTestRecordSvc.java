@@ -27,6 +27,7 @@ import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyTestRecord;
+import com.zhitail.app.entity.FyTestVersion;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
 import com.zhitail.app.manager.FyTestMng;
@@ -107,10 +108,10 @@ public class FyTestRecordSvc {
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/queryTestRecord",method=RequestMethod.GET)
-	public Result queryTestRecord(String token,Integer start,Integer count,FyTestRecord search) {
+	public Result queryTestRecord(String token,Integer start,Integer count,FyTestVersion version,FyTestRecord search) {
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		search.setUserId(u.getId());
-		List<FyTestRecord> list = testRecordMng.getList(start,count,search);
+		List<FyTestRecord> list = testRecordMng.getList(start,count,version,search);
 		for(FyTestRecord r:list) {
 			r.lite();
 		}

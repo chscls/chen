@@ -21,21 +21,12 @@ public interface FyTestVersionMng {
 
 	
 
-	public Pagination<FyTestVersion> getDetailPage(Integer pageNo,
-			Integer pageSize, FyTestVersion search, Long[] ids, String sort);
-
-	public List<FyTestVersion> getList(Integer start, Integer count, FyTestVersion search);
 
 	
 
-	public Integer getTotal(  FyTestVersion search);
+	public FyTestVersion findByCode(String code);
 
-	public  List<FyTestRecordStatistics> groupByCodes(String[] codes);
-
-	public FyTestVersion addTestRecord(Long userId, String code, Long recordId);
-
-
-	public Pagination<FyTestVersion> getMyPage(Integer pageNo, Integer pageSize, FyTestVersion search);
+	public FyTestVersion save(FyTestVersion vr);
 
 	
 

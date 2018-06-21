@@ -101,133 +101,7 @@ public class FyTestVersionMngImpl implements FyTestVersionMng {
 		}
 	}
 
-	@Override
-	public List<FyTestRecordStatistics> groupByCodes(String[] codes) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(
-				" select new com.zhitail.app.entity.middle.FyTestRecordStatistics(bean.score,bean.updateTime,bean.orgId,bean.code,bean.title,count(bean.orgId),max(bean.goal),min(bean.goal),avg(bean.goal),bean.mode) from FyTestVersion bean where 1=1 ");
-
-		if (codes != null) {
-			finder.append(" and bean.code in:codes");
-			finder.setParamList("codes", codes);
-		}
-		finder.append(" group by bean.code ");
-		finder.append(" order by bean.id desc");
-		List<Object> list = testRecordDao.findObjectListByFinder(finder);
-		List<FyTestRecordStatistics> xx = new ArrayList<FyTestRecordStatistics>();
-		for (Object s : list) {
-			xx.add((FyTestRecordStatistics) s);
-		}
-		return xx;
-
-	}
-
-	@Override
-	public Pagination<FyTestVersion> getDetailPage(Integer pageNo, Integer pageSize, FyTestVersion search,Long[] ids,String sort) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTestVersion bean where 1=1");
-
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
-		}
-		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code=:code");
-			finder.setParam("code", search.getCode());
-		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId=:teaId");
-			finder.setParam("teaId", search.getTeaId());
-		}
-		
-		if(ids!=null) {
-			finder.append(" and bean.userId in:ids");
-			finder.setParamList("ids", ids);
-		}
-		finder.append(" order by bean.goal "+sort);
-
-		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
-	}
-
-	@Override
-	public List<FyTestVersion> getList(Integer start, Integer count, FyTestVersion search) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTestVersion bean where 1=1");
-
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
-		}
-		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code=:code");
-			finder.setParam("code", search.getCode());
-		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId=:teaId");
-			finder.setParam("teaId", search.getTeaId());
-		}
 	
-		finder.setFirstResult(start);
-		finder.setMaxResults(count);
-
-		finder.append(" order by bean.id desc");
-		return testRecordDao.findListByFinder(finder);
-	}
-
-	
-
-	@Override
-	public FyTestVersion addTestRecord(Long userId, String code, Long recordId) {
-		if (recordId != null) {
-			return findById(recordId);
-		}
-
-		// TODO Auto-generated method stub
-		FyTest t = testMng.findByCode(code);
-		List<QuestionConfig> qcs = t.getQuestionConfigs();
-		double score=0.0;
-		for(QuestionConfig qc:qcs) {
-			score+=qc.getScore();
-		}
-		FyTestVersion tr = new FyTestVersion();
-		tr.setCode(t.getCode());
-		tr.setCreateTime(new Date());
-		tr.setIsQuestionnaire(t.getIsQuestionnaire());
-		tr.setLimitSecond(t.getLimitSecond());
-		tr.setTitle(t.getTitle());
-		tr.setTeaId(t.getUserId());
-		tr.setMode(t.getMode());
-		
-		tr.setOrgId(t.getId());
-		tr.setScore(score);
-		tr.setUpdateTime(t.getUpdateTime());
-		testMng.fullQuestions(t);
-		
-		return testRecordDao.save(tr);
-	}
-
-	@Override
-	public Integer getTotal(FyTestVersion search) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTestVersion bean where 1=1");
-
-		if (search != null && search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
-		}
-		if (search != null && search.getCode() != null) {
-			finder.append(" and bean.code =:code");
-			finder.setParam("code", search.getCode());
-		}
-		if (search != null && search.getTeaId() != null) {
-			finder.append(" and bean.teaId =:teaId");
-			finder.setParam("teaId", search.getTeaId());
-		}
-		
-		int totalCount = testRecordDao.countQueryResult(finder);
-		return totalCount;
-	}
-
 	
 
 	
@@ -307,30 +181,17 @@ public class FyTestVersionMngImpl implements FyTestVersionMng {
 		}
 	}
 
-	@Override
-	public Pagination<FyTestVersion> getMyPage(Integer pageNo, Integer pageSize, FyTestVersion search) {
-		// TODO Auto-generated method stub
-		Finder finder = Finder.create(" from FyTestVersion bean where 1=1");
-
-		if (search.getTitle() != null) {
-			finder.append(" and bean.title like:title");
-			finder.setParam("title", "%" + search.getTitle() + "%");
-		}
-		if (search.getCode() != null) {
-			finder.append(" and bean.code =:code");
-			finder.setParam("code", search.getCode());
-		}
-		if (search.getTeaId() != null) {
-			finder.append(" and bean.teaId =:teaId");
-			finder.setParam("teaId", search.getTeaId());
-		}
 	
-		if (search.getOrgId() != null) {
-			finder.append(" and bean.orgId =:orgId");
-			finder.setParam("userId", search.getOrgId());
-		}
-		finder.append(" order by bean.id desc");
-		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
+	@Override
+	public FyTestVersion findByCode(String code) {
+		// TODO Auto-generated method stub
+		return testRecordDao.findByCode(code);
+	}
+
+	@Override
+	public FyTestVersion save(FyTestVersion vr) {
+		// TODO Auto-generated method stub
+		return testRecordDao.save(vr);
 	}
 
 	

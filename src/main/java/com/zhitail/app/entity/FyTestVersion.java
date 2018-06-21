@@ -1,14 +1,20 @@
 package com.zhitail.app.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.alibaba.fastjson.JSONArray;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.FyTest.Mode;
 
 @Entity
@@ -32,6 +38,24 @@ public class FyTestVersion {
 	private String title;
 	private Long teaId;
 	private Long orgId;
+
+	@JsonIgnore
+	@Lob
+	private String json;
+	@Transient
+	public List<FyQuestion> getQuestions() {
+		if(json!=null){
+			return JSONArray.parseArray(this.json,FyQuestion.class);
+			}else{
+				return new ArrayList<FyQuestion>(0);
+			}
+	}
+	public String getJson() {
+		return json;
+	}
+	public void setJson(String json) {
+		this.json = json;
+	}
 	public Long getOrgId() {
 		return orgId;
 	}

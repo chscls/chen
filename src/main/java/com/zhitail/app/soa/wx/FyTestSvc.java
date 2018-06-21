@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
+import com.zhitail.app.entity.FyTestVersion;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyTestMng;
@@ -51,14 +52,15 @@ public class FyTestSvc {
 			return Result.error("该试卷不存在");
 		}
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
+		FyTestVersion vr = new FyTestVersion();
 		FyTestRecord tr=new FyTestRecord();
-		tr.setCode(test.getCode());
+		vr.setCode(test.getCode());
 		tr.setUserId(u.getId());
-		Integer count= testRecordMng.getTotal(tr);
+		Integer count= testRecordMng.getTotal(vr,tr);
 		
 	
 		
-		List<FyTestRecord> records= testRecordMng.getList( 0, 5,tr);
+		List<FyTestRecord> records= testRecordMng.getList( 0, 5,vr,tr);
 		for(FyTestRecord ftr:records) {
 			ftr.lite();
 		}
