@@ -1,5 +1,7 @@
 package com.zhitail.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,6 +52,13 @@ public class FyFriend {
 	private Long id;
 	@Column(name = "user_id")
 	private Long userId;
+	private Date createTime;
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	private String realname;
 	@Column(name = "friend_id")
 	private Long friendId;

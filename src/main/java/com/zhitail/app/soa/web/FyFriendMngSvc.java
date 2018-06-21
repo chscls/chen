@@ -1,6 +1,7 @@
 package com.zhitail.app.soa.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,7 @@ public class FyFriendMngSvc {
 			ff.setRealname(realname);
 			ff.setUserId(u.getId());
 			ff.setFriendId(userId);
+			ff.setCreateTime(new Date());
 			ff=friendMng.save(ff);
 		}
 	
