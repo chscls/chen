@@ -3,7 +3,7 @@ package com.zhitail.app.entity.middle;
 public class FyAnswer {
 	private Double goal;
 	private Boolean isGrade=false;
-	private Integer[] index;
+	private Integer[] indexs;
 	private String[] answers;
 	public Double getGoal() {
 		return goal;
@@ -17,11 +17,12 @@ public class FyAnswer {
 	public void setIsGrade(Boolean isGrade) {
 		this.isGrade = isGrade;
 	}
-	public Integer[] getIndex() {
-		return index;
+	
+	public Integer[] getIndexs() {
+		return indexs;
 	}
-	public void setIndex(Integer[] index) {
-		this.index = index;
+	public void setIndexs(Integer[] indexs) {
+		this.indexs = indexs;
 	}
 	public String[] getAnswers() {
 		return answers;

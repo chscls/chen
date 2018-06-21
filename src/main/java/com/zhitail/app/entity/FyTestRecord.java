@@ -199,11 +199,11 @@ public class FyTestRecord {
 				
 				if (q.getType() == Type.single || q.getType() == Type.judge||q.getType() == Type.mutiply) {
 					
-					if(a.getIndex()==null||a.getIndex().length==0) {
+					if(a.getIndexs()==null||a.getIndexs().length==0) {
 						continue;
 					}
-					for(int j=0;j<a.getIndex().length;j++) {
-						q.getItems().get(a.getIndex()[j]).setIsAnswer(true);
+					for(int j=0;j<a.getIndexs().length;j++) {
+						q.getItems().get(a.getIndexs()[j]).setIsAnswer(true);
 					}
 					
 				} else {

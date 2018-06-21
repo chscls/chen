@@ -348,13 +348,13 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	private void checkRadio(FyQuestion q, FyAnswer a) {
-			a.setGoal(q.getItems().get(a.getIndex()[0]).getIsAnswer()?q.getScore() : 0.0);
+			a.setGoal(q.getItems().get(a.getIndexs()[0]).getIsAnswer()?q.getScore() : 0.0);
 			a.setIsGrade(true);	
 	}
 
 	private void checkCheckBox(FyQuestion q, FyAnswer as) {
 		List<FyQuestionItem> is = q.getItems();
-		Integer[] indexs = as.getIndex();
+		Integer[] indexs = as.getIndexs();
 		List<Integer> x = new ArrayList<Integer>();
 		Arrays.sort(indexs);
 		for (int i = 0; i < is.size(); i++) {
