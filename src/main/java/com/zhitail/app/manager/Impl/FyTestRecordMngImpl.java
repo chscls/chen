@@ -348,7 +348,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	private void checkRadio(FyQuestion q, FyAnswer a) {
-			a.setGoal(q.getItems().get(a.getIndexs()[0]).getIsAnswer()?q.getScore() : 0.0);
+	Boolean isAnswer = q.getItems().get(a.getIndexs()[0]).getIsAnswer();
+			a.setGoal(isAnswer!=null&&isAnswer?q.getScore() : 0.0);
 			a.setIsGrade(true);	
 	}
 
