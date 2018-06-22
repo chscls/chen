@@ -128,9 +128,6 @@ public class FyTestRecordSvc {
 		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),code,recordId);
 		
 		//r.full();
-		return new Result(r );
-		
-		
-		
+		return new Result(r );	
 	}
 }
