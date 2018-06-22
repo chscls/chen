@@ -29,7 +29,7 @@ public interface FyTestRecordMng {
 	public Integer getTotal(  FyTestVersion vr, FyTestRecord search);
 
 
-	public FyTestRecord addTestRecord(Long userId, String code, Long recordId);
+	public FyTestRecord addTestRecord(Long userId,Long id, Long recordId);
 
 	public FyTestRecord submit(Long id, String answers, String sign);
 

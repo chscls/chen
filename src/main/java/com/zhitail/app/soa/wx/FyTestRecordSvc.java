@@ -123,9 +123,9 @@ public class FyTestRecordSvc {
 	}
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/addTestRecord",method=RequestMethod.GET)
-	public Result addTestRecord(String token,String code,Long recordId) {
+	public Result addTestRecord(String token,Long id,Long recordId) {
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
-		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),code,recordId);
+		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),id,recordId);
 		
 		//r.full();
 		return new Result(r );	

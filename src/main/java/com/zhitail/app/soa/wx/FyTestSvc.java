@@ -46,8 +46,8 @@ public class FyTestSvc {
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
-	public Result findTest(String token,String code) {
-		FyTest test= testMng.findByCode(code);
+	public Result findTest(String token,Long id) {
+		FyTest test= testMng.findById(id);
 		if(test==null) {
 			return Result.error("该试卷不存在");
 		}

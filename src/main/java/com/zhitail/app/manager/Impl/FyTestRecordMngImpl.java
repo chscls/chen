@@ -188,15 +188,15 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	
 
 	@Override
-	public FyTestRecord addTestRecord(Long userId, String code, Long recordId) {
+	public FyTestRecord addTestRecord(Long userId, Long id, Long recordId) {
 		if (recordId != null) {
 			return findById(recordId);
 		}
 
 		// TODO Auto-generated method stub
-		FyTest t = testMng.findByCode(code);
+		FyTest t = testMng.findById(id);
 		
-		FyTestVersion vr = versionMng.findByCode(code);
+		FyTestVersion vr = versionMng.findByCode(t.getCode());
 		FyTestRecord tr = new FyTestRecord();
 		if(vr==null) {
 			vr=new FyTestVersion();
