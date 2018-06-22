@@ -80,28 +80,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		
          super.addResourceHandlers(registry);  
     }  
-	  @Bean
-	  public EmbeddedServletContainerFactory servletContainer() {
-	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http
-	        return tomcat;
-	  }
-
-	 private Connector createSslConnector() {
-	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-	        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-	        File keystore = new File("D:/your-name.jks");
-            /*File truststore = new ClassPathResource("sample.jks").getFile();*/
-            connector.setScheme("https");
-            connector.setSecure(true);
-            connector.setPort(443);
-            protocol.setSSLEnabled(true);
-            protocol.setKeystoreFile(keystore.getAbsolutePath());
-            protocol.setKeystorePass("214719198680595");
-           // protocol.setKeyPass(key_password);
-            return connector;
-	     
-	    }
+	 
 	@Bean
 	public MappingJackson2HttpMessageConverter responseBodyConverter() {
 		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();

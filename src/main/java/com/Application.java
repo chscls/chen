@@ -7,7 +7,8 @@ import java.util.Properties;
 
 import javax.servlet.MultipartConfigElement;
 
-
+import org.apache.catalina.connector.Connector;
+import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -40,7 +41,7 @@ import com.zhitail.test.SnowflakeIdWorker;
 
 @SpringBootApplication
 @ServletComponentScan
-//@EnableEurekaClient
+@EnableEurekaClient
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 @EnableScheduling
 public class Application {
@@ -80,6 +81,27 @@ public class Application {
 	    }  
 	 
 	 
-	
+	 //@Bean
+	  public EmbeddedServletContainerFactory servletContainer() {
+	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http
+	        return tomcat;
+	  }
+
+	 private Connector createSslConnector() {
+	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+	        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
+	        File keystore = new File("D:/your-name.jks");
+           /*File truststore = new ClassPathResource("sample.jks").getFile();*/
+           connector.setScheme("https");
+           connector.setSecure(true);
+           connector.setPort(443);
+           protocol.setSSLEnabled(true);
+           protocol.setKeystoreFile(keystore.getAbsolutePath());
+           protocol.setKeystorePass("214719198680595");
+          // protocol.setKeyPass(key_password);
+           return connector;
+	     
+	    }
 	 
 }
