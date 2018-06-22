@@ -56,7 +56,9 @@ public class FyTestRecord {
 	public void setVersion(FyTestVersion version) {
 		this.version = version;
 	}
-	
+	public Double getScore() {
+		return this.version.getScore();
+	}
 	public Double getGoal() {
 		return goal;
 	}

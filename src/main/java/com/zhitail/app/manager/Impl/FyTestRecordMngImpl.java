@@ -213,7 +213,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			vr.setTitle(t.getTitle());
 			vr.setTeaId(t.getUserId());
 			vr.setMode(t.getMode());
-			
+			vr.setCreateTime(new Date());
 			vr.setOrgId(t.getId());
 			vr.setScore(score);
 			vr.setUpdateTime(t.getUpdateTime());
