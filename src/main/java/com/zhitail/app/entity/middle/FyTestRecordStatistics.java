@@ -2,6 +2,7 @@ package com.zhitail.app.entity.middle;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTest.Mode;
 import com.zhitail.app.entity.FyTestVersion;
@@ -11,6 +12,20 @@ public class FyTestRecordStatistics {
 		private String title;
 		private Long orgId;
 		private Double score;
+		@JsonIgnore
+		private FyTestVersion version;
+		public FyTestVersion getVersion() {
+			return version;
+		}
+		public void setVersion(FyTestVersion version) {
+			this.version = version;
+		}
+		public Double getRate(){
+			if(version!=null) {
+				return version.getRate();
+			}
+			return null;
+		}
 		public Double getScore() {
 			return score;
 		}
