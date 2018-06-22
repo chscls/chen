@@ -348,8 +348,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	private void checkRadio(FyQuestion q, FyAnswer a) {
-	Boolean isAnswer = q.getItems().get(a.getIndexs()[0]).getIsAnswer();
-			a.setGoal(isAnswer!=null&&isAnswer?q.getScore() : 0.0);
+	Boolean isSolution = q.getItems().get(a.getIndexs()[0]).getIsSolution();
+			a.setGoal(isSolution!=null&&isSolution?q.getScore() : 0.0);
 			a.setIsGrade(true);	
 	}
 
@@ -363,9 +363,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 				x.add(i);
 			}
 		}
-	
-		
-		a.setGoal(x.toArray(new Integer[x.size()]).equals(indexs) ? q.getGoal() : 0.0);
+		Integer[] b=x.toArray(new Integer[x.size()]);
+		Boolean  y = Arrays.equals(b,indexs);
+		a.setGoal(y? q.getScore() : 0.0);
 		a.setIsGrade(true);
 		
 	}
