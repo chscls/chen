@@ -81,11 +81,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
          super.addResourceHandlers(registry);  
     }  
 	  @Bean
-	    public EmbeddedServletContainerFactory servletContainer() {
+	  public EmbeddedServletContainerFactory servletContainer() {
 	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
 	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http
 	        return tomcat;
-	    }
+	  }
 
 	 private Connector createSslConnector() {
 	        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");

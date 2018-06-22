@@ -19,7 +19,7 @@ spring:
     jpa:
       repositories:
         enabled: true
-#datasource:  
+  #datasource:  
     #driver-class-name: com.mysql.jdbc.Driver
     #url: jdbc:mysql://qdm176766154.my3w.com:3306/qdm176766154_db?characterEncoding=UTF-8
     #username: qdm176766154
@@ -57,6 +57,7 @@ spring:
     port: 6379
     expire: 1800
     host: localhost
+    #password: chenerping
 com:
   zhiyong:
     resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/

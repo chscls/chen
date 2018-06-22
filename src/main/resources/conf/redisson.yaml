@@ -10,7 +10,7 @@ singleServerConfig:
   retryInterval: 1000
   reconnectionTimeout: 3000
   failedAttempts: 1
-  
+  #password: chenerping
   subscriptionsPerConnection: 5
   clientName: null
   address:
