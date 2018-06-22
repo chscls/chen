@@ -38,7 +38,14 @@ public class FyTestVersion {
 	private String title;
 	private Long teaId;
 	private Long orgId;
+	private Double rate;
 
+	public Double getRate() {
+		return rate;
+	}
+	public void setRate(Double rate) {
+		this.rate = rate;
+	}
 	@JsonIgnore
 	@Lob
 	private String json;

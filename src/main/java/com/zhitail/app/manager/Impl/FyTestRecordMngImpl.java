@@ -218,6 +218,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			vr.setScore(score);
 			vr.setUpdateTime(t.getUpdateTime());
 			testMng.fullQuestions(t);
+			vr.setRate(computeRate(score,t.getQuestions()));
 			vr.setJson(JSONArray.toJSONString(t.getQuestions()));
 			vr = versionMng.save(vr);
 		}
@@ -228,6 +229,15 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	    tr.setJson(JSONArray.toJSONString(new FyAnswer[vr.getQuestions().size()]) );
 		tr.reFreshUuid();
 		return testRecordDao.save(tr);
+	}
+
+	private Double computeRate(Double score,List<FyQuestion> questions) {
+		// TODO Auto-generated method stub
+		Double total=0.0;
+		for(FyQuestion q:questions) {
+			total+=q.getScore()*q.getDifficulty()/score;
+		}
+		return total/questions.size();
 	}
 
 	@Override
