@@ -12,6 +12,10 @@ public class FyTestRecordStatistics {
 		private String title;
 		private Long orgId;
 		private Double score;
+		private Double rate;
+		public void setRate(Double rate) {
+			this.rate = rate;
+		}
 		@JsonIgnore
 		private FyTestVersion version;
 		public FyTestVersion getVersion() {
@@ -21,6 +25,9 @@ public class FyTestRecordStatistics {
 			this.version = version;
 		}
 		public Double getRate(){
+			if(this.rate!=null) {
+				return rate;
+			}
 			if(version!=null) {
 				return version.getRate();
 			}

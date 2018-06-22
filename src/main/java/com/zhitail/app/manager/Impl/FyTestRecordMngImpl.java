@@ -235,9 +235,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		// TODO Auto-generated method stub
 		Double total=0.0;
 		for(FyQuestion q:questions) {
-			total+=q.getScore()*q.getDifficulty()/score;
+			total+=(q.getScore()*(100-q.getDifficulty()))/score;
 		}
-		return total/questions.size();
+		return total/questions.size()/100;
 	}
 
 	@Override

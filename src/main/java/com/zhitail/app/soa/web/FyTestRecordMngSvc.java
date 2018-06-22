@@ -24,6 +24,7 @@ import com.zhitail.app.entity.FyTestVersion;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyTest.Mode;
 import com.zhitail.app.entity.middle.FyTestRecordStatistics;
+import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyFriendMng;
 import com.zhitail.app.manager.FySensitiveMng;
@@ -64,15 +65,29 @@ public class FyTestRecordMngSvc {
 		FyTestVersion fr = new FyTestVersion();
 		fr.setCode(code);
 	    Pagination<FyTestRecordStatistics>  page =  testRecordMng.groupByCodes(fr,1,10);
-	
+	    fr=versionMng.findByCode(code);
 		if(page.getList().size()>0) {
-		return new Result(page.getList().get(0));
+			FyTestRecordStatistics fs=page.getList().get(0);
+			fs.setVersion(fr);
+		return new Result(fs);
 		}else {
 			FyTest ft = 	testMng.findByCode(code);
-			fr=versionMng.findByCode(code);
+			
 			if(ft!=null) {
+				testMng.fullQuestions(ft);
 				FyTestRecordStatistics fs=new FyTestRecordStatistics (ft);
-				fs.setVersion(fr);
+				double score=0.0;
+				for(QuestionConfig qc:ft.getQuestionConfigs()) {
+					score+=qc.getScore();
+				}
+				double total=0.0;
+				for(FyQuestion q:ft.getQuestions()) {
+					total+=(q.getScore()*(100-q.getDifficulty()))/score;
+				}
+				
+				
+				double rate = total/100;
+				fs.setRate(rate);
 				return new Result(fs);
 			}else {
 				
