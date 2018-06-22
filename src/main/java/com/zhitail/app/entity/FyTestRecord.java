@@ -48,6 +48,7 @@ public class FyTestRecord {
 	private String uuid;
 	@ManyToOne
 	@JoinColumn(name = "version_id")
+	@JsonIgnore
 	private FyTestVersion version;
 	public FyTestVersion getVersion() {
 		return version;
