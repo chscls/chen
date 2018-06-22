@@ -123,13 +123,10 @@ public class FyTestRecord {
 			}
 	}
 	@Transient
-	public List<FyQuestion> questions;
 	public List<FyQuestion> getQuestions() {
-		return questions;
+		return this.version.getQuestions();
 	}
-	public void setQuestions(List<FyQuestion> questions) {
-		this.questions = questions;
-	}
+
 	public String getJson() {
 		return json;
 	}
@@ -182,7 +179,7 @@ public class FyTestRecord {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public void full() {
+/*	public void full() {
 		if(this.getAnswers().size()==0) {
 			this.questions = this.version.getQuestions();
 		}else {
@@ -221,6 +218,6 @@ public class FyTestRecord {
 		}
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 	
 }
