@@ -103,7 +103,7 @@ public class FyTestRecordStatistics {
 			this.avgScore =0.0;
 			this.title=fr.getTitle();
 			this.mode=fr.getMode();
-			
+			this.version = fr;
 			// TODO Auto-generated constructor stub
 		}
 		public FyTestRecordStatistics(FyTest fr) {

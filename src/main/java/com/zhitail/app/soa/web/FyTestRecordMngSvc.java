@@ -28,6 +28,7 @@ import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyFriendMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyTestRecordMng;
+import com.zhitail.app.manager.FyTestVersionMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
@@ -47,6 +48,8 @@ public class FyTestRecordMngSvc {
 	private FyUserMng userMng;
 	@Autowired
 	private FyFriendMng friendMng;
+	@Autowired
+	private FyTestVersionMng versionMng;
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/findTestRecord", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
@@ -60,15 +63,19 @@ public class FyTestRecordMngSvc {
 		
 		FyTestVersion fr = new FyTestVersion();
 		fr.setCode(code);
-	   Pagination<FyTestRecordStatistics>  page =  testRecordMng.groupByCodes(fr,1,10);
+	    Pagination<FyTestRecordStatistics>  page =  testRecordMng.groupByCodes(fr,1,10);
 	
 		if(page.getList().size()>0) {
 		return new Result(page.getList().get(0));
 		}else {
 			FyTest ft = 	testMng.findByCode(code);
+			fr=versionMng.findByCode(code);
 			if(ft!=null) {
-				return new Result(new FyTestRecordStatistics (ft));
+				FyTestRecordStatistics fs=new FyTestRecordStatistics (ft);
+				fs.setVersion(fr);
+				return new Result(fs);
 			}else {
+				
 				return new Result(new FyTestRecordStatistics (fr));		
 			}
 		}
