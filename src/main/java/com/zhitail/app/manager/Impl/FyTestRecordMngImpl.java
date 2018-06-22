@@ -353,9 +353,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			a.setIsGrade(true);	
 	}
 
-	private void checkCheckBox(FyQuestion q, FyAnswer as) {
+	private void checkCheckBox(FyQuestion q, FyAnswer a) {
 		List<FyQuestionItem> is = q.getItems();
-		Integer[] indexs = as.getIndexs();
+		Integer[] indexs = a.getIndexs();
 		List<Integer> x = new ArrayList<Integer>();
 		Arrays.sort(indexs);
 		for (int i = 0; i < is.size(); i++) {
@@ -365,8 +365,8 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		}
 	
 		
-		q.setGoal(x.toArray(new Integer[x.size()]).equals(indexs) ? q.getGoal() : 0.0);
-		q.setIsGrade(true);
+		a.setGoal(x.toArray(new Integer[x.size()]).equals(indexs) ? q.getGoal() : 0.0);
+		a.setIsGrade(true);
 		
 	}
 
