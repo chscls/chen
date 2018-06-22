@@ -237,7 +237,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		for(FyQuestion q:questions) {
 			total+=(q.getScore()*(100-q.getDifficulty()))/score;
 		}
-		return total/questions.size()/100;
+		return total/100;
 	}
 
 	@Override
