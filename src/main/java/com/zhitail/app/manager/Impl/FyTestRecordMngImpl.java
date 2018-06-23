@@ -242,7 +242,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		}
 		for(FyQuestion q:qs) {
 			items=q.getItems();
-			if(q.getType()==Type.single||q.getType()==Type.mutiply) {
+			if(q.getType()==Type.single||q.getType()==Type.mutiply||q.getType()==Type.judge) {
 				Collections.shuffle(items);	
 				q.setJson(JSONArray.toJSONString(items));
 			}
@@ -293,7 +293,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		ftr.setSign(sign);
 		}
 		List<FyAnswer> ans = JSONArray.parseArray(answers, FyAnswer.class);
-		List<FyQuestion> qs = ftr.getVersion().getQuestions();
+		List<FyQuestion> qs = ftr.getQuestions();
 		if(ans.size()!=qs.size()) {
 			return null;
 		}
