@@ -2,6 +2,7 @@ package com.zhitail.app.manager.Impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -207,7 +208,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			}
 			
 			vr.setCode(t.getCode());
-			
+			vr.setIsNoOrder(t.getIsNoOrder());
 			vr.setIsQuestionnaire(t.getIsQuestionnaire());
 			vr.setLimitSecond(t.getLimitSecond());
 			vr.setTitle(t.getTitle());
@@ -222,6 +223,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			vr.setJson(JSONArray.toJSONString(t.getQuestions()));
 			vr = versionMng.save(vr);
 		}
+		tr.setQuestionJson(computeOrder(vr));
 		tr.setVersion(vr);
 		tr.setCreateTime(new Date());
 		tr.setUserId(userId);
@@ -229,6 +231,24 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	    tr.setJson(JSONArray.toJSONString(new FyAnswer[vr.getQuestions().size()]) );
 		tr.reFreshUuid();
 		return testRecordDao.save(tr);
+	}
+
+	private String computeOrder(FyTestVersion vr) {
+		Boolean isNoOrder = vr.getIsNoOrder();
+		List<FyQuestion> qs=vr.getQuestions();
+		List<FyQuestionItem> items;
+		if(isNoOrder) {
+			Collections.shuffle(qs);
+		}
+		for(FyQuestion q:qs) {
+			items=q.getItems();
+			if(q.getType()==Type.single||q.getType()==Type.mutiply) {
+				Collections.shuffle(items);	
+				q.setJson(JSONArray.toJSONString(items));
+			}
+		}
+		// TODO Auto-generated method stub
+		return JSONArray.toJSONString(qs);
 	}
 
 	private Double computeRate(Double score,List<FyQuestion> questions) {

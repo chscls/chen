@@ -49,6 +49,7 @@ public class FyTestVersion {
 	@JsonIgnore
 	@Lob
 	private String json;
+
 	@Transient
 	public List<FyQuestion> getQuestions() {
 		if(json!=null){
@@ -71,6 +72,13 @@ public class FyTestVersion {
 	}
 	private Date updateTime;
 	private Date createTime;
+	private Boolean isNoOrder;
+	public Boolean getIsNoOrder() {
+		return isNoOrder;
+	}
+	public void setIsNoOrder(Boolean isNoOrder) {
+		this.isNoOrder = isNoOrder;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -125,4 +133,5 @@ public class FyTestVersion {
 	public void setTeaId(Long teaId) {
 		this.teaId = teaId;
 	}
+	
 }
