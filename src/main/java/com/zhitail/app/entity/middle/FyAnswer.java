@@ -9,6 +9,10 @@ public class FyAnswer {
 	private Double goal;
 	private Boolean isGrade;
 	private Integer[] orders;
+	public FyAnswer() {
+		
+		
+	}
 	public FyAnswer(int i) {
 		this.index=i;
 		this.isGrade=false;
