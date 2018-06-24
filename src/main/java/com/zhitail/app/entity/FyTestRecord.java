@@ -59,6 +59,9 @@ public class FyTestRecord {
 	public Double getScore() {
 		return this.version.getScore();
 	}
+	public String getTitle() {
+		return this.version.getTitle();
+	}
 	public Double getGoal() {
 		return goal;
 	}
