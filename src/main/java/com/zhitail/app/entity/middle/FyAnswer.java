@@ -65,6 +65,7 @@ public class FyAnswer {
 		Collections.shuffle(ins);
 		// TODO Auto-generated method stub
 		this.orders=ins.toArray(new Integer[length]);
+		this.indexs=new Integer[0];
 	}
 	
 

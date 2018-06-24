@@ -300,18 +300,14 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		if(ans.size()!=qs.size()) {
 			return null;
 		}
-		List<FyAnswer> ano = ftr.getAnswers();
-		for(int i=0;i<ans.size();i++) {
-			ans.get(i).setIndex(ano.get(i).getIndex());
-			ans.get(i).setOrders(ano.get(i).getOrders());
-		}
+	
 		FyQuestion q;
 		FyAnswer a;
 		if(!ftr.getVersion().getIsQuestionnaire()) {
 			for (int i = 0; i < qs.size(); i++) {
-			q = qs.get(i);
-			
-				a = ans.get(i);
+			a = ans.get(i);
+			q=qs.get(a.getIndex());
+				
 				if (q.getType() == Type.single || q.getType() == Type.judge) {
 				
 				checkRadio(q, a);
