@@ -293,12 +293,18 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		if(StringUtils.isNotBlank(sign)) {
 		ftr.setSign(sign);
 		}
+		
 		List<FyAnswer> ans = JSONArray.parseArray(answers, FyAnswer.class);
+		
 		List<FyQuestion> qs = ftr.getQuestions();
 		if(ans.size()!=qs.size()) {
 			return null;
 		}
-		
+		List<FyAnswer> ano = ftr.getAnswers();
+		for(int i=0;i<ans.size();i++) {
+			ans.get(i).setIndex(ano.get(i).getIndex());
+			ans.get(i).setOrders(ano.get(i).getOrders());
+		}
 		FyQuestion q;
 		FyAnswer a;
 		if(!ftr.getVersion().getIsQuestionnaire()) {
@@ -379,7 +385,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	}
 
 	private void checkRadio(FyQuestion q, FyAnswer a) {
-	Boolean isSolution = q.getItems().get(a.getIndexs()[0]).getIsSolution();
+		Boolean isSolution = q.getItems().get(a.getIndexs()[0]).getIsSolution();
 			a.setGoal(isSolution!=null&&isSolution?q.getScore() : 0.0);
 			a.setIsGrade(true);	
 	}
