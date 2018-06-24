@@ -99,9 +99,7 @@ public class FyTestRecord {
 	@JsonIgnore
 	@Lob
 	private String json;
-	@JsonIgnore
-	@Lob
-	private String questionJson;
+
 	@Transient
 	
 	private FyUser user;
@@ -130,19 +128,10 @@ public class FyTestRecord {
 	}
 	@Transient
 	public List<FyQuestion> getQuestions() {
-		if(questionJson!=null){
-			return JSONArray.parseArray(this.questionJson,FyQuestion.class);
-			}else{
-				return new ArrayList<FyQuestion>(0);
-			}
+		return this.version.getQuestions();
 	}
 
-	public String getQuestionJson() {
-		return questionJson;
-	}
-	public void setQuestionJson(String questionJson) {
-		this.questionJson = questionJson;
-	}
+
 	public String getJson() {
 		return json;
 	}

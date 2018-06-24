@@ -223,32 +223,33 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			vr.setJson(JSONArray.toJSONString(t.getQuestions()));
 			vr = versionMng.save(vr);
 		}
-		tr.setQuestionJson(computeOrder(vr));
+	
 		tr.setVersion(vr);
 		tr.setCreateTime(new Date());
 		tr.setUserId(userId);
 		tr.setStatus(Status.create);
-	    tr.setJson(JSONArray.toJSONString(new FyAnswer[vr.getQuestions().size()]) );
+	    tr.setJson(computeOrder(vr) );
 		tr.reFreshUuid();
 		return testRecordDao.save(tr);
 	}
 
 	private String computeOrder(FyTestVersion vr) {
-		Boolean isNoOrder = vr.getIsNoOrder();
+		
+		
 		List<FyQuestion> qs=vr.getQuestions();
-		List<FyQuestionItem> items;
-		if(isNoOrder) {
-			Collections.shuffle(qs);
-		}
-		for(FyQuestion q:qs) {
-			items=q.getItems();
-			if(q.getType()==Type.single||q.getType()==Type.mutiply||q.getType()==Type.judge) {
-				Collections.shuffle(items);	
-				q.setJson(JSONArray.toJSONString(items));
+		List<FyAnswer> ans = new ArrayList<FyAnswer>(qs.size());
+		FyAnswer a;
+		for(int i=0;i<qs.size();i++) {
+			a=new FyAnswer(i);
+			if(qs.get(i).getType()==Type.single||qs.get(i).getType()==Type.mutiply||qs.get(i).getType()==Type.judge) {
+				a.makeOrder(qs.get(i).getItems().size());		
 			}
+			ans.add(a);
 		}
-		// TODO Auto-generated method stub
-		return JSONArray.toJSONString(qs);
+		if(vr.getIsNoOrder()) {
+			Collections.shuffle(ans);
+		}
+		return JSONArray.toJSONString(ans);
 	}
 
 	private Double computeRate(Double score,List<FyQuestion> questions) {
