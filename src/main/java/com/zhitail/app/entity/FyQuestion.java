@@ -32,6 +32,14 @@ public class FyQuestion {
 	private Long id;
 	@Lob
 	private String title;
+	@Lob
+	private String analysis;
+	public String getAnalysis() {
+		return analysis;
+	}
+	public void setAnalysis(String analysis) {
+		this.analysis = analysis;
+	}
 	private Integer difficulty=0;
 	@Transient
 	private Double score;
@@ -100,6 +108,13 @@ public class FyQuestion {
 	}
 	public void setIsQuestionnaire(Boolean isQuestionnaire) {
 		this.isQuestionnaire = isQuestionnaire;
+	}
+	private Boolean isAnalysisRich=false;
+	public Boolean getIsAnalysisRich() {
+		return isAnalysisRich;
+	}
+	public void setIsAnalysisRich(Boolean isAnalysisRich) {
+		this.isAnalysisRich = isAnalysisRich;
 	}
 	private Boolean isRich=false;
 	private Boolean isQuestionnaire=false;
