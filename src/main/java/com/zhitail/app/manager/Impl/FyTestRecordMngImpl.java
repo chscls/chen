@@ -303,6 +303,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	
 		FyQuestion q;
 		FyAnswer a;
+		ftr.setEndTime(new Date());
 		if(!ftr.getVersion().getIsQuestionnaire()) {
 			for (int i = 0; i < qs.size(); i++) {
 			a = ans.get(i);
@@ -356,7 +357,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		}else {
 			ftr.setStatus(Status.check);
 		}
-		ftr.setEndTime(new Date());
+	
 		ftr.setJson(JSONObject.toJSONString(ans));
 		// TODO Auto-generated method stub
 
@@ -455,8 +456,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 				 answers.get(i).setIsGrade(true);
 			 }
 		 }
-		 fr.setJson(JSONArray.toJSONString(answers));
-		 fr.setStatus(Status.complete);
+		
+		 checkGoal(answers, fr);
+		
 		 
 		return update(fr);
 	}
