@@ -73,7 +73,11 @@ public class FyTestRecordMngSvc {
 	@RequestMapping(value = "/getWait", method = RequestMethod.GET)
 	public Result getWait(String token, String code) {
 		FyTestRecord testRecord = testRecordMng.getWait(code);
-
+if(testRecord==null) {
+	testRecord = new FyTestRecord();
+	testRecord.setVersion(new FyTestVersion());
+	return new Result(testRecord);
+}
 		return new Result(testRecord);
 	}
 	
