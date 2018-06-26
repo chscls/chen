@@ -463,6 +463,26 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		return update(fr);
 	}
 
+	@Override
+	public FyTestRecord getWait(String code) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyTestRecord bean where 1=1");
+
+	
+		
+			finder.append(" and bean.version.code =:code");
+			finder.setParam("code", code);
+			finder.append(" and bean.status =:status");
+			finder.setParam("status", Status.check);
+		finder.append(" order by bean.endTime asc");
+		finder.setMaxResults(1);
+		List<FyTestRecord> list =this.testRecordDao.findListByFinder(finder);
+		if(list.size()>0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
 	
 
 }

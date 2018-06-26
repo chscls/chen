@@ -70,6 +70,15 @@ public class FyTestRecordMngSvc {
 		return new Result(testRecord);
 	}
 	@TokenAuth(value = "token")
+	@RequestMapping(value = "/getWait", method = RequestMethod.GET)
+	public Result getWait(String token, String code) {
+		FyTestRecord testRecord = testRecordMng.getWait(code);
+
+		return new Result(testRecord);
+	}
+	
+	
+	@TokenAuth(value = "token")
 	@RequestMapping(value = "/queryTestRecordStatistics", method = RequestMethod.GET)
 	public Result queryTestRecordStatistics(String token, String code) {
 		

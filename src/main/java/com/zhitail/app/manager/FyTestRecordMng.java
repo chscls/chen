@@ -48,6 +48,9 @@ public interface FyTestRecordMng {
 
 	public FyTestRecord makeScore(Long id, JSONObject scores);
 
+
+	public FyTestRecord getWait(String code);
+
 	
 
 }
