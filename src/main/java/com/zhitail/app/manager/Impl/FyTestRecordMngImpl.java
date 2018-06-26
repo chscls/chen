@@ -352,11 +352,11 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		ftr.setGoal(allGoal);
 		if (isAllGrade) {
 			ftr.setStatus(Status.complete);
-			ftr.setEndTime(new Date());
+		
 		}else {
 			ftr.setStatus(Status.check);
 		}
-
+		ftr.setEndTime(new Date());
 		ftr.setJson(JSONObject.toJSONString(ans));
 		// TODO Auto-generated method stub
 
