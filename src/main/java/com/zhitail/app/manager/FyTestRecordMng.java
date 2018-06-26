@@ -2,6 +2,7 @@ package com.zhitail.app.manager;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTestRecord;
 import com.zhitail.app.entity.FyTestVersion;
@@ -42,6 +43,10 @@ public interface FyTestRecordMng {
 
 
 	public Pagination<FyTestRecordStatistics> groupByCodes(FyTestVersion version, Integer pageNo, Integer pageSize);
+
+
+
+	public FyTestRecord makeScore(Long id, JSONObject scores);
 
 	
 

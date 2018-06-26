@@ -438,6 +438,29 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 		return testRecordDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
+	@Override
+	public FyTestRecord makeScore(Long id, JSONObject scores) {
+		// TODO Auto-generated method stub
+		 FyTestRecord  fr =this.findById(id);
+		 List<FyQuestion> questions =fr.getQuestions();
+		 List<FyAnswer> answers = fr.getAnswers();
+		 for(int i=0;i<answers.size();i++) {
+			 
+			 if(questions.get(answers.get(i).getIndex()).getType()==Type.ask) {
+				 if(scores.containsKey(i+"")) {
+					 answers.get(i).setGoal(scores.getDouble(i+""));
+				 }else {
+					 answers.get(i).setGoal(0.0);
+				 }
+				 answers.get(i).setIsGrade(true);
+			 }
+		 }
+		 fr.setJson(JSONArray.toJSONString(answers));
+		 fr.setStatus(Status.complete);
+		 
+		return update(fr);
+	}
+
 	
 
 }

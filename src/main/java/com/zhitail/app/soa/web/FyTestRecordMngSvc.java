@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhitail.app.entity.FyFriend;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
@@ -51,6 +52,16 @@ public class FyTestRecordMngSvc {
 	private FyFriendMng friendMng;
 	@Autowired
 	private FyTestVersionMng versionMng;
+	@TokenAuth(value = "token")
+	@RequestMapping(value = "/makeScore", method = RequestMethod.POST)
+	public Result makeScore(String token, Long id,String scores) {
+		
+		JSONObject jo = JSONObject.parseObject(scores);
+		
+		FyTestRecord testRecord = testRecordMng.makeScore(id,jo);
+		
+		return new Result(testRecord);
+	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/findTestRecord", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
