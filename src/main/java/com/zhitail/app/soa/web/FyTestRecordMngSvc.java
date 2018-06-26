@@ -59,14 +59,14 @@ public class FyTestRecordMngSvc {
 		JSONObject jo = JSONObject.parseObject(scores);
 		
 		FyTestRecord testRecord = testRecordMng.makeScore(id,jo);
-		
+		testRecord.setUser(userMng.findById(testRecord.getUserId()));
 		return new Result(testRecord);
 	}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/findTestRecord", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
 		FyTestRecord testRecord = testRecordMng.findById(id);
-
+		testRecord.setUser(userMng.findById(testRecord.getUserId()));
 		return new Result(testRecord);
 	}
 	@TokenAuth(value = "token")
@@ -77,6 +77,13 @@ if(testRecord==null) {
 	testRecord = new FyTestRecord();
 	testRecord.setVersion(new FyTestVersion());
 	return new Result(testRecord);
+}
+testRecord.setUser(userMng.findById(testRecord.getUserId()));
+FyUser u = userMng.findByUserName(loginManager.getUser(token));
+
+List<FyFriend> list= friendMng.findByIds( u.getId(), new Long[] {testRecord.getUserId()});
+if(list.size()>0) {
+	testRecord.setFriend(list.get(0));
 }
 		return new Result(testRecord);
 	}
