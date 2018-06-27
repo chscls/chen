@@ -14,4 +14,6 @@ public interface FyAdSpaceMng {
 
 	public void delete(Long[] ids);
 
+	public FyAdSpace findById(Long sid);
+
 }

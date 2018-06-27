@@ -27,6 +27,7 @@ import com.zhitail.app.entity.FyAd;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
 import com.zhitail.app.manager.FyAdMng;
+import com.zhitail.app.manager.FyAdSpaceMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
@@ -41,6 +42,8 @@ public class FyAdMngSvc {
 	
 	@Autowired
 	private FyAdMng beanMng;
+	@Autowired
+	private FyAdSpaceMng adSpaceMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
 	public Result query(String token, Integer pageNo,Integer pageSize,FyAd search) {
@@ -50,11 +53,18 @@ public class FyAdMngSvc {
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result add( String token,FyAd bean) {
-		if(bean.getId()==null){
+	public Result add( String token,FyAd bean,Long sid) {
 		
+		
+		if(bean.getId()==null){
+			if(sid!=null) {
+				bean.setAdSpace(adSpaceMng.findById(sid));
+			}
 			bean = beanMng.save(bean);
 		}else{
+			if(sid!=null) {
+				bean.setAdSpace(adSpaceMng.findById(sid));
+			}
 			bean = beanMng.update(bean);
 		}
 		return new Result(bean);

@@ -17,7 +17,7 @@ import com.zhitail.frame.util.page.Pagination;
 @Transactional
 public class  FyAdSpaceMngImpl implements FyAdSpaceMng{
 	@Autowired
-	private FyAdSpaceDao sensitiveDao;
+	private FyAdSpaceDao dao;
 	public Pagination<FyAdSpace> getPage(Integer pageNo, Integer pageSize,
 			FyAdSpace search) {
 		// TODO Auto-generated method stub
@@ -32,25 +32,31 @@ public class  FyAdSpaceMngImpl implements FyAdSpaceMng{
 	            finder.setParam("keyword","%"+search.getKeyword()+"%");
 		}
 		finder.append(" order by bean.id desc");
-		return sensitiveDao.findPageByFinder(finder, pageNo, pageSize);
+		return dao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
 	public FyAdSpace save(FyAdSpace bean) {
 		// TODO Auto-generated method stub
-		return sensitiveDao.save(bean);
+		return dao.save(bean);
 	}
 
 	public FyAdSpace update(FyAdSpace bean) {
 		// TODO Auto-generated method stub
 		Updater u = new Updater(bean);
-	    return sensitiveDao.updateByUpdater(u);
+	    return dao.updateByUpdater(u);
 	}
 
 	public void delete(Long[] ids) {
 		for(Long id:ids){
-			sensitiveDao.delete(id);	
+			dao.delete(id);	
 			}
 		
+	}
+
+	@Override
+	public FyAdSpace findById(Long sid) {
+		// TODO Auto-generated method stub
+		return dao.findOne(sid);
 	}
 
 }
