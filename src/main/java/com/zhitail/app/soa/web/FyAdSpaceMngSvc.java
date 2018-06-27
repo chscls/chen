@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhitail.app.entity.FySensitive;
+import com.zhitail.app.entity.FyAdSpace;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
-import com.zhitail.app.manager.FySensitiveMng;
+import com.zhitail.app.manager.FyAdSpaceMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
@@ -35,38 +35,38 @@ import com.zhitail.frame.util.service.Result;
 
 
 
-@RequestMapping("/services/FySensitiveMngSvc")
+@RequestMapping("/services/FyAdSpaceMngSvc")
 @RestController
-public class FySensitiveMngSvc {
+public class FyAdSpaceMngSvc {
 	@Autowired
 	private LoginManager loginManager;
 	@Autowired
-	private FySensitiveMng sensitiveMng;
+	private FyAdSpaceMng beanMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
-	public Result querySensitive(String token, Integer pageNo,Integer pageSize,FySensitive search) {
-		Pagination<FySensitive> page = sensitiveMng.getPage(pageNo,pageSize,search);
+	public Result querybean(String token, Integer pageNo,Integer pageSize,FyAdSpace search) {
+		Pagination<FyAdSpace> page = beanMng.getPage(pageNo,pageSize,search);
 		return new Result(page);
 	}
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addSensitive( String token,FySensitive sensitive) {
-		if(sensitive.getId()==null){
+	public Result AdSpacedbean( String token,FyAdSpace bean) {
+		if(bean.getId()==null){
 		
-			sensitive = sensitiveMng.save(sensitive);
+			bean = beanMng.save(bean);
 		}else{
-			sensitive = sensitiveMng.update(sensitive);
+			bean = beanMng.update(bean);
 		}
-		return new Result(sensitive);
+		return new Result(bean);
 	
 	}
 	
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result removeSensitive(String token, Long[] ids) {
-		sensitiveMng.delete(ids);
+	public Result removebean(String token, Long[] ids) {
+		beanMng.delete(ids);
 		return new Result(true);
 	}
 }
