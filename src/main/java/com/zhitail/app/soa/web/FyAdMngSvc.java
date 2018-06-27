@@ -1,5 +1,6 @@
 package com.zhitail.app.soa.web;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -60,6 +61,7 @@ public class FyAdMngSvc {
 			if(sid!=null) {
 				bean.setAdSpace(adSpaceMng.findById(sid));
 			}
+			bean.setCreateTime(new Date());
 			bean = beanMng.save(bean);
 		}else{
 			if(sid!=null) {
