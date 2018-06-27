@@ -38,8 +38,7 @@ import com.zhitail.frame.util.service.Result;
 @RequestMapping("/services/FyAdMngSvc")
 @RestController
 public class FyAdMngSvc {
-	@Autowired
-	private LoginManager loginManager;
+	
 	@Autowired
 	private FyAdMng beanMng;
 	@TokenAuth(value="token")
