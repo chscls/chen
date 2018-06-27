@@ -24,10 +24,13 @@ public class  FyAdSpaceMngImpl implements FyAdSpaceMng{
 		Finder finder = Finder.create(" from FyAdSpace bean where 1=1");
 	
 		if(search.getName()!=null){
-			  finder.append(" and bean.name like:word");
-	            finder.setParam("word","%"+search.getName()+"%");
+			  finder.append(" and bean.name like:name");
+	            finder.setParam("name","%"+search.getName()+"%");
 		}
-		
+		if(search.getKeyword()!=null){
+			  finder.append(" and bean.keyword like:keyword");
+	            finder.setParam("keyword","%"+search.getKeyword()+"%");
+		}
 		finder.append(" order by bean.id desc");
 		return sensitiveDao.findPageByFinder(finder, pageNo, pageSize);
 	}

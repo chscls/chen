@@ -1,5 +1,6 @@
 package com.zhitail.app.soa.web;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,7 +53,7 @@ public class FyAdSpaceMngSvc {
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result add( String token,FyAdSpace bean) {
 		if(bean.getId()==null){
-		
+			bean.setCreateTime(new Date());
 			bean = beanMng.save(bean);
 		}else{
 			bean = beanMng.update(bean);
