@@ -44,14 +44,14 @@ public class FySensitiveMngSvc {
 	private FySensitiveMng sensitiveMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
-	public Result querySensitive(String token, Integer pageNo,Integer pageSize,FySensitive search) {
+	public Result query(String token, Integer pageNo,Integer pageSize,FySensitive search) {
 		Pagination<FySensitive> page = sensitiveMng.getPage(pageNo,pageSize,search);
 		return new Result(page);
 	}
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addSensitive( String token,FySensitive sensitive) {
+	public Result add( String token,FySensitive sensitive) {
 		if(sensitive.getId()==null){
 		
 			sensitive = sensitiveMng.save(sensitive);
@@ -65,7 +65,7 @@ public class FySensitiveMngSvc {
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result removeSensitive(String token, Long[] ids) {
+	public Result remove(String token, Long[] ids) {
 		sensitiveMng.delete(ids);
 		return new Result(true);
 	}

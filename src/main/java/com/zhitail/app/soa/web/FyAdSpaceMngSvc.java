@@ -43,14 +43,14 @@ public class FyAdSpaceMngSvc {
 	private FyAdSpaceMng beanMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
-	public Result querybean(String token, Integer pageNo,Integer pageSize,FyAdSpace search) {
+	public Result query(String token, Integer pageNo,Integer pageSize,FyAdSpace search) {
 		Pagination<FyAdSpace> page = beanMng.getPage(pageNo,pageSize,search);
 		return new Result(page);
 	}
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result AdSpacedbean( String token,FyAdSpace bean) {
+	public Result add( String token,FyAdSpace bean) {
 		if(bean.getId()==null){
 		
 			bean = beanMng.save(bean);
@@ -64,7 +64,7 @@ public class FyAdSpaceMngSvc {
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result removebean(String token, Long[] ids) {
+	public Result remove(String token, Long[] ids) {
 		beanMng.delete(ids);
 		return new Result(true);
 	}

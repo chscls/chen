@@ -42,15 +42,15 @@ public class FyAdMngSvc {
 	@Autowired
 	private FyAdMng beanMng;
 	@TokenAuth(value="token")
-	@RequestMapping(value = "/querybean",method=RequestMethod.GET)
-	public Result querybean(String token, Integer pageNo,Integer pageSize,FyAd search) {
+	@RequestMapping(value = "/query",method=RequestMethod.GET)
+	public Result query(String token, Integer pageNo,Integer pageSize,FyAd search) {
 		Pagination<FyAd> page = beanMng.getPage(pageNo,pageSize,search);
 		return new Result(page);
 	}
 	
 	@TokenAuth(value="token")
-	@RequestMapping(value = "/addbean", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result addbean( String token,FyAd bean) {
+	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result add( String token,FyAd bean) {
 		if(bean.getId()==null){
 		
 			bean = beanMng.save(bean);
@@ -63,8 +63,8 @@ public class FyAdMngSvc {
 	
 	
 	@TokenAuth(value="token")
-	@RequestMapping(value = "/removebean", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result removebean(String token, Long[] ids) {
+	@RequestMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result remove(String token, Long[] ids) {
 		beanMng.delete(ids);
 		return new Result(true);
 	}
