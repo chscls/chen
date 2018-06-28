@@ -19,6 +19,20 @@ public class FyAdSpace {
 	private String keyword;
 	private String name;
 	private Date createTime;
+	private Integer width;
+	private Integer height;
+	public Integer getWidth() {
+		return width;
+	}
+	public void setWidth(Integer width) {
+		this.width = width;
+	}
+	public Integer getHeight() {
+		return height;
+	}
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
 	public Long getId() {
 		return id;
 	}
