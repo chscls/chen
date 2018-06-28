@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,11 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Component
-public class NewFileRepository {
-
-	public String storeByExt(String basePath,String keyword, String ext, MultipartFile file)
+public class FileRepository {
+	 @Value("${com.zhitail.upload.basePath}")
+	    private String basePath;
+	 @Value("${com.zhitail.upload.path}")
+	 private String path;
+	public String storeByExt(String ext, MultipartFile file)
 			throws IOException {
-			String filename = UploadUtils.generateFilename(keyword, ext);
+			String filename = UploadUtils.generateFilename(path, ext);
 			File root=new File(basePath);
 			UploadUtils.checkDirAndCreate(root);
 			String destPath=root.getAbsolutePath()+filename;
@@ -38,9 +42,6 @@ public class NewFileRepository {
 		}
 	}
 
-	private String getKeyWord(String path){
-		return path.split("/")[0];
-		
-	}
+
 }
 

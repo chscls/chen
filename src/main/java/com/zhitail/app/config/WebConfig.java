@@ -3,7 +3,7 @@ package com.zhitail.app.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhitail.frame.common.upload.FileWebUploader;
+
 
 import org.apache.catalina.connector.Connector;
 import org.apache.commons.lang3.StringUtils;
@@ -58,7 +58,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	
 
 	
-		String x = env.getProperty("com.zhiyong.resourcePathMap");
+		String x = env.getProperty("com.zhitail.upload.resourcePathMap");
 	
 		if(!StringUtils.isBlank(x)){
 			String[] xx=x.split(",");
@@ -97,13 +97,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	    converters.add(responseBodyConverter());
 	}
 	
-	@Bean(name="fileWebUploader")
-	 public FileWebUploader getFileWebUploader(){
-		FileWebUploader fileWebUploader=new FileWebUploader();
-		 return fileWebUploader;
-	 }
-	
-	
+
 
 	
 	
