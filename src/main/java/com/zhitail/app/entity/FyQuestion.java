@@ -34,6 +34,13 @@ public class FyQuestion {
 	private String title;
 	@Lob
 	private String analysis;
+	private Boolean hasImg=false;
+	public Boolean getHasImg() {
+		return hasImg;
+	}
+	public void setHasImg(Boolean hasImg) {
+		this.hasImg = hasImg;
+	}
 	public String getAnalysis() {
 		return analysis;
 	}

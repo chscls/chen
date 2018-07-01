@@ -71,10 +71,11 @@ public class FyQuestionMngSvc {
 		if (!loginManager.verify(token)) {
 			return new Result(HttpStatus.UNAUTHORIZED);
 		}
-		FyQuestion q =  questionMng.findById(id);
+		FyQuestion q = questionMng.findById(id);
 		q.setId(id);
 		q.setIsQuestionnaire(isQuestionnaire);
 		q.setJson(options);
+		q.setHasImg(options.contains("<img") || options.contains("<IMG"));
 		q.setStatus(Status.complete);
 		q = questionMng.update(q, true);
 		return new Result(q);
@@ -87,6 +88,12 @@ public class FyQuestionMngSvc {
 			return new Result(HttpStatus.UNAUTHORIZED);
 		}
 		question.setTagsJson(tags != null ? JSONArray.toJSONString(tags) : null);
+		if (question.getIsRich() && question.getIsAnalysisRich()) {
+			question.setHasImg(false);
+		} else {
+			question.setHasImg(question.getTitle().contains("<img") || question.getTitle().contains("<IMG")
+					|| question.getAnalysis().contains("<IMG") || question.getAnalysis().contains("<IMG"));
+		}
 		if (question.getId() == null) {
 			FyUser u = userMng.findByUserName(loginManager.getUser(token));
 			Long count = questionMng.getCount(u.getId(), null);
@@ -99,7 +106,7 @@ public class FyQuestionMngSvc {
 			question.setJson((new JSONArray()).toJSONString());
 			question = questionMng.save(question, u);
 		} else {
-			question= questionMng.update(question,true);
+			question = questionMng.update(question, true);
 		}
 		return new Result(question);
 
