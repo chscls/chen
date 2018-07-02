@@ -52,8 +52,11 @@ spring:
     host: localhost
     password: chenerping
 com:
-  zhiyong:
-    resourcePathMap: /**->classpath:/static/,/u/**->D:/mooc3/rs200/u/
+  zhitail:
+    upload: 
+       resourcePathMap: /**->classpath:/static/,/u/**->d:/msms/u/
+       basePath: d:/msms
+       path: /u
 server:
   port: 52000
 eureka:

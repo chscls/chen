@@ -193,6 +193,22 @@ public class FyQuestion {
 	public void setDifficulty(Integer difficulty) {
 		this.difficulty = difficulty;
 	}
+	public void fullImg(String imgServer) {
+		// TODO Auto-generated method stub
+		if(this.getIsRich()!=null&&this.getIsRich()) {
+			this.title=this.title.replace("<img src=\"", "<img src=\""+imgServer);
+		}
+		if(this.getIsAnalysisRich()!=null&&this.getIsAnalysisRich()) {
+			this.analysis=this.analysis.replaceAll("<img src=\"", "<img src=\""+imgServer);
+		}
+		List<FyQuestionItem> items = this.getItems();
+		for(FyQuestionItem item:items) {
+			if(item.getIsRich()!=null&&item.getIsRich()) {
+				item.fullImg(imgServer);
+			}
+		}
+		this.json = JSONArray.toJSONString(items);
+	}
 	
 	
 }

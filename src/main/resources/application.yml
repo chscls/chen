@@ -64,6 +64,7 @@ com:
        resourcePathMap: /**->classpath:/static/,/u/**->d:/ptd/u/
        basePath: d:/ptd
        path: /u
+       imgServer: http://localhost:52000
 
 eureka:
   server:

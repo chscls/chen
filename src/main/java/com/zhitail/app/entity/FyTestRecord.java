@@ -227,5 +227,16 @@ public class FyTestRecord {
 		// TODO Auto-generated method stub
 		
 	}*/
+	public void fullImg(String imgServer) {
+		// TODO Auto-generated method stub
+		if(this.getQuestions()!=null) {
+			List<FyQuestion> list = this.getQuestions();
+			for(FyQuestion fq:list) {
+				fq.fullImg(imgServer);
+				
+			}
+			this.version.setJson(JSONArray.toJSONString(list));
+		}
+	}
 	
 }

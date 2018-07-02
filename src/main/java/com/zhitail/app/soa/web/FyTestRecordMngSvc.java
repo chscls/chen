@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,9 @@ import com.zhitail.frame.util.service.Result;
 @RequestMapping("/services/FyTestRecordMngSvc")
 @RestController
 public class FyTestRecordMngSvc {
+	 @Value("${com.zhitail.upload.imgServer}")
+    private String imgServer;
+	
 	@Autowired
 	private LoginManager loginManager;
 	@Autowired
@@ -60,6 +64,7 @@ public class FyTestRecordMngSvc {
 		
 		FyTestRecord testRecord = testRecordMng.makeScore(id,jo);
 		testRecord.setUser(userMng.findById(testRecord.getUserId()));
+		
 		return new Result(testRecord);
 	}
 	@TokenAuth(value = "token")
@@ -67,6 +72,7 @@ public class FyTestRecordMngSvc {
 	public Result findQuestion(String token, Long id) {
 		FyTestRecord testRecord = testRecordMng.findById(id);
 		testRecord.setUser(userMng.findById(testRecord.getUserId()));
+		testRecord.fullImg(token);
 		return new Result(testRecord);
 	}
 	@TokenAuth(value = "token")

@@ -81,7 +81,7 @@ public class Application {
 	    }  
 	 
 	 
-	 @Bean
+	@Bean
 	  public EmbeddedServletContainerFactory servletContainer() {
 	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
 	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http

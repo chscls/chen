@@ -40,5 +40,11 @@ public class FyQuestionItem {
 	public void setContent(java.lang.String content) {
 		this.content = content;
 	}
+	public void fullImg(String imgServer) {
+		// TODO Auto-generated method stub
+		if(this.getIsRich()!=null&&this.getIsRich()) {
+			this.content=this.content.replaceAll("<img src=\"", "<img src=\""+imgServer);
+		}
+	}
 
 }

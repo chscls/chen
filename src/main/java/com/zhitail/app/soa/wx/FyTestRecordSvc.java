@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +47,9 @@ import freemarker.template.Template;
 @RequestMapping("/services/FyTestRecordSvc")
 @RestController
 public class FyTestRecordSvc {
+	 @Value("${com.zhitail.upload.imgServer}")
+    private String imgServer;
+
 	@Autowired
 	private LoginManager loginManager;
 	@Autowired
@@ -126,7 +130,7 @@ public class FyTestRecordSvc {
 	public Result addTestRecord(String token,Long id,Long recordId) {
 		FyUser u=userMng.findByUserName(loginManager.getUser(token));
 		FyTestRecord r = testRecordMng.addTestRecord(u.getId(),id,recordId);
-		
+		r.fullImg(imgServer);
 		//r.full();
 		return new Result(r );	
 	}

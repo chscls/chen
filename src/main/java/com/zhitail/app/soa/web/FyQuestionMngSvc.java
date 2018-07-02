@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ import com.zhitail.frame.util.service.Result;
 @RequestMapping("/services/FyQuestionMngSvc")
 @RestController
 public class FyQuestionMngSvc {
+	 @Value("${com.zhitail.upload.imgServer}")
+	 private String imgServer;
+
 	@Autowired
 	private LoginManager loginManager;
 	@Autowired
@@ -37,6 +41,7 @@ public class FyQuestionMngSvc {
 	@RequestMapping(value = "/findQuestion", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
 		FyQuestion question = questionMng.findById(id);
+		question.fullImg(imgServer);
 		return new Result(question);
 	}
 
@@ -50,6 +55,9 @@ public class FyQuestionMngSvc {
 		FyUser u = userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyQuestion> page = questionMng.getPage(sorter, alreadyIds, pageNo, pageSize, u.getId(), title, type,
 				difficulty, status, tag);
+		for(FyQuestion q:page.getList()) {
+			q.fullImg(imgServer);
+		}
 		return new Result(page);
 	}
 
@@ -62,6 +70,9 @@ public class FyQuestionMngSvc {
 		}
 		FyUser u = userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyQuestion> page = questionMng.getRecyclePage(sorter, pageNo, pageSize, u.getId(), title, tag);
+		for(FyQuestion q:page.getList()) {
+			q.fullImg(imgServer);
+		}
 		return new Result(page);
 	}
 
@@ -78,6 +89,7 @@ public class FyQuestionMngSvc {
 		q.setHasImg(options.contains("<img") || options.contains("<IMG"));
 		q.setStatus(Status.complete);
 		q = questionMng.update(q, true);
+		q.fullImg(imgServer);
 		return new Result(q);
 	}
 
@@ -107,6 +119,8 @@ public class FyQuestionMngSvc {
 		} else {
 			question = questionMng.update(question, true);
 		}
+		
+		question.fullImg(imgServer);
 		return new Result(question);
 
 	}
