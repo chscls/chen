@@ -16,6 +16,8 @@ import javax.persistence.Transient;
 import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.middle.FyQuestionItem;
+import com.zhitail.app.entity.middle.QuestionConfig;
+import com.zhitail.app.entity.middle.SubQuestionConfig;
 @Entity
 @Table(name = "fy_question")
 public class FyQuestion {
@@ -189,6 +191,17 @@ public class FyQuestion {
 	}
 	public Integer getDifficulty() {
 		return difficulty;
+	}
+	@JsonIgnore
+	@Lob
+	private String subQuestionJson;
+	public List<SubQuestionConfig> getSubQuestionConfigs() {
+		if(subQuestionJson!=null){
+			
+			return JSONArray.parseArray(subQuestionJson,SubQuestionConfig.class);
+			}else{
+				return new ArrayList<SubQuestionConfig>(0);
+			}
 	}
 	public void setDifficulty(Integer difficulty) {
 		this.difficulty = difficulty;
