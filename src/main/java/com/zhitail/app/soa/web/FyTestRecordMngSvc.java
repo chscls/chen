@@ -181,6 +181,7 @@ if(list.size()>0) {
 			if(map2.containsKey(s.getUserId())) {
 				s.setFriend(map2.get(s.getUserId()));
 			}
+			s.fullImg(imgServer);
 		}
 		return new Result(page);
 

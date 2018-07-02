@@ -57,6 +57,7 @@ com:
        resourcePathMap: /**->classpath:/static/,/u/**->d:/msms/u/
        basePath: d:/msms
        path: /u
+       imgServer: https://www.zymoocs.com/ptd
 server:
   port: 52000
 eureka:
