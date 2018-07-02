@@ -41,7 +41,7 @@ import com.zhitail.test.SnowflakeIdWorker;
 
 @SpringBootApplication
 @ServletComponentScan
-@EnableEurekaClient
+//@EnableEurekaClient
 @EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
 @EnableScheduling
 public class Application {
@@ -81,7 +81,7 @@ public class Application {
 	    }  
 	 
 	 
-	//@Bean
+	@Bean
 	  public EmbeddedServletContainerFactory servletContainer() {
 	        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
 	        tomcat.addAdditionalTomcatConnectors(createSslConnector()); // 添加http
