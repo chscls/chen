@@ -72,7 +72,7 @@ public class FyTestRecordMngSvc {
 	public Result findQuestion(String token, Long id) {
 		FyTestRecord testRecord = testRecordMng.findById(id);
 		testRecord.setUser(userMng.findById(testRecord.getUserId()));
-		testRecord.fullImg(token);
+		testRecord.fullImg(imgServer);
 		return new Result(testRecord);
 	}
 	@TokenAuth(value = "token")
