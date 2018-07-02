@@ -91,8 +91,7 @@ public class FyQuestionMngSvc {
 		if (question.getIsRich() && question.getIsAnalysisRich()) {
 			question.setHasImg(false);
 		} else {
-			question.setHasImg(question.getTitle().contains("<img") || question.getTitle().contains("<IMG")
-					|| question.getAnalysis().contains("<IMG") || question.getAnalysis().contains("<IMG"));
+			question.setHasImg(question.getTitle().contains("<img src=\"/u") || question.getAnalysis().contains("<img src=\"/u"));
 		}
 		if (question.getId() == null) {
 			FyUser u = userMng.findByUserName(loginManager.getUser(token));
