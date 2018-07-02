@@ -2,7 +2,9 @@ package com.zhitail.app.manager.Impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +24,7 @@ import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.entity.middle.QuestionUser;
+import com.zhitail.app.entity.middle.SubQuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyUserMng;
@@ -280,6 +283,36 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 				this.delete(list.toArray(new Long[list.size()]), user);
 			}
 		}
+	}
+	@Override
+	public void fullQuestions(FyQuestion question) {
+		// TODO Auto-generated method stub
+		FyQuestion temp;
+		List<SubQuestionConfig> ids = question.getSubQuestionConfigs();
+		if (ids.size() > 0) {
+			Long[] qids = new Long[ids.size()];
+			for (int i = 0; i < ids.size(); i++) {
+				qids[i] = ids.get(i).getId();
+			}
+			List<FyQuestion> qs = findByIds(qids);
+			Map<Long, FyQuestion> map = new HashMap<Long, FyQuestion>(qs.size());
+			for (FyQuestion q : qs) {
+				map.put(q.getId(), q);
+			}
+			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+			for (SubQuestionConfig config : ids) {
+				if (map.containsKey(config.getId())) {
+					temp = map.get(config.getId());
+					temp.setRate(config.getRate());
+					fqs.add(temp);
+				}
+			}
+			question.setSubQuestions(fqs);
+
+		} else {
+			question.setSubQuestions(new ArrayList<FyQuestion>());
+		}
+
 	}
 
 }

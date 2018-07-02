@@ -53,6 +53,14 @@ public class FyQuestion {
 	@Transient
 	private Double score;
 	@Transient
+	private Double rate;
+	public Double getRate() {
+		return rate;
+	}
+	public void setRate(Double rate) {
+		this.rate = rate;
+	}
+	@Transient
 	private Double goal;
 	private Boolean isRecycle=false;
 	public Boolean getIsRecycle() {
