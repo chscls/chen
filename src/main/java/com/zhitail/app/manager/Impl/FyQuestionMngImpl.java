@@ -286,6 +286,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 	@Override
 	public void fullQuestions(FyQuestion question) {
+		if(question.getType()==Type.synthesis) {
 		// TODO Auto-generated method stub
 		FyQuestion temp;
 		List<SubQuestionConfig> ids = question.getSubQuestionConfigs();
@@ -313,6 +314,6 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			question.setSubQuestions(new ArrayList<FyQuestion>());
 		}
 
-	}
+	}}
 
 }
