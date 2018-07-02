@@ -5,6 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class FyAnswer {
+	public FyAnswer[] subAnswers;
+	public FyAnswer[] getSubAnswers() {
+		return subAnswers;
+	}
+	public void setSubAnswers(FyAnswer[] subAnswers) {
+		this.subAnswers = subAnswers;
+	}
 	private Integer index;
 	private Double goal;
 	private Boolean isGrade;
