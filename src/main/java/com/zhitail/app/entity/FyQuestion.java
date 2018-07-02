@@ -195,6 +195,14 @@ public class FyQuestion {
 	@JsonIgnore
 	@Lob
 	private String subQuestionJson;
+	@Transient
+	private List<FyQuestion> subQuestions;
+	public List<FyQuestion> getSubQuestions() {
+		return subQuestions;
+	}
+	public void setSubQuestions(List<FyQuestion> subQuestions) {
+		this.subQuestions = subQuestions;
+	}
 	public List<SubQuestionConfig> getSubQuestionConfigs() {
 		if(subQuestionJson!=null){
 			
