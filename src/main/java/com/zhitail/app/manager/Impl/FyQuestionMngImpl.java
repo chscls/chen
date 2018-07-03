@@ -315,5 +315,37 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		}
 
 	}}
+	@Override
+	public FyQuestion updateQuestionQuestions(Long id, Long[] qids, Double rate) {
+		// TODO Auto-generated method stub
+		FyQuestion t = this.findById(id);
+		List<SubQuestionConfig> list;
+		// TODO Auto-generated method stub
+		if (rate == null) {
+			rate= 1.0/qids.length;
+	
+		     list = new ArrayList<SubQuestionConfig>();
+		   for (Long qid : qids) {
+			  if (qid != null) {
+				  SubQuestionConfig qc = new SubQuestionConfig(qid, rate);
+				list.add(qc);
+			  }
+		   }
+		}else {
+			list = t.getSubQuestionConfigs();
+			 for (Long qid : qids) {
+				  if (qid != null) {
+					  SubQuestionConfig qc = new SubQuestionConfig(qid, rate);
+					int x  = list.indexOf(qc);
+					list.set(x, qc);
+				  }
+			 }
+		}
+		
+		
+		t.setSubQuestionJson(JSONArray.toJSONString(list));
+		
+		return update(t,true);
+	}
 
 }

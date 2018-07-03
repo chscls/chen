@@ -21,6 +21,12 @@ import com.zhitail.app.entity.middle.SubQuestionConfig;
 @Entity
 @Table(name = "fy_question")
 public class FyQuestion {
+	public String getSubQuestionJson() {
+		return subQuestionJson;
+	}
+	public void setSubQuestionJson(String subQuestionJson) {
+		this.subQuestionJson = subQuestionJson;
+	}
 	public enum Type{
 		single,mutiply,judge,fill,ask,synthesis
 	}

@@ -35,4 +35,6 @@ public interface FyQuestionMng {
 
 	public Long getCount(Long userId, Boolean isRecycle);
 
+	public FyQuestion updateQuestionQuestions(Long id, Long[] qids,Double rate);
+
 }

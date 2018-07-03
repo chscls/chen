@@ -36,12 +36,23 @@ public class FyQuestionMngSvc {
 	private FyQuestionMng questionMng;
 	@Autowired
 	private FyUserMng userMng;
-
+	@TokenAuth(value = "token")
+	@RequestMapping(value = "/updateQuestionQuestions", method = RequestMethod.GET)
+	public Result updateQuestionQuestions(String token, Long id,Long[] qids,Double rate) {
+		
+		
+		FyQuestion question = questionMng.updateQuestionQuestions(id, qids,rate);
+		question.fullImg(imgServer);
+		questionMng.fullQuestions(question);
+		return new Result(question);
+	}
+	
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/findQuestion", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
 		FyQuestion question = questionMng.findById(id);
 		question.fullImg(imgServer);
+		questionMng.fullQuestions(question);
 		return new Result(question);
 	}
 
@@ -90,6 +101,7 @@ public class FyQuestionMngSvc {
 		q.setStatus(Status.complete);
 		q = questionMng.update(q, true);
 		q.fullImg(imgServer);
+		questionMng.fullQuestions(q);
 		return new Result(q);
 	}
 
@@ -121,6 +133,7 @@ public class FyQuestionMngSvc {
 		}
 		
 		question.fullImg(imgServer);
+		questionMng.fullQuestions(question);
 		return new Result(question);
 
 	}
