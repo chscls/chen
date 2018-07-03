@@ -37,7 +37,7 @@ public class FyQuestionMngSvc {
 	@Autowired
 	private FyUserMng userMng;
 	@TokenAuth(value = "token")
-	@RequestMapping(value = "/updateQuestionQuestions", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateQuestionQuestions", method = RequestMethod.POST)
 	public Result updateQuestionQuestions(String token, Long id,Long[] qids,Double rate) {
 		
 		
