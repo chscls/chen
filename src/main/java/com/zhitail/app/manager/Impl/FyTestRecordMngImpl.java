@@ -210,7 +210,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			for(QuestionConfig qc:qcs) {
 				score+=qc.getScore();
 			}
-			
+			vr.setSkin(t.getSkin());
 			vr.setCode(t.getCode());
 			vr.setIsNoOrder(t.getIsNoOrder());
 			vr.setIsQuestionnaire(t.getIsQuestionnaire());
