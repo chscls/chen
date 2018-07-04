@@ -34,6 +34,7 @@ import com.zhitail.app.manager.FyTestRecordMng;
 import com.zhitail.app.manager.FyTestVersionMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.app.soa.PublicComponent;
 import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
@@ -56,6 +57,8 @@ public class FyTestRecordMngSvc {
 	private FyFriendMng friendMng;
 	@Autowired
 	private FyTestVersionMng versionMng;
+	@Autowired
+	private PublicComponent pc;
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/makeScore", method = RequestMethod.POST)
 	public Result makeScore(String token, Long id,String scores) {
@@ -111,7 +114,7 @@ if(list.size()>0) {
 			FyTest ft = 	testMng.findByCode(code);
 			
 			if(ft!=null) {
-				testMng.fullQuestions(ft);
+				pc.fullQuestions(ft);
 				FyTestRecordStatistics fs=new FyTestRecordStatistics (ft);
 				double score=0.0;
 				for(QuestionConfig qc:ft.getQuestionConfigs()) {

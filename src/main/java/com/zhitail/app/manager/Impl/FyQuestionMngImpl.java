@@ -42,7 +42,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-
+	
 	public void delete(Long[] ids, FyUser user) {
 		// TODO Auto-generated method stub
 

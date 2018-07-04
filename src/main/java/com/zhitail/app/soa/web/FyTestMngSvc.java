@@ -37,6 +37,7 @@ import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
+import com.zhitail.app.soa.PublicComponent;
 import com.zhitail.frame.common.annotion.TokenAuth;
 import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
@@ -59,7 +60,8 @@ public class FyTestMngSvc {
 	@Autowired
 	private FyTestRecordMng  testRecordMng;
 
-	
+	@Autowired
+	private PublicComponent pc;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/findTest",method=RequestMethod.GET)
 	public Result findQuestion(String token,Long id) {
@@ -67,7 +69,7 @@ public class FyTestMngSvc {
 			return  new Result(HttpStatus.UNAUTHORIZED);
 		}
 		FyTest test= testMng.findById(id);
-		testMng.fullQuestions(test);
+		pc.fullQuestions(test);
 		return new Result(test);
 	}
 	@TokenAuth(value="token")
@@ -103,7 +105,7 @@ public class FyTestMngSvc {
 			test.refreshCode();
 			test= testMng.update(test);
 		}
-		testMng.fullQuestions(test);
+		pc.fullQuestions(test);
 		return new Result(test);
 	}
 	@TokenAuth(value="token")
@@ -116,7 +118,7 @@ public class FyTestMngSvc {
 		}
 		
 		FyTest t  = testMng.updateTestQuestions(id,s,score);
-		testMng.fullQuestions(t);
+		pc.fullQuestions(t);
 		return new Result(t);	
 	}
 	

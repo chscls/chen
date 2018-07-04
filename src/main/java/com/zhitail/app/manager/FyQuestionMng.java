@@ -10,7 +10,7 @@ import com.zhitail.app.entity.FyUser;
 import com.zhitail.frame.util.page.Pagination;
 
 public interface FyQuestionMng {
-
+	
 	
 	public void delete(Long[] ids,FyUser user);
 

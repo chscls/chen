@@ -34,6 +34,7 @@ import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FyTestMng;
 import com.zhitail.app.manager.FyTestRecordMng;
 import com.zhitail.app.manager.FyTestVersionMng;
+import com.zhitail.app.soa.PublicComponent;
 import com.zhitail.frame.util.hibernate.Finder;
 import com.zhitail.frame.util.hibernate.Updater;
 import com.zhitail.frame.util.page.Pagination;
@@ -47,6 +48,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 	private FyTestVersionDao testVersionDao;
 	@Autowired
 	private FyTestMng testMng;
+	
+	@Autowired
+	private PublicComponent pc;
 	
 	@Autowired
 	private FyTestVersionMng versionMng;
@@ -218,7 +222,7 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			vr.setOrgId(t.getId());
 			vr.setScore(score);
 			vr.setUpdateTime(t.getUpdateTime());
-			testMng.fullQuestions(t);
+			pc.fullQuestions(t);
 			vr.setRate(computeRate(score,t.getQuestions()));
 			vr.setJson(JSONArray.toJSONString(t.getQuestions()));
 			vr = versionMng.save(vr);

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ import com.zhitail.frame.util.page.Pagination;
 @Service
 @Transactional
 public class FyTestMngImpl implements FyTestMng {
+	
 	@Autowired
 	private FyTestDao testDao;
 	@Autowired
@@ -107,34 +109,7 @@ public class FyTestMngImpl implements FyTestMng {
 		return testDao.findListByFinder(finder);
 	}
 
-	public void fullQuestions(FyTest test) {
-		FyQuestion temp;
-		List<QuestionConfig> ids = test.getQuestionConfigs();
-		if (ids.size() > 0) {
-			Long[] qids = new Long[ids.size()];
-			for (int i = 0; i < ids.size(); i++) {
-				qids[i] = ids.get(i).getId();
-			}
-			List<FyQuestion> qs = questionMng.findByIds(qids);
-			Map<Long, FyQuestion> map = new HashMap<Long, FyQuestion>(qs.size());
-			for (FyQuestion q : qs) {
-				map.put(q.getId(), q);
-			}
-			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
-			for (QuestionConfig config : ids) {
-				if (map.containsKey(config.getId())) {
-					temp = map.get(config.getId());
-					temp.setScore(config.getScore());
-					fqs.add(temp);
-				}
-			}
-			test.setQuestions(fqs);
-
-		} else {
-			test.setQuestions(new ArrayList<FyQuestion>());
-		}
-
-	}
+	
 
 	@Override
 	public List<FyTest> getList(Integer start, Integer count, FyTest search) {

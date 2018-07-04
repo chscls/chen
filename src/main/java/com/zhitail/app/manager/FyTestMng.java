@@ -8,8 +8,7 @@ import com.zhitail.frame.util.page.Pagination;
 import com.zhitail.frame.util.service.Result;
 
 public interface FyTestMng {
-	public  void fullQuestions(FyTest test) ;
-	
+
 
 	public FyTest update(FyTest test);
 
