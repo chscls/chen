@@ -51,6 +51,13 @@ public class FyTest {
 	}
 	private Boolean isQuestionnaire=false;
 	private Boolean isNoOrder=false;
+	private String skin;
+	public String getSkin() {
+		return skin;
+	}
+	public void setSkin(String skin) {
+		this.skin = skin;
+	}
 	public Boolean getIsNoOrder() {
 		return isNoOrder;
 	}

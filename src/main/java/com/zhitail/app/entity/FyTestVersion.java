@@ -39,7 +39,13 @@ public class FyTestVersion {
 	private Long teaId;
 	private Long orgId;
 	private Double rate;
-
+	private String skin;
+	public String getSkin() {
+		return skin;
+	}
+	public void setSkin(String skin) {
+		this.skin = skin;
+	}
 	public Double getRate() {
 		return rate;
 	}
