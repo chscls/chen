@@ -42,7 +42,7 @@ public class FyQuestionItem {
 	}
 	public void fullImg(String imgServer) {
 		// TODO Auto-generated method stub
-		if(this.getIsRich()!=null&&this.getIsRich()) {
+		if(this.getIsRich()!=null&&this.getIsRich()&&!this.content.contains("http")) {
 			this.content=this.content.replaceAll("<img src=\"", "<img src=\""+imgServer);
 		}
 	}

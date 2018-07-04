@@ -111,8 +111,10 @@ public class FyQuestionMngSvc {
 		Pagination<FyQuestion> page = questionMng.getPage(sorter, alreadyIds, pageNo, pageSize, u.getId(), title, type,
 				difficulty, status, tag);
 		for(FyQuestion q:page.getList()) {
+			
 			fullQuestions(q);
 			q.fullImg(imgServer);
+			
 			
 		}
 		return new Result(page);

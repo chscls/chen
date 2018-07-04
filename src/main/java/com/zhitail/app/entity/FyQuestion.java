@@ -289,10 +289,10 @@ public class FyQuestion {
 
 	public void fullImg(String imgServer) {
 		// TODO Auto-generated method stub
-		if (this.getIsRich() != null && this.getIsRich()) {
+		if (this.getIsRich() != null && this.getIsRich()&&!this.title.contains("http")) {
 			this.title = this.title.replace("<img src=\"", "<img src=\"" + imgServer);
 		}
-		if (this.getIsAnalysisRich() != null && this.getIsAnalysisRich()) {
+		if (this.getIsAnalysisRich() != null && this.getIsAnalysisRich()&&!this.analysis.contains("http")) {
 			this.analysis = this.analysis.replaceAll("<img src=\"", "<img src=\"" + imgServer);
 		}
 		if (this.type == Type.synthesis) {
