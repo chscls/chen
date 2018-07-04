@@ -285,37 +285,8 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			}
 		}
 	}
-	@Override
-	public void fullQuestions(FyQuestion question) {
-		if(question.getType()==Type.synthesis) {
-		// TODO Auto-generated method stub
-		FyQuestion temp;
-		List<SubQuestionConfig> ids = question.getSubQuestionConfigs();
-		if (ids.size() > 0) {
-			Long[] qids = new Long[ids.size()];
-			for (int i = 0; i < ids.size(); i++) {
-				qids[i] = ids.get(i).getId();
-			}
-			List<FyQuestion> qs = findByIds(qids);
-			Map<Long, FyQuestion> map = new HashMap<Long, FyQuestion>(qs.size());
-			for (FyQuestion q : qs) {
-				map.put(q.getId(), q);
-			}
-			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
-			for (SubQuestionConfig config : ids) {
-				if (map.containsKey(config.getId())) {
-					temp = map.get(config.getId());
-					temp.setRate(config.getRate());
-					fqs.add(temp);
-				}
-			}
-			question.setSubQuestions(fqs);
-
-		} else {
-			question.setSubQuestions(new ArrayList<FyQuestion>());
-		}
-
-	}}
+	
+	
 	@Override
 	public FyQuestion updateQuestionQuestions(Long id, Set<Long> qids, Double rate) {
 		// TODO Auto-generated method stub

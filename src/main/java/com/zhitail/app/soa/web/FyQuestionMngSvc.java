@@ -1,7 +1,11 @@
 package com.zhitail.app.soa.web;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
@@ -18,6 +22,8 @@ import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FySensitive;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.FyQuestion.Status;
+import com.zhitail.app.entity.FyQuestion.Type;
+import com.zhitail.app.entity.middle.SubQuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
 import com.zhitail.app.manager.FySensitiveMng;
 import com.zhitail.app.manager.FyUserMng;
@@ -38,6 +44,37 @@ public class FyQuestionMngSvc {
 	private FyQuestionMng questionMng;
 	@Autowired
 	private FyUserMng userMng;
+	
+	public void fullQuestions(FyQuestion question) {
+		if(question.getType()==Type.synthesis) {
+		// TODO Auto-generated method stub
+		FyQuestion temp;
+		List<SubQuestionConfig> ids = question.getSubQuestionConfigs();
+		if (ids.size() > 0) {
+			Long[] qids = new Long[ids.size()];
+			for (int i = 0; i < ids.size(); i++) {
+				qids[i] = ids.get(i).getId();
+			}
+			List<FyQuestion> qs = questionMng.findByIds(qids);
+			Map<Long, FyQuestion> map = new HashMap<Long, FyQuestion>(qs.size());
+			for (FyQuestion q : qs) {
+				map.put(q.getId(), q);
+			}
+			List<FyQuestion> fqs = new ArrayList<FyQuestion>();
+			for (SubQuestionConfig config : ids) {
+				if (map.containsKey(config.getId())) {
+					temp = map.get(config.getId());
+					temp.setRate(config.getRate());
+					fqs.add(temp);
+				}
+			}
+			question.setSubQuestions(fqs);
+
+		} else {
+			question.setSubQuestions(new ArrayList<FyQuestion>());
+		}
+
+	}}
 	@TokenAuth(value = "token")
 	@RequestMapping(value = "/updateQuestionQuestions", method = RequestMethod.POST)
 	public Result updateQuestionQuestions(String token, Long id,Long[] qids,Double rate) {
@@ -49,7 +86,7 @@ public class FyQuestionMngSvc {
 	
 		FyQuestion question = questionMng.updateQuestionQuestions(id, s,rate);
 		question.fullImg(imgServer);
-		questionMng.fullQuestions(question);
+		fullQuestions(question);
 		return new Result(question);
 	}
 	
@@ -57,7 +94,7 @@ public class FyQuestionMngSvc {
 	@RequestMapping(value = "/findQuestion", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
 		FyQuestion question = questionMng.findById(id);
-		questionMng.fullQuestions(question);
+		fullQuestions(question);
 		question.fullImg(imgServer);
 		
 		return new Result(question);
@@ -74,7 +111,9 @@ public class FyQuestionMngSvc {
 		Pagination<FyQuestion> page = questionMng.getPage(sorter, alreadyIds, pageNo, pageSize, u.getId(), title, type,
 				difficulty, status, tag);
 		for(FyQuestion q:page.getList()) {
+			fullQuestions(q);
 			q.fullImg(imgServer);
+			
 		}
 		return new Result(page);
 	}
@@ -89,7 +128,9 @@ public class FyQuestionMngSvc {
 		FyUser u = userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyQuestion> page = questionMng.getRecyclePage(sorter, pageNo, pageSize, u.getId(), title, tag);
 		for(FyQuestion q:page.getList()) {
+			fullQuestions(q);
 			q.fullImg(imgServer);
+			
 		}
 		return new Result(page);
 	}
@@ -108,7 +149,7 @@ public class FyQuestionMngSvc {
 		q.setStatus(Status.complete);
 		q = questionMng.update(q, true);
 		q.fullImg(imgServer);
-		questionMng.fullQuestions(q);
+		fullQuestions(q);
 		return new Result(q);
 	}
 
@@ -140,7 +181,7 @@ public class FyQuestionMngSvc {
 		}
 		
 		question.fullImg(imgServer);
-		questionMng.fullQuestions(question);
+		fullQuestions(question);
 		return new Result(question);
 
 	}

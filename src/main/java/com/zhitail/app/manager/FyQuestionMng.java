@@ -11,8 +11,7 @@ import com.zhitail.frame.util.page.Pagination;
 
 public interface FyQuestionMng {
 
-	public  void fullQuestions(FyQuestion question) ;
-
+	
 	public void delete(Long[] ids,FyUser user);
 
 	public FyQuestion update(FyQuestion question, Boolean isChange);
