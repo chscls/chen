@@ -51,8 +51,9 @@ public class FyQuestionMngSvc {
 	@RequestMapping(value = "/findQuestion", method = RequestMethod.GET)
 	public Result findQuestion(String token, Long id) {
 		FyQuestion question = questionMng.findById(id);
-		question.fullImg(imgServer);
 		questionMng.fullQuestions(question);
+		question.fullImg(imgServer);
+		
 		return new Result(question);
 	}
 
