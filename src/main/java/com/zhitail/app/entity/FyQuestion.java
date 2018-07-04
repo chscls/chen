@@ -296,8 +296,10 @@ public class FyQuestion {
 			this.analysis = this.analysis.replaceAll("<img src=\"", "<img src=\"" + imgServer);
 		}
 		if (this.type == Type.synthesis) {
-			for (FyQuestion q : this.getSubQuestions()) {
-				q.fullImg(imgServer);
+			if (this.getSubQuestions() != null) {
+				for (FyQuestion q : this.getSubQuestions()) {
+					q.fullImg(imgServer);
+				}
 			}
 		} else {
 			List<FyQuestionItem> items = this.getItems();

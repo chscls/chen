@@ -1,6 +1,7 @@
 package com.zhitail.app.manager;
 
 import java.util.List;
+import java.util.Set;
 
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.frame.util.page.Pagination;
@@ -54,6 +55,6 @@ public interface FyTestMng {
 	public void downShopTest(Long[] ids);
 
 
-	FyTest updateTestQuestions(Long id, Long[] qids, Double score);
+	FyTest updateTestQuestions(Long id, Set<Long> qids, Double score);
 
 }

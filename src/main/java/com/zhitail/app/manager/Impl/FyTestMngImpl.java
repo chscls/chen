@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -61,7 +62,7 @@ public class FyTestMngImpl implements FyTestMng {
 	}
 
 	@Override
-	public FyTest updateTestQuestions(Long id, Long[] qids, Double score) {
+	public FyTest updateTestQuestions(Long id, Set<Long> qids, Double score) {
 		FyTest t = testDao.findOne(id);
 		List<QuestionConfig> list;
 		// TODO Auto-generated method stub

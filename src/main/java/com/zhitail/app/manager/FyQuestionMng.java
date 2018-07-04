@@ -1,6 +1,7 @@
 package com.zhitail.app.manager;
 
 import java.util.List;
+import java.util.Set;
 
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FySensitive;
@@ -35,6 +36,6 @@ public interface FyQuestionMng {
 
 	public Long getCount(Long userId, Boolean isRecycle);
 
-	public FyQuestion updateQuestionQuestions(Long id, Long[] qids,Double rate);
+	public FyQuestion updateQuestionQuestions(Long id, Set<Long> qids,Double rate);
 
 }

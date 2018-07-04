@@ -9,8 +9,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -107,7 +109,13 @@ public class FyTestMngSvc {
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/updateTestQuestions", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result updateTestQuestions(String token,Long id, Long[] qids,Double score) {
-		FyTest t  = testMng.updateTestQuestions(id,qids,score);
+		
+		Set<Long> s = new HashSet<Long>(qids.length);
+		for(Long qid:qids) {
+			s.add(qid);
+		}
+		
+		FyTest t  = testMng.updateTestQuestions(id,s,score);
 		testMng.fullQuestions(t);
 		return new Result(t);	
 	}

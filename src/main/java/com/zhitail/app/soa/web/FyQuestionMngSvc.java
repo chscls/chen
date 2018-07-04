@@ -1,6 +1,8 @@
 package com.zhitail.app.soa.web;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,12 @@ public class FyQuestionMngSvc {
 	@RequestMapping(value = "/updateQuestionQuestions", method = RequestMethod.POST)
 	public Result updateQuestionQuestions(String token, Long id,Long[] qids,Double rate) {
 		
-		
-		FyQuestion question = questionMng.updateQuestionQuestions(id, qids,rate);
+		Set<Long> s = new HashSet<Long>(qids.length);
+		for(Long qid:qids) {
+			s.add(qid);
+		}
+	
+		FyQuestion question = questionMng.updateQuestionQuestions(id, s,rate);
 		question.fullImg(imgServer);
 		questionMng.fullQuestions(question);
 		return new Result(question);

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -316,13 +317,13 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 	}}
 	@Override
-	public FyQuestion updateQuestionQuestions(Long id, Long[] qids, Double rate) {
+	public FyQuestion updateQuestionQuestions(Long id, Set<Long> qids, Double rate) {
 		// TODO Auto-generated method stub
 		FyQuestion t = this.findById(id);
 		List<SubQuestionConfig> list;
 		// TODO Auto-generated method stub
 		if (rate == null) {
-			rate= 1.0/qids.length;
+			rate= 1.0/qids.size();
 	
 		     list = new ArrayList<SubQuestionConfig>();
 		   for (Long qid : qids) {
