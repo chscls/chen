@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.zhitail.app.entity.FyQuestion;
+import com.zhitail.app.entity.FyQuestion.Type;
+
 public class FyAnswer {
 	public FyAnswer[] subAnswers;
 	public FyAnswer[] getSubAnswers() {
@@ -73,6 +76,20 @@ public class FyAnswer {
 		// TODO Auto-generated method stub
 		this.orders=ins.toArray(new Integer[length]);
 		this.indexs=new Integer[0];
+	}
+	public void makeOrders(List<FyQuestion> subQuestions) {
+		List<FyAnswer> ans = new ArrayList<FyAnswer>(subQuestions.size());
+		FyAnswer a;
+		for(int i=0;i<subQuestions.size();i++) {
+			a=new FyAnswer(i);
+			if(subQuestions.get(i).getType()==Type.single||subQuestions.get(i).getType()==Type.mutiply||subQuestions.get(i).getType()==Type.judge) {
+				a.makeOrder(subQuestions.get(i).getItems().size());		
+			}
+			ans.add(a);
+		}
+		this.subAnswers = ans.toArray(new FyAnswer[ans.size()]) ;
+		// TODO Auto-generated method stub
+		
 	}
 	
 

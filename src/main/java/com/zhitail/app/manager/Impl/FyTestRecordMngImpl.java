@@ -248,6 +248,9 @@ public class FyTestRecordMngImpl implements FyTestRecordMng {
 			if(qs.get(i).getType()==Type.single||qs.get(i).getType()==Type.mutiply||qs.get(i).getType()==Type.judge) {
 				a.makeOrder(qs.get(i).getItems().size());		
 			}
+			if(qs.get(i).getType()==Type.synthesis) {
+				a.makeOrders(qs.get(i).getSubQuestions());	
+			}
 			ans.add(a);
 		}
 		if(vr.getIsNoOrder()) {
