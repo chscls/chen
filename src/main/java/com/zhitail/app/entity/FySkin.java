@@ -85,7 +85,8 @@ public class FySkin {
 		this.price = price;
 	}
 	public void init() {
-		this.setCode(Application.getSnowflakeIdWorker().nextId()+"");
+		this.createTime=new Date();
+		this.code=Application.getSnowflakeIdWorker().nextId()+"";
 	}
 	
 

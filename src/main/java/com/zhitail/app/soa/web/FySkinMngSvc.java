@@ -53,7 +53,8 @@ public class FySkinMngSvc {
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Result add( String token,FySkin bean) {
 		if(bean.getId()==null){
-			bean.setCreateTime(new Date());
+		
+			bean.init();
 			bean = beanMng.save(bean);
 		}else{
 			bean = beanMng.update(bean);
