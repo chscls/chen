@@ -52,6 +52,20 @@ public class FyTest {
 	private Boolean isQuestionnaire=false;
 	private Boolean isNoOrder=false;
 	private String skin;
+	private Double orgPrice;
+	public Double getOrgPrice() {
+		return orgPrice;
+	}
+	public void setOrgPrice(Double orgPrice) {
+		this.orgPrice = orgPrice;
+	}
+	private Double price;
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 	public String getSkin() {
 		return skin;
 	}

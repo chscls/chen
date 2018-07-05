@@ -24,6 +24,19 @@ public class FyUserSkin {
 	@ManyToOne
 	@JoinColumn(name = "skin_id")
 	private FySkin skin;
+	private Double buyPrice;
+	public FySkin getSkin() {
+		return skin;
+	}
+	public void setSkin(FySkin skin) {
+		this.skin = skin;
+	}
+	public Double getBuyPrice() {
+		return buyPrice;
+	}
+	public void setBuyPrice(Double buyPrice) {
+		this.buyPrice = buyPrice;
+	}
 	private Date buyTime;
 	public Long getId() {
 		return id;

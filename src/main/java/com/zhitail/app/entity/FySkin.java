@@ -24,6 +24,13 @@ public class FySkin {
 	private String name;
 	private String code;
 	private Date createTime;
+	private Double orgPrice;
+	public Double getOrgPrice() {
+		return orgPrice;
+	}
+	public void setOrgPrice(Double orgPrice) {
+		this.orgPrice = orgPrice;
+	}
 	private Double price;
 	private String img;
 	@Lob
