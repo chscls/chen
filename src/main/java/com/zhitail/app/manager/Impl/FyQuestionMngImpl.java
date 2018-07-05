@@ -44,7 +44,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	private FyUserMng userMng;
 
 	public List<FyQuestion> findByQuestionId(Long id) {
-		Finder finder = Finder.create(" from FyTest bean where 1=1");
+		Finder finder = Finder.create(" from FyQuestion bean where 1=1");
 
 		if (id != null) {
 			finder.append(" and bean.subQuestionJson like:id");
@@ -112,6 +112,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 		// TODO Auto-generated method stub
 		Updater u = new Updater(question);
+		question.setUpdateTime(new Date());
 		question = questionDao.updateByUpdater(u);
 		if (isChange != null && isChange) {
 			List<FyTest> list = testMng.findByQuestionId(question.getId());

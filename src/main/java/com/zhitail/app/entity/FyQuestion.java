@@ -153,6 +153,14 @@ public class FyQuestion {
 	public void setType(Type type) {
 		this.type = type;
 	}
+	private Date updateTime;
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
 	private Date createTime;
 
