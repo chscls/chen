@@ -319,6 +319,11 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	public FyQuestion updateQuestionQuestions(Long id, Set<Long> qids, Double rate) {
 		// TODO Auto-generated method stub
 		FyQuestion t = this.findById(id);
+		if(qids.size()==0) {
+			t.setSubQuestionJson(JSONArray.toJSONString(new ArrayList<SubQuestionConfig>()));
+			t.setStatus(Status.create);
+			return update(t, true);
+		}
 		List<SubQuestionConfig> list;
 		// TODO Auto-generated method stub
 		if (rate == null) {
