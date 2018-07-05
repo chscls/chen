@@ -77,9 +77,7 @@ public class FyQuestionMngSvc {
 	@RequestMapping(value = "/queryQuestion", method = RequestMethod.POST)
 	public Result queryQuestion(String token, String sorter, Long[] alreadyIds, Integer pageNo, Integer pageSize,
 			String type, String difficulty, String status, String title, String tag) {
-		if (!loginManager.verify(token)) {
-			return new Result(HttpStatus.UNAUTHORIZED);
-		}
+		
 		FyUser u = userMng.findByUserName(loginManager.getUser(token));
 		Pagination<FyQuestion> page = questionMng.getPage(sorter, alreadyIds, pageNo, pageSize, u.getId(), title, type,
 				difficulty, status, tag);

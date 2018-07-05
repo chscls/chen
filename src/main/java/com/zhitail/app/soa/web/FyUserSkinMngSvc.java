@@ -42,10 +42,15 @@ public class FyUserSkinMngSvc {
 	
 	@Autowired
 	private FyUserSkinMng beanMng;
+	@Autowired
+	private FyUserMng userMng;
+	@Autowired
+	private LoginManager loginManager;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
 	public Result query(String token, Integer pageNo,Integer pageSize,FyUserSkin search,String name,String code) {
-		Pagination<FyUserSkin> page = beanMng.getPage(pageNo,pageSize,search,name,code);
+		FyUser u = userMng.findByUserName(loginManager.getUser(token));
+		Pagination<FyUserSkin> page = beanMng.getPage(u.getId(),pageNo,pageSize,search,name,code);
 		return new Result(page);
 	}
 	

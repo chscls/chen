@@ -19,7 +19,7 @@ import com.zhitail.frame.util.page.Pagination;
 public class  FyUserSkinMngImpl implements FyUserSkinMng{
 	@Autowired
 	private FyUserSkinDao userSkinDao;
-	public Pagination<FyUserSkin> getPage(Integer pageNo, Integer pageSize,FyUserSkin search,String name,String code
+	public Pagination<FyUserSkin> getPage(Long userId,Integer pageNo, Integer pageSize,FyUserSkin search,String name,String code
 			) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyUserSkin bean where 1=1");
@@ -32,7 +32,8 @@ public class  FyUserSkinMngImpl implements FyUserSkinMng{
 			  finder.append(" and bean.skin.code like:code");
 	            finder.setParam("code","%"+code+"%");
 		}
-		finder.append(" order by bean.id desc");
+		finder.append(" and bean.userId =:userId ");
+		 finder.setParam("userId",userId);
 		return userSkinDao.findPageByFinder(finder, pageNo, pageSize);
 	}
 
