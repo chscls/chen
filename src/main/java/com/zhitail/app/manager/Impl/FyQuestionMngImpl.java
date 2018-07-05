@@ -42,12 +42,24 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	private FyTestMng testMng;
 	@Autowired
 	private FyUserMng userMng;
-	
+
+	public List<FyQuestion> findByQuestionId(Long id) {
+		Finder finder = Finder.create(" from FyTest bean where 1=1");
+
+		if (id != null) {
+			finder.append(" and bean.subQuestionJson like:id");
+			finder.setParam("id", "%:" + id + ",%");
+		}
+		return questionDao.findListByFinder(finder);
+
+	}
+
 	public void delete(Long[] ids, FyUser user) {
 		// TODO Auto-generated method stub
 
 		for (Long id : ids) {
 			List<FyTest> ft = testMng.findByQuestionId(id);
+
 			QuestionConfig qc = new QuestionConfig(id, null);
 			for (FyTest f : ft) {
 
@@ -59,21 +71,36 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 				testMng.update(f);
 
 			}
+			List<FyQuestion> qs = this.findByQuestionId(id);
+
+			SubQuestionConfig sc = new SubQuestionConfig(id, null);
+			for (FyQuestion f : qs) {
+
+				List<SubQuestionConfig> qids = f.getSubQuestionConfigs();
+				qids.remove(sc);
+
+				f.setJson(JSONArray.toJSONString(qids));
+
+				update(f, true);
+
+			}
+
 			questionDao.delete(id);
 		}
 
-		user.setQuestionCount(getCount(user.getId(),null));
-		user.setRecycleCount(getCount(user.getId(),true));
+		user.setQuestionCount(getCount(user.getId(), null));
+		user.setRecycleCount(getCount(user.getId(), true));
 		userMng.update(user);
 	}
+
 	@Override
-	public Long getCount(Long userId,Boolean isRecycle) {
+	public Long getCount(Long userId, Boolean isRecycle) {
 
 		Finder finder = Finder.create(" from FyQuestion bean where bean.userId=:userId");
 		finder.setParam("userId", userId);
-		if(isRecycle!=null) {
-		finder.append(" and bean.isRecycle=:isRecycle");
-		finder.setParam("isRecycle", isRecycle);
+		if (isRecycle != null) {
+			finder.append(" and bean.isRecycle=:isRecycle");
+			finder.setParam("isRecycle", isRecycle);
 		}
 		Integer x = questionDao.countQueryResult(finder);
 
@@ -81,20 +108,20 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 
 	}
 
-	public FyQuestion update(FyQuestion question,Boolean isChange) {
-		
+	public FyQuestion update(FyQuestion question, Boolean isChange) {
+
 		// TODO Auto-generated method stub
 		Updater u = new Updater(question);
 		question = questionDao.updateByUpdater(u);
-		if(isChange!=null&&isChange) {
-		List<FyTest> list = 	testMng.findByQuestionId(question.getId());
-		for(FyTest t:list) {
-			t.refreshCode();
-			testMng.update(t);
+		if (isChange != null && isChange) {
+			List<FyTest> list = testMng.findByQuestionId(question.getId());
+			for (FyTest t : list) {
+				t.refreshCode();
+				testMng.update(t);
+			}
+
 		}
-			
-		}
-		
+
 		return question;
 	}
 
@@ -102,7 +129,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		// TODO Auto-generated method stub
 
 		question = questionDao.save(question);
-		user.setQuestionCount(getCount(user.getId(),null));
+		user.setQuestionCount(getCount(user.getId(), null));
 		userMng.update(user);
 		return question;
 	}
@@ -182,7 +209,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	@Override
-	public void recycle(Long[] ids,FyUser user) {
+	public void recycle(Long[] ids, FyUser user) {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
@@ -191,10 +218,10 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			if (q != null) {
 				q.setRecycleTime(new Date());
 				q.setIsRecycle(true);
-				this.update(q,null);
+				this.update(q, null);
 			}
 		}
-		user.setRecycleCount(getCount(user.getId(),true));
+		user.setRecycleCount(getCount(user.getId(), true));
 		userMng.update(user);
 	}
 
@@ -226,7 +253,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 	}
 
 	@Override
-	public void recovery(Long[] ids,FyUser user) {
+	public void recovery(Long[] ids, FyUser user) {
 		// TODO Auto-generated method stub
 		FyQuestion q;
 		for (Long id : ids) {
@@ -234,11 +261,11 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			if (q != null) {
 				q.setRecycleTime(null);
 				q.setIsRecycle(false);
-				
-				this.update(q,null);
+
+				this.update(q, null);
 			}
 		}
-		user.setRecycleCount(getCount(user.getId(),true));
+		user.setRecycleCount(getCount(user.getId(), true));
 		userMng.update(user);
 	}
 
@@ -262,7 +289,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		Long uid = 0L;
 		List<Long> list = new ArrayList<Long>();
 		QuestionUser qu;
-		for (int i = 0;i< x.size();i++) {
+		for (int i = 0; i < x.size(); i++) {
 			qu = (QuestionUser) x.get(i);
 
 			if (qu.getUid() != uid) {
@@ -279,14 +306,13 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 			}
 
 			list.add(qu.getQid());
-			if(i==x.size()-1) {
+			if (i == x.size() - 1) {
 				FyUser user = userMng.findById(uid);
 				this.delete(list.toArray(new Long[list.size()]), user);
 			}
 		}
 	}
-	
-	
+
 	@Override
 	public FyQuestion updateQuestionQuestions(Long id, Set<Long> qids, Double rate) {
 		// TODO Auto-generated method stub
@@ -294,30 +320,29 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		List<SubQuestionConfig> list;
 		// TODO Auto-generated method stub
 		if (rate == null) {
-			rate= 1.0/qids.size();
-	
-		     list = new ArrayList<SubQuestionConfig>();
-		   for (Long qid : qids) {
-			  if (qid != null) {
-				  SubQuestionConfig qc = new SubQuestionConfig(qid, rate);
-				list.add(qc);
-			  }
-		   }
-		}else {
+			rate = 1.0 / qids.size();
+
+			list = new ArrayList<SubQuestionConfig>();
+			for (Long qid : qids) {
+				if (qid != null) {
+					SubQuestionConfig qc = new SubQuestionConfig(qid, rate);
+					list.add(qc);
+				}
+			}
+		} else {
 			list = t.getSubQuestionConfigs();
-			 for (Long qid : qids) {
-				  if (qid != null) {
-					  SubQuestionConfig qc = new SubQuestionConfig(qid, rate);
-					int x  = list.indexOf(qc);
+			for (Long qid : qids) {
+				if (qid != null) {
+					SubQuestionConfig qc = new SubQuestionConfig(qid, rate);
+					int x = list.indexOf(qc);
 					list.set(x, qc);
-				  }
-			 }
+				}
+			}
 		}
-		
-		
+
 		t.setSubQuestionJson(JSONArray.toJSONString(list));
-		
-		return update(t,true);
+
+		return update(t, true);
 	}
 
 }
