@@ -15,7 +15,7 @@ import com.Application;
 @Table(name = "fy_skin")
 public class FySkin {
 	public enum Status {
-		create, sale, noSale
+		noSale, sale
 	}
 
 	@Id
@@ -47,7 +47,7 @@ public class FySkin {
 	public void setImg(String img) {
 		this.img = img;
 	}
-	private Status status=Status.create;
+	private Status status=Status.noSale;
 	public Status getStatus() {
 		return status;
 	}
