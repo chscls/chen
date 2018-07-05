@@ -88,6 +88,12 @@ public class FySkin {
 		this.createTime=new Date();
 		this.code=Application.getSnowflakeIdWorker().nextId()+"";
 	}
+	public void fullImg(String imgServer) {
+		// TODO Auto-generated method stub
+		if (!this.description.contains("http")) {
+			this.description = this.description.replace("<img src=\"", "<img src=\"" + imgServer);
+		}
+	}
 	
 
 }
