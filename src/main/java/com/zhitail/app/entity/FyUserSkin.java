@@ -19,7 +19,7 @@ public class FyUserSkin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String name;
+	
 	private String userId;
 	@ManyToOne
 	@JoinColumn(name = "skin_id")
@@ -44,12 +44,7 @@ public class FyUserSkin {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	
 
 	public Date getBuyTime() {

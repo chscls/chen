@@ -6,7 +6,7 @@ import com.zhitail.frame.util.page.Pagination;
 public interface FyUserSkinMng {
 
 	public Pagination<FyUserSkin> getPage(Integer pageNo, Integer pageSize,
-			FyUserSkin search);
+			FyUserSkin search,String name,String code);
 
 	public FyUserSkin save(FyUserSkin userSkin);
 

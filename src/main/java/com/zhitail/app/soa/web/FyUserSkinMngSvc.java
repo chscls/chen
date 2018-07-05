@@ -44,8 +44,8 @@ public class FyUserSkinMngSvc {
 	private FyUserSkinMng beanMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
-	public Result query(String token, Integer pageNo,Integer pageSize,FyUserSkin search) {
-		Pagination<FyUserSkin> page = beanMng.getPage(pageNo,pageSize,search);
+	public Result query(String token, Integer pageNo,Integer pageSize,FyUserSkin search,String name,String code) {
+		Pagination<FyUserSkin> page = beanMng.getPage(pageNo,pageSize,search,name,code);
 		return new Result(page);
 	}
 	

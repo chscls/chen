@@ -19,16 +19,19 @@ import com.zhitail.frame.util.page.Pagination;
 public class  FyUserSkinMngImpl implements FyUserSkinMng{
 	@Autowired
 	private FyUserSkinDao userSkinDao;
-	public Pagination<FyUserSkin> getPage(Integer pageNo, Integer pageSize,
-			FyUserSkin search) {
+	public Pagination<FyUserSkin> getPage(Integer pageNo, Integer pageSize,FyUserSkin search,String name,String code
+			) {
 		// TODO Auto-generated method stub
 		Finder finder = Finder.create(" from FyUserSkin bean where 1=1");
 	
-		if(search.getName()!=null){
-			  finder.append(" and bean.name like:name");
-	            finder.setParam("word","%"+search.getName()+"%");
+		if(name!=null){
+			  finder.append(" and bean.skin.name like:name");
+	            finder.setParam("name","%"+name+"%");
 		}
-		
+		if(code!=null){
+			  finder.append(" and bean.skin.code like:code");
+	            finder.setParam("code","%"+code+"%");
+		}
 		finder.append(" order by bean.id desc");
 		return userSkinDao.findPageByFinder(finder, pageNo, pageSize);
 	}
