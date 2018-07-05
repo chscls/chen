@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import com.Application;
+
 @Entity
 @Table(name = "fy_skin")
 public class FySkin {
@@ -75,7 +77,9 @@ public class FySkin {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	
+	public void init() {
+		this.setCode(Application.getSnowflakeIdWorker().nextId()+"");
+	}
 	
 
 }
