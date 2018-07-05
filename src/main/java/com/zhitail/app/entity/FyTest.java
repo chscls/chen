@@ -32,10 +32,8 @@ public class FyTest {
 	public enum Mode{
 		free,singleLimit,totalLimit,race,
 	}
+
 	public enum Status{
-		create,process,complete
-	}
-	public enum SaleStatus{
 		create,apply,refuse,sale
 	}
 	@Id
@@ -89,14 +87,14 @@ public class FyTest {
 		this.isQuestionnaire = isQuestionnaire;
 	}
 	private Mode mode;
-	public SaleStatus getSaleStatus() {
-		return saleStatus;
+	public Status getStatus() {
+		return status;
 	}
-	public void setSaleStatus(SaleStatus saleStatus) {
-		this.saleStatus = saleStatus;
+	public void setSaleStatus(Status status) {
+		this.status = status;
 	}
 	private Boolean isRecycle=false;
-	private SaleStatus saleStatus=SaleStatus.create;
+	private Status status=Status.create;
 	public Boolean getIsRecycle() {
 		return isRecycle;
 	}
@@ -118,7 +116,7 @@ public class FyTest {
 	public void setScore(Double score) {
 		this.score = score;
 	}
-	private Status status=Status.create;
+	
 	
 	private Integer limitSecond;
 	public Integer getLimitSecond() {
@@ -127,12 +125,7 @@ public class FyTest {
 	public void setLimitSecond(Integer limitSecond) {
 		this.limitSecond = limitSecond;
 	}
-	public Status getStatus() {
-		return status;
-	}
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+	
 	private String title;
 	private String description;
 	public String getDescription() {

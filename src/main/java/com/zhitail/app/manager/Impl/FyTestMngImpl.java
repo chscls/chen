@@ -20,7 +20,7 @@ import com.zhitail.app.dao.FyTestDao;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyTest.Mode;
-import com.zhitail.app.entity.FyTest.SaleStatus;
+
 import com.zhitail.app.entity.FyTest.Status;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.middle.QuestionConfig;
@@ -286,8 +286,8 @@ public class FyTestMngImpl implements FyTestMng {
 		for (Long id : ids) {
 			test = this.findById(id);
 			if (test != null
-					&& (test.getSaleStatus() == SaleStatus.create || test.getSaleStatus() == SaleStatus.refuse)) {
-				test.setSaleStatus(SaleStatus.apply);
+					&& (test.getStatus() == Status.create || test.getStatus() == Status.refuse)) {
+				test.setSaleStatus(Status.apply);
 				this.update(test);
 			}
 		}
@@ -299,8 +299,8 @@ public class FyTestMngImpl implements FyTestMng {
 		FyTest test;
 		for (Long id : ids) {
 			test = this.findById(id);
-			if (test != null && test.getSaleStatus() == SaleStatus.sale) {
-				test.setSaleStatus(SaleStatus.create);
+			if (test != null && test.getStatus() == Status.sale) {
+				test.setSaleStatus(Status.create);
 				this.update(test);
 			}
 		}
