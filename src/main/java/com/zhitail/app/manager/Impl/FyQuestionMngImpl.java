@@ -130,6 +130,7 @@ public class FyQuestionMngImpl implements FyQuestionMng {
 		// TODO Auto-generated method stub
 
 		question = questionDao.save(question);
+		question.setUpdateTime(question.getCreateTime());
 		user.setQuestionCount(getCount(user.getId(), null));
 		userMng.update(user);
 		return question;
