@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -51,7 +52,9 @@ public class FyTest {
 	}
 	private Boolean isQuestionnaire=false;
 	private Boolean isNoOrder=false;
-	private String skin;
+	@ManyToOne
+	@JoinColumn(name = "skin_id")
+	private FySkin skin;
 	private Double orgPrice;
 	public Double getOrgPrice() {
 		return orgPrice;
@@ -66,10 +69,11 @@ public class FyTest {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	public String getSkin() {
+
+	public FySkin getSkin() {
 		return skin;
 	}
-	public void setSkin(String skin) {
+	public void setSkin(FySkin skin) {
 		this.skin = skin;
 	}
 	public Boolean getIsNoOrder() {

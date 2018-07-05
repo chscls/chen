@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -34,16 +36,19 @@ public class FyTestVersion {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	@ManyToOne
+	@JoinColumn(name = "skin_id")
+	private FySkin skin;
 	private Integer limitSecond;
 	private String title;
 	private Long teaId;
 	private Long orgId;
 	private Double rate;
-	private String skin;
-	public String getSkin() {
+	
+	public FySkin getSkin() {
 		return skin;
 	}
-	public void setSkin(String skin) {
+	public void setSkin(FySkin skin) {
 		this.skin = skin;
 	}
 	public Double getRate() {
