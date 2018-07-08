@@ -13,6 +13,8 @@ public class FySensitive {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String word;
+	
+	
 	public Long getId() {
 		return id;
 	}
