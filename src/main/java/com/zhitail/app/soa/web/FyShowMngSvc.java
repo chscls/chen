@@ -23,10 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhitail.app.entity.FyCatalog;
+import com.zhitail.app.entity.FyShow;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.entity.middle.AntUser;
-import com.zhitail.app.manager.FyCatalogMng;
+import com.zhitail.app.manager.FyShowMng;
+import com.zhitail.app.manager.FyShowMng;
 import com.zhitail.app.manager.FyUserMng;
 import com.zhitail.app.soa.LoginManager;
 import com.zhitail.frame.common.annotion.TokenAuth;
@@ -40,17 +41,17 @@ import com.zhitail.frame.util.service.Result;
 public class FyShowMngSvc {
 	
 	@Autowired
-	private FyCatalogMng beanMng;
+	private FyShowMng beanMng;
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
-	public Result query(String token, Integer pageNo,Integer pageSize,FyCatalog search) {
-		Pagination<FyCatalog> page = beanMng.getPage(pageNo,pageSize,search);
+	public Result query(String token, Integer pageNo,Integer pageSize,FyShow search) {
+		Pagination<FyShow> page = beanMng.getPage(pageNo,pageSize,search);
 		return new Result(page);
 	}
 	
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Result add( String token,FyCatalog bean) {
+	public Result add( String token,FyShow bean) {
 		if(bean.getId()==null){
 		
 			bean = beanMng.save(bean);
