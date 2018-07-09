@@ -20,10 +20,12 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.IndexColumn;
 
+import com.zhitail.app.entity.middle.ShowAble;
+
 
 @Entity
 @Table(name = "fy_catalog")
-public class FyCatalog {
+public class FyCatalog implements ShowAble{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -32,7 +34,13 @@ public class FyCatalog {
 	private Long parentId;
 	private String templete;
 	private String path;
-	
+	private String img;
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public String getTemplete() {
 		return templete;
 	}
