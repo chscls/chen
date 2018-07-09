@@ -27,7 +27,8 @@ public class  FyCatalogMngImpl implements FyCatalogMng{
 			  finder.append(" and bean.name like:word");
 	            finder.setParam("word","%"+search.getName()+"%");
 		}
-		
+		 finder.append(" and bean.parentId = NULL");
+      
 		finder.append(" order by bean.id desc");
 		return catalogDao.findPageByFinder(finder, pageNo, pageSize);
 	}
