@@ -30,7 +30,21 @@ public class FyCatalog {
 	
 	private String name;
 	private Long parentId;
+	private String templete;
+	private String path;
 	
+	public String getTemplete() {
+		return templete;
+	}
+	public void setTemplete(String templete) {
+		this.templete = templete;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	@OneToMany(orphanRemoval=true,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@IndexColumn(name="priority")
 	@JoinTable(name="fy_catalog_catalog",joinColumns={@JoinColumn(name="parent_id",referencedColumnName="id")},
