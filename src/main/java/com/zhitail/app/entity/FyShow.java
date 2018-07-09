@@ -22,6 +22,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.IndexColumn;
 
 import com.alibaba.fastjson.JSONArray;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.entity.middle.ShowAble;
 
@@ -50,6 +51,7 @@ public class FyShow {
 
 	@Transient
 	private List<ShowAble> list;
+	@JsonIgnore
 	@Lob
 	private String json;
 
