@@ -1,5 +1,7 @@
 package com.zhitail.app.manager.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,15 @@ public class  FyCatalogMngImpl implements FyCatalogMng{
 	}
 
 	public FyCatalog save(FyCatalog bean) {
+		bean = catalogDao.save(bean);
+		if(bean.getParentId()!=null) {
+			FyCatalog c = catalogDao.findOne(bean.getParentId());
+			List<FyCatalog> fc = c.getChildren();
+			if(fc!=null) {
+				fc.add(bean);
+		
+			}
+		}
 		// TODO Auto-generated method stub
 		return catalogDao.save(bean);
 	}

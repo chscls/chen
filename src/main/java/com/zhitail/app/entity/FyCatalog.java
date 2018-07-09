@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.IndexColumn;
@@ -30,7 +31,7 @@ public class FyCatalog {
 	private String name;
 	private Long parentId;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+	@OneToMany(orphanRemoval=true,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@IndexColumn(name="priority")
 	@JoinTable(name="fy_catalog_catalog",joinColumns={@JoinColumn(name="parent_id",referencedColumnName="id")},
 			inverseJoinColumns={@JoinColumn(name="child_id",referencedColumnName="id")}
