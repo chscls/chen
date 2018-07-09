@@ -74,10 +74,10 @@ public class  FyShowMngImpl implements FyShowMng{
 		// TODO Auto-generated method stub
 		
 			// TODO Auto-generated method stub
-			Finder finder = Finder.create(" from FyShow bean where 1=1");
+			Finder finder = Finder.create(" from FyShow bean where 1=1 ");
 
 			if (id != null) {
-				finder.append("(and bean.json like:id1 or bean.json like:id2 or bean.json like:id3 or bean.json like:id4)");
+				finder.append("and (bean.json like:id1 or bean.json like:id2 or bean.json like:id3 or bean.json like:id4)");
 				finder.setParam("id1", "%[" + id + "]%");
 				finder.setParam("id2", "%," + id + ",%");
 				finder.setParam("id3", "%[" + id + ",%");
