@@ -3,6 +3,7 @@ package com.zhitail.app.manager;
 import java.util.List;
 
 import com.zhitail.app.entity.FyCatalog;
+import com.zhitail.app.entity.FyTest;
 import com.zhitail.frame.util.page.Pagination;
 
 public interface FyCatalogMng {

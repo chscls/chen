@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zhitail.app.dao.FyShowDao;
 import com.zhitail.app.dao.FyUserDao;
+import com.zhitail.app.entity.FyCatalog;
 import com.zhitail.app.entity.FyShow;
 import com.zhitail.app.entity.FyUser;
 import com.zhitail.app.manager.FyShowMng;
@@ -66,6 +67,24 @@ public class  FyShowMngImpl implements FyShowMng{
 	public FyShow findById(Long id) {
 		// TODO Auto-generated method stub
 		return showDao.findOne(id);
+	}
+
+	@Override
+	public List<FyShow> findByCatalogId(Long id) {
+		// TODO Auto-generated method stub
+		
+			// TODO Auto-generated method stub
+			Finder finder = Finder.create(" from FyShow bean where 1=1");
+
+			if (id != null) {
+				finder.append("(and bean.json like:id1 or bean.json like:id2 or bean.json like:id3 or bean.json like:id4)");
+				finder.setParam("id1", "%[" + id + "]%");
+				finder.setParam("id2", "%," + id + ",%");
+				finder.setParam("id3", "%[" + id + ",%");
+				finder.setParam("id4", "%," + id + "]%");
+			}
+			return showDao.findListByFinder(finder);
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.zhitail.app.manager;
 
+import java.util.List;
+
 import com.zhitail.app.entity.FyShow;
 import com.zhitail.frame.util.page.Pagination;
 
@@ -15,5 +17,7 @@ public interface FyShowMng {
 	public void delete(Long[] ids);
 
 	public FyShow findById(Long id);
+
+	public List<FyShow> findByCatalogId(Long id);
 
 }
