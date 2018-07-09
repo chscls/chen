@@ -53,7 +53,7 @@ public class FyShow {
 	@Lob
 	private String json;
 
-	private List<Long> getShowIds() {
+	public List<Long> getShowIds() {
 		if (json != null) {
 
 			return JSONArray.parseArray(json, Long.class);
