@@ -62,4 +62,15 @@ public class  FyCatalogMngImpl implements FyCatalogMng{
 		
 	}
 
+	@Override
+	public List<FyCatalog> findByIds(Long[] ids) {
+		// TODO Auto-generated method stub
+		Finder finder = Finder.create(" from FyCatalog bean where 1=1");
+		if(ids!=null){
+			finder.append(" and bean.id in:ids ");
+			finder.setParamList("ids", ids);
+		}
+		return catalogDao.findListByFinder(finder);
+	}
+
 }

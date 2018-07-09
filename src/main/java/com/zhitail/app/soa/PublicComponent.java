@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.zhitail.app.entity.FyCatalog;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyQuestion.Type;
 import com.zhitail.app.entity.FyShow;
 import com.zhitail.app.entity.middle.QuestionConfig;
+import com.zhitail.app.entity.middle.ShowAble;
 import com.zhitail.app.entity.middle.SubQuestionConfig;
+import com.zhitail.app.manager.FyCatalogMng;
 import com.zhitail.app.manager.FyQuestionMng;
 
 @Component
@@ -23,6 +26,8 @@ public class PublicComponent {
 	 private String imgServer;
 	@Autowired
 	private FyQuestionMng questionMng;
+	@Autowired
+	private FyCatalogMng catalogMng;
 	public void fullQuestions(FyQuestion question) {
 		if(question.getType()==Type.synthesis) {
 		// TODO Auto-generated method stub
@@ -55,7 +60,27 @@ public class PublicComponent {
 	}}
 	
 	public void fullShow(FyShow show) {
+		List<Long> ids =show.getShowIds();
 		
+		if(ids.size()==0) {
+			return;
+		}
+		List<ShowAble> ls=new ArrayList<ShowAble>();
+		FyShow.Type t = show.getType();
+		if(t==FyShow.Type.catalog) {
+			List<FyCatalog> list = catalogMng.findByIds(ids.toArray(new Long[ids.size()]));
+			Map<Long,FyCatalog> map=new HashMap<Long,FyCatalog>();
+			for(FyCatalog f:list) {
+				map.put(f.getId(), f);
+			}
+			for(Long id:ids) {
+				if(map.containsKey(id)) {
+					ls.add((ShowAble)map.get(id));
+				}
+			}
+			show.setList(ls);
+		}
+	
 	}
 	public void fullQuestions(FyTest test) {
 		FyQuestion temp;
