@@ -80,7 +80,7 @@ public class FyShow {
 
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@IndexColumn(name = "priority")
-	@JoinTable(name = "fy_catalog_catalog", joinColumns = {
+	@JoinTable(name = "fy_show_show", joinColumns = {
 			@JoinColumn(name = "parent_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "child_id", referencedColumnName = "id") })
 	private List<FyShow> children;

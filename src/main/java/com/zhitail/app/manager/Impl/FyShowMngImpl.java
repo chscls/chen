@@ -62,4 +62,10 @@ public class  FyShowMngImpl implements FyShowMng{
 		
 	}
 
+	@Override
+	public FyShow findById(Long id) {
+		// TODO Auto-generated method stub
+		return showDao.findOne(id);
+	}
+
 }

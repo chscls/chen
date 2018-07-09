@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.zhitail.app.entity.FyQuestion;
 import com.zhitail.app.entity.FyTest;
 import com.zhitail.app.entity.FyQuestion.Type;
+import com.zhitail.app.entity.FyShow;
 import com.zhitail.app.entity.middle.QuestionConfig;
 import com.zhitail.app.entity.middle.SubQuestionConfig;
 import com.zhitail.app.manager.FyQuestionMng;
@@ -53,7 +54,9 @@ public class PublicComponent {
 
 	}}
 	
-	
+	public void fullShow(FyShow show) {
+		
+	}
 	public void fullQuestions(FyTest test) {
 		FyQuestion temp;
 		List<QuestionConfig> ids = test.getQuestionConfigs();

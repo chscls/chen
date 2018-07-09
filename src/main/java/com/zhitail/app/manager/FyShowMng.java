@@ -14,4 +14,6 @@ public interface FyShowMng {
 
 	public void delete(Long[] ids);
 
+	public FyShow findById(Long id);
+
 }
