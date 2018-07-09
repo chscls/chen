@@ -21,11 +21,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 
 import com.zhitail.app.entity.middle.ShowAble;
+import com.zhitail.app.entity.middle.ShowAbleInterface;
 
 
 @Entity
 @Table(name = "fy_catalog")
-public class FyCatalog implements ShowAble{
+public class FyCatalog implements ShowAbleInterface{
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -114,6 +115,17 @@ public class FyCatalog implements ShowAble{
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	@Override
+	public ShowAble makeShowAble() {
+		// TODO Auto-generated method stub
+		ShowAble sa=new ShowAble();
+		sa.setId(id);
+		sa.setImg(img);
+		sa.setPath(path);
+		sa.setTemplete(templete);
+		
+		return sa;
 	}
 
 }

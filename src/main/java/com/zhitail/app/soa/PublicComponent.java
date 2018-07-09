@@ -75,7 +75,7 @@ public class PublicComponent {
 			}
 			for(Long id:ids) {
 				if(map.containsKey(id)) {
-					ls.add((ShowAble)map.get(id));
+					ls.add(map.get(id).makeShowAble());
 				}
 			}
 			show.setList(ls);
