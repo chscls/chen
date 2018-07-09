@@ -124,7 +124,7 @@ public class FyCatalog implements ShowAbleInterface{
 		sa.setImg(img);
 		sa.setPath(path);
 		sa.setTemplete(templete);
-		
+		sa.setName(name);
 		return sa;
 	}
 
