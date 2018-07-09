@@ -61,11 +61,12 @@ public class PublicComponent {
 	
 	public void fullShow(FyShow show) {
 		List<Long> ids =show.getShowIds();
-		
+		List<ShowAble> ls=new ArrayList<ShowAble>();
 		if(ids.size()==0) {
+			show.setList(ls);
 			return;
 		}
-		List<ShowAble> ls=new ArrayList<ShowAble>();
+	
 		FyShow.Type t = show.getType();
 		if(t==FyShow.Type.catalog) {
 			List<FyCatalog> list = catalogMng.findByIds(ids.toArray(new Long[ids.size()]));

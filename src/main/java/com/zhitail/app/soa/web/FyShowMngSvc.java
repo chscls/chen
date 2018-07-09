@@ -1,8 +1,8 @@
 package com.zhitail.app.soa.web;
 
+import java.util.HashSet;
 import java.util.List;
-
-
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +45,47 @@ public class FyShowMngSvc {
 	private FyShowMng beanMng;
 	 @Autowired
 		private PublicComponent pc;
+	 @TokenAuth(value="token")
+		@RequestMapping(value = "/deleteCatalog", produces = MediaType.APPLICATION_JSON_VALUE)
+		public Result deleteCatalog( String token,Long id,Long[] ids) {
+			
+			FyShow	bean = beanMng.findById(id);
+			List<Long> alreayIds=bean.getShowIds();
+			Set<Long> s = new HashSet<Long>();
+			for(Long i:alreayIds) {
+				s.add(i);
+			}
+			for(Long i:ids) {
+				s.remove(i);
+			}
+			bean.setJson(JSONArray.toJSONString(s));
+			bean=beanMng.update(bean);
+			pc.fullShow(bean);
+			return new Result(bean);
+		
+		}
+	 @TokenAuth(value="token")
+		@RequestMapping(value = "/addCatalog", produces = MediaType.APPLICATION_JSON_VALUE)
+		public Result addCatalog( String token,Long id,Long[] ids) {
+			
+			FyShow	bean = beanMng.findById(id);
+			List<Long> alreayIds=bean.getShowIds();
+			Set<Long> s = new HashSet<Long>();
+			for(Long i:alreayIds) {
+				s.add(i);
+			}
+			for(Long i:ids) {
+				s.add(i);
+			}
+			bean.setJson(JSONArray.toJSONString(s));
+			bean=beanMng.update(bean);
+			pc.fullShow(bean);
+			return new Result(bean);
+		
+		}
+		
+	 
+	 
 	@TokenAuth(value="token")
 	@RequestMapping(value = "/query",method=RequestMethod.GET)
 	public Result query(String token, Integer pageNo,Integer pageSize,FyShow search) {
